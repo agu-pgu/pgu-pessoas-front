@@ -1,0 +1,121 @@
+// FormLogin.scss
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('../../assets/imgs/fundo.png');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .login-box {
+    background-color: rgb(255, 255, 255);
+    padding: 60px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona a box-shadow */
+  
+    .Login-h2 {
+      font-weight: lighter;
+  
+      .login-span {
+        font-weight: bold;
+      }
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+      margin: 20px auto;
+    }
+  
+    label {
+      margin-top: 10px;
+    }
+  
+    input {
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 0.5px solid #0199CB;
+      border-radius: 5px;
+
+      &:focus {
+        border: 1px solid #0199CB; // Aumentei para 1px para melhor visibilidade
+      }
+    }
+  
+    input::placeholder {
+      color: #0199CB;
+    }
+  
+    .checkboxes {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+  
+      input[type="checkbox"] {
+        appearance: none;
+        border: 2px solid #0199CB;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        outline: none;
+        position: relative;
+  
+        &:checked {
+          background-color: #0199CB;
+          border-color: #0199CB;
+        }
+  
+        &:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 10px;
+          height: 10px;
+          background-color: #fff;
+          border-radius: 50%;
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+        }
+  
+        &:checked:before {
+          opacity: 1;
+        }
+      }
+  
+      label {
+        margin-left: 5px;
+      }
+    }
+  
+    input::placeholder {
+      color: #0199CB;
+    }
+  
+    button {
+      padding: 15px;
+      font-size: 16px;
+      background-color: #0199CB;
+      color: #fff;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+  
+    .login-button-submit {
+      margin-top: 30px;
+    }
+    .login-p {
+        font-size: 10px;
+    }
+  }
+  

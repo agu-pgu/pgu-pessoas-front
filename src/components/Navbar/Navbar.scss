@@ -1,0 +1,58 @@
+// Navbar.scss
+
+@import "../../global.scss";
+
+.navbar {
+  position: fixed; /* Fixa a barra de navegação na tela */
+  top: 0; /* Ajusta para o topo da tela */
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Coloca a barra na frente de outros elementos */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  color: blue;
+
+  .menu-name {
+    color: black;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+
+    .img-govbr {
+      padding: 10px;
+      border-right: 2px solid #ffe9e9;
+    }
+
+    .menu-name-h3 {
+      font-weight: lighter;
+    }
+
+    .menu-name-span {
+      font-weight: bold;
+    }
+
+    .menu-name-span-gov {
+      font-size: 13px;
+    }
+  }
+
+  .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .menu-logout {
+      margin-right: 10px;
+
+      .menu-logout-button {
+        border: none;
+        background-color: rgba(255, 255, 255, 0.8); /* Adapte a transparência conforme necessário */
+        cursor: pointer;
+        font-size: 20px;
+      }
+    }
+  }
+}
