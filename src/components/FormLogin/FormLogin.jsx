@@ -3,6 +3,7 @@ import "./FormLogin.scss";
 import Navbar from "../Navbar/Navbar";
 import { loginUser } from "../../services/calls";
 import { useNavigate } from "react-router-dom";
+import { loginServerError, loginUserError } from "../../assets/js/Alerts";
 
 const FormLogin = () => {
   const [sapiensChecked, setSapiensChecked] = useState(true);

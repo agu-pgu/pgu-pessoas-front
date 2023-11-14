@@ -13,6 +13,7 @@ export const loginUser = async (username, password, sapiens) => {
       },
     });
     localStorage.setItem("token", response.data.TOKEN);
+    localStorage.setItem("uid", response.data.SPLIT_PROFILE.ID);
     if (response.data.SUCESSO === true) {
       return 200;
     } else {
