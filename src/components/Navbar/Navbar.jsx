@@ -29,7 +29,7 @@ const Navbar = () => {
         <div>
           <span className="menu-name-span-gov">Governo Federal</span>
           <h3 className="menu-name-h3">
-            <span className="menu-name-span">G</span>ESFER
+            <span className="menu-name-span">PGU</span>-Pessoas
           </h3>
         </div>
       </div>

@@ -21,7 +21,7 @@ const FormLogin = () => {
       <Navbar />
       <div className="login-container">
         <div className="login-box">
-          <h2 className='Login-h2'>Bem vindo ao novo <span className='login-span'>G</span>ESFER</h2>
+          <h2 className='Login-h2'>Bem vindo ao <span className='login-span'>PGU</span>-Pessoas</h2>
           <form>
             <label htmlFor="username">Usuário:</label>
             <input type="text" id="username" placeholder='000.000.000-00' name="username" />
@@ -51,7 +51,7 @@ const FormLogin = () => {
 
             <button className='login-button-submit' type="submit">Login</button>
           </form>
-          <p className='login-p'>&copy; Gesfer <strong>Desenvolvimento</strong> 1.0.0 2023 CONATEC. Alguns direitos reservados.</p>
+          <p className='login-p'>&copy; PGU-Pessoas <strong>Desenvolvimento</strong> 1.0.0 2023 CONATEC. Alguns direitos reservados.</p>
         </div>
       </div>
     </>
