@@ -1,22 +1,32 @@
-import React from 'react'
-import { FaUser, FaAddressCard, FaCog, FaChartBar, FaClipboardList, FaSearch } from 'react-icons/fa';
-import "./Buttons.scss"
-
+import React, { useState } from 'react';
+import { FaUser, FaAddressCard, FaCog, FaChartBar, FaClipboardList } from 'react-icons/fa';
+import './Buttons.scss';
 
 const buttons = [
-    { icon: <FaUser />, label: 'Meus dados' },
-    { icon: <FaAddressCard />, label: 'Cadastro' },
-    { icon: <FaCog />, label: 'Administração' },
-    { icon: <FaChartBar />, label: 'Relatórios' },
-    { icon: <FaClipboardList />, label: 'Auditoria' },
-  ];
+  { icon: <FaUser />, label: 'Meus dados', content: 'Conteúdo Meus Dados' },
+  { icon: <FaAddressCard />, label: 'Cadastro', content: 'Conteúdo Cadastro' },
+  { icon: <FaCog />, label: 'Administração', content: 'Conteúdo Administração' },
+  { icon: <FaChartBar />, label: 'Relatórios', content: 'Conteúdo Relatórios' },
+  { icon: <FaClipboardList />, label: 'Auditoria', content: 'Conteúdo Auditoria' },
+];
 
-export default function Buttons() {
+const Buttons = ({ setContent }) => {
+  const [activeButton, setActiveButton] = useState(0);
+
+  const handleButtonClick = (index) => {
+    setActiveButton(index);
+    setContent(buttons[index].content);
+  };
+
   return (
-    <div className="home-container">
+    <div className="buttons-container">
       <div className="buttons-wrapper">
         {buttons.map((button, index) => (
-          <div className="button" key={index}>
+          <div
+            className={`button ${index === activeButton ? 'active' : ''}`}
+            key={index}
+            onClick={() => handleButtonClick(index)}
+          >
             <div className="button-inner">
               {button.icon}
               <span className="label">{button.label}</span>
@@ -25,5 +35,7 @@ export default function Buttons() {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Buttons;
