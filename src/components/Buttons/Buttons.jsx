@@ -11,10 +11,10 @@ const buttons = [
 ];
 
 const Buttons = ({ setContent }) => {
-  const [activeButton, setActiveButton] = useState(0);
+  const [activeButton, setActiveButton] = useState(null);
 
   const handleButtonClick = (index) => {
-    setActiveButton(index);
+    setActiveButton(activeButton === index ? null : index);
     setContent(buttons[index].content);
   };
 
@@ -26,6 +26,7 @@ const Buttons = ({ setContent }) => {
             className={`button ${index === activeButton ? 'active' : ''}`}
             key={index}
             onClick={() => handleButtonClick(index)}
+
           >
             <div className="button-inner">
               {button.icon}
