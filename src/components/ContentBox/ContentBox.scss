@@ -1,4 +1,3 @@
-// ContentBox.scss
 @import "../../global.scss";
 
 .content-box {
@@ -8,6 +7,22 @@
     margin-left: 20px; 
     margin-right: 20px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 1; 
+    z-index: 1;
+
+    .div-contentBox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .p-contentBox {
+        padding: 20px;
+        font-size: 5rem;
+        font-weight: 500;
+        color: #fff;
+    }
+    
+    }
+
+
   }
 

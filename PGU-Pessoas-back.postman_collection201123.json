@@ -1,0 +1,1321 @@
+{
+	"info": {
+		"_postman_id": "e9b06d5b-4f61-4d52-b6f3-9d06347aa8c9",
+		"name": "PGU-Pessoas-back",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3816406"
+	},
+	"item": [
+		{
+			"name": "CONSULTAR",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "ConsultarSetor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_BASE}}/ConsultarSetor",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"ConsultarSetor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ConsultarAfastamento",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL_BASE}}/ConsultarAfastamento",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"ConsultarAfastamento"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "ConsultarSetor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CONSULTAR\":[\r\n        {\r\n            \"SETOR\": {\r\n                \"setor_nome\": \"Setor 1\",\r\n                \"setor_descricao\": \"Setor descrição 1.\",\r\n                \"setor_sigla\": \"SET1\",\r\n                \"setor_ativo\": \"1\"\r\n            }\r\n        },\r\n        {\r\n            \"SETOR\": {\r\n                \"OP_L\": \"OR\",\r\n                \"CONSULTA\": {\r\n                    \"setor_nome\": {\r\n                        \"setor_nome\": \"Setor\",\r\n                        \"OP_C\": \"=\"\r\n                    },\r\n                    \"setor_sigla\": {\r\n                        \"setor_sigla\": \"%SET%\",\r\n                        \"OP_C\": \"like\"\r\n                    },\r\n                    \"setor_ativo\": {\r\n                        \"setor_ativo\": \"0\",\r\n                        \"OP_C\": \"=\"\r\n                    },\r\n                    \"setor_criado_em\": {\r\n                        \"setor_criado_em\": \"2023-11-16 09:43:01\",\r\n                        \"OP_C\": \">=\"\r\n                    }\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"SETOR\": {\r\n                \"CONSULTA\": {\r\n                    \"setor_id\": {\r\n                        \"setor_id\": \"('5', '6')\",\r\n                        \"OP_C\": \"in\"\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/ConsultarSetor",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"ConsultarSetor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ConsultarAfastamento",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CONSULTAR\":[\r\n        {\r\n            \"AFASTAMENTO\": {\r\n                \"OP_L\": \"OR\",\r\n                \"CONSULTA\": {\r\n                    \"cid_id\": {\r\n                        \"cid_id\": \"1\",\r\n                        \"OP_C\": \">=\"\r\n                    },\r\n                    \"pessoa_id\": {\r\n                        \"pessoa_id\": \"1\",\r\n                        \"OP_C\": \">=\"\r\n                    }\r\n                }\r\n            },\r\n            \"AFASTAMENTO_MOTIVO_STATUS\": {\r\n                \"afastamento_status_id\": \"2\"\r\n            },\r\n            \"AFASTAMENTO_STATUS\": {\r\n                \"afastamento_status_nome\": \"Afastamento status 1\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/ConsultarAfastamento",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"ConsultarAfastamento"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CADASTRAR",
+			"item": [
+				{
+					"name": "ADMINISTRAÇÃO",
+					"item": [
+						{
+							"name": "CadastrarSetor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"SETOR\": {\r\n                \"setor_nome\": \"Setor 1\",\r\n                \"setor_descricao\": \"Setor descrição 1.\",\r\n                \"setor_sigla\": \"SET1\"\r\n            }\r\n        },\r\n        {\r\n            \"SETOR\": {\r\n                \"setor_nome\": \"Setor 2\",\r\n                \"setor_sigla\": \"SET2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarSetor",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarSetor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarRegiao",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"REGIAO\": {\r\n                \"regiao_nome\": \"Região 1\",\r\n                \"regiao_descricao\": \"Região descrição 1.\",\r\n                \"regiao_sigla\": \"REG1\"\r\n            }\r\n        },\r\n        {\r\n            \"REGIAO\": {\r\n                \"regiao_nome\": \"Região 2\",\r\n                \"regiao_sigla\": \"REG2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarRegiao",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarRegiao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarUnidade",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"UNIDADE\": {\r\n                \"unidade_nome\": \"Unidade 1\",\r\n                \"unidade_descricao\": \"Unidade descrição 1.\",\r\n                \"unidade_sigla\": \"UNI1\"\r\n            }\r\n        },\r\n        {\r\n            \"UNIDADE\": {\r\n                \"unidade_nome\": \"Unidade 2\",\r\n                \"unidade_sigla\": \"UNI2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarUnidade",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarUnidade"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCoordenacao",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"COORDENACAO\": {\r\n                \"coordenacao_nome\": \"Coordenação 1\",\r\n                \"coordenacao_descricao\": \"Coordenação descrição 1.\",\r\n                \"coordenacao_sigla\": \"COR1\"\r\n            }\r\n        },\r\n        {\r\n            \"COORDENACAO\": {\r\n                \"coordenacao_nome\": \"Coordenação 2\",\r\n                \"coordenacao_sigla\": \"COR2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCoordenacao",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCoordenacao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarFuncao",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"FUNCAO\": {\r\n                \"funcao_nome\": \"Função 1\",\r\n                \"funcao_descricao\": \"Função descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"FUNCAO\": {\r\n                \"funcao_nome\": \"Função 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarFuncao",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarFuncao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarNucleo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"NUCLEO\": {\r\n                \"nucleo_nome\": \"Núcleo 1\",\r\n                \"nucleo_descricao\": \"Núcleo descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"NUCLEO\": {\r\n                \"nucleo_nome\": \"Núcleo 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarNucleo",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarNucleo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCargo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CARGO\": {\r\n                \"cargo_nome\": \"Cargo 1\",\r\n                \"cargo_descricao\": \"Cargo descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"CARGO\": {\r\n                \"cargo_nome\": \"Cargo 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCargo",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCargo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCarreiraStatus",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CARREIRA_STATUS\": {\r\n                \"carreira_status_nome\": \"Carreira status 1\",\r\n                \"carreira_status_descricao\": \"Carreira status descrição 1.\",\r\n                \"carreira_status_ordem\": \"4\"\r\n            }\r\n        },\r\n        {\r\n            \"CARREIRA_STATUS\": {\r\n                \"carreira_status_nome\": \"Carreira status 2\",\r\n                \"carreira_status_ordem\": \"5\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCarreiraStatus",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCarreiraStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarFeriasStatus",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"FERIAS_STATUS\": {\r\n                \"ferias_status_nome\": \"Férias status 1\",\r\n                \"ferias_status_descricao\": \"Férias status descrição 1.\",\r\n                \"ferias_status_ordem\": \"3\"\r\n            }\r\n        },\r\n        {\r\n            \"FERIAS_STATUS\": {\r\n                \"ferias_status_nome\": \"Férias status 2\",\r\n                \"ferias_status_ordem\": \"4\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarFeriasStatus",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarFeriasStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarAfastamentoStatus",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"AFASTAMENTO_STATUS\": {\r\n                \"afastamento_status_nome\": \"Afastamento status 1\",\r\n                \"afastamento_status_descricao\": \"Afastamento status descrição 1.\",\r\n                \"afastamento_status_ordem\": \"3\"\r\n            }\r\n        },\r\n        {\r\n            \"AFASTAMENTO_STATUS\": {\r\n                \"afastamento_status_nome\": \"Afastamento status 2\",\r\n                \"afastamento_status_ordem\": \"4\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarAfastamentoStatus",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarAfastamentoStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCarreiraTipo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CARREIRA_TIPO\": {\r\n                \"carreira_tipo_nome\": \"Carreira tipo 1\",\r\n                \"carreira_tipo_descricao\": \"Carreira tipo descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"CARREIRA_TIPO\": {\r\n                \"carreira_tipo_nome\": \"Carreira tipo 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCarreiraTipo",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCarreiraTipo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarAfastamentoTipo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"AFASTAMENTO_TIPO\": {\r\n                \"afastamento_tipo_nome\": \"Afastamento tipo 1\",\r\n                \"afastamento_tipo_descricao\": \"Afastamento tipo descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"AFASTAMENTO_TIPO\": {\r\n                \"afastamento_tipo_nome\": \"Afastamento tipo 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarAfastamentoTipo",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarAfastamentoTipo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarRegimeTrabalhoTipo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"REGIME_TRABALHO_TIPO\": {\r\n                \"regime_trabalho_tipo_nome\": \"Regime de trabalho tipo 1\",\r\n                \"regime_trabalho_tipo_descricao\": \"Regime de trabalho tipo descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"REGIME_TRABALHO_TIPO\": {\r\n                \"regime_trabalho_tipo_nome\": \"Regime de trabalho tipo 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarRegimeTrabalhoTipo",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarRegimeTrabalhoTipo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarRegimeTrabalhoModalidade",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"REGIME_TRABALHO_MODALIDADE\": {\r\n                \"regime_trabalho_modalidade_nome\": \"Regime de trabalho modalidade 1\",\r\n                \"regime_trabalho_modalidade_descricao\": \"Regime de trabalho modalidade descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"REGIME_TRABALHO_MODALIDADE\": {\r\n                \"regime_trabalho_modalidade_nome\": \"Regime de trabalho modalidade 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarRegimeTrabalhoModalidade",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarRegimeTrabalhoModalidade"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarIngresso",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"INGRESSO\": {\r\n                \"ingresso_nome\": \"Ingresso 1\",\r\n                \"ingresso_descricao\": \"Ingresso descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"INGRESSO\": {\r\n                \"ingresso_nome\": \"Ingresso 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarIngresso",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarIngresso"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarConcursoCota",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CONCURSO_COTA\": {\r\n                \"concurso_cota_nome\": \"Concurso cota nome 1\",\r\n                \"concurso_cota_descricao\": \"Concurso cota descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"CONCURSO_COTA\": {\r\n                \"concurso_cota_nome\": \"Concurso cota 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarConcursoCota",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarConcursoCota"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCidCategoria",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CID_CATEGORIA\": {\r\n                \"cid_categoria_nome\": \"CID categoria 1\",\r\n                \"cid_categoria_descricao\": \"CID categoria descrição 1.\"\r\n            }\r\n        },\r\n        {\r\n            \"CID_CATEGORIA\": {\r\n                \"cid_categoria_nome\": \"CID categoria 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCidCategoria",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCidCategoria"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarConcurso",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CONCURSO\": {\r\n                \"concurso_nome\": \"Concurso 1\",\r\n                \"concurso_descricao\": \"Concurso descrição 1.\",\r\n                \"concurso_ano\": \"2022\",\r\n                \"concurso_edital\": \"Concurso edital 1\"\r\n            }\r\n        },\r\n        {\r\n            \"CONCURSO\": {\r\n                \"concurso_nome\": \"Concurso 2\",\r\n                \"concurso_ano\": \"2001\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarConcurso",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarConcurso"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCid",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CID\": {\r\n                \"cid_nome\": \"CID nome 1\",\r\n                \"cid_descricao\": \"CID descrição 1.\",\r\n                \"cid_classe\": \"CID classe 1\",\r\n                \"cid_categoria_id\": \"1\"\r\n            }\r\n        },\r\n        {\r\n            \"CID\": {\r\n                \"cid_classe\": \"CID classe 2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCid",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCid"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCidSub",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CID_SUB\": {\r\n                \"cid_sub_nome\": \"CID sub nome 1\",\r\n                \"cid_sub_descricao\": \"CID sub descrição 1.\",\r\n                \"cid_sub_classe\": \"CID sub classe 1\",\r\n                \"cid_id\": \"1\"\r\n            }\r\n        },\r\n        {\r\n            \"CID_SUB\": {\r\n                \"cid_sub_classe\": \"CID sub classe 2\",\r\n                \"cid_id\": \"2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCidSub",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCidSub"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CADASTRO",
+					"item": [
+						{
+							"name": "CadastrarPessoa",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"PESSOA\": {\r\n                \"pessoa_nome\": \"Pessoa nome 1\",\r\n                \"pessoa_data_nascimento\": \"1997-11-15 00:00:00\",\r\n                \"pessoa_cpf\": \"432.432.765-34\",\r\n                \"pessoa_email\": \"email.1@agu.gov.br\",\r\n                \"pessoa_siape\": \"343241\",\r\n                \"genero_id\": \"3\",\r\n                \"municipio_id\": \"804\"\r\n            }\r\n        },\r\n        {\r\n            \"PESSOA\":{\r\n                \"pessoa_nome\": \"Pessoa nome 2\",\r\n                \"pessoa_email\": \"email.2@agu.gov.br\",\r\n                \"genero_id\": \"4\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarPessoa",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarPessoa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarCarreira",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"CARREIRA\": {\r\n                \"pessoa_id\": \"1\",\r\n                \"cargo_id\": \"1\",\r\n                \"cargo_inicio\": \"2021-07-06 00:00:00\",\r\n                \"cargo_fim\": \"2023-07-05 00:00:00\",\r\n                \"ingresso_id\": \"1\",\r\n                \"concurso_id\": \"1\",\r\n                \"concurso_classificacao\": \"3\",\r\n                \"concurso_cota_id\": \"1\",\r\n                \"carreira_tipo_id\": \"4\",\r\n                \"setor_id\": \"5\",\r\n                \"setor_inicio\": \"2021-07-06 00:00:00\",\r\n                \"setor_fim\": \"2023-07-05 00:00:00\",\r\n                \"funcao_id\": \"1\",\r\n                \"funcao_inicio\": \"2021-07-06 00:00:00\",\r\n                \"funcao_fim\": \"2023-07-05 00:00:00\",\r\n                \"coordenacao_id\": \"1\",\r\n                \"coordenacao_inicio\": \"2021-07-06 00:00:00\",\r\n                \"coordenacao_fim\": \"2023-07-05 00:00:00\",\r\n                \"nucleo_id\": \"1\",\r\n                \"nucleo_inicio\": \"2021-07-06 00:00:00\",\r\n                \"nucleo_fim\": \"2023-07-05 00:00:00\"\r\n            },\r\n            \"CARREIRA_MOTIVO_STATUS\": {\r\n                \"carreira_motivo_status_descricao\": \"Carreira motivo status descrição 1\",\r\n                \"carreira_status_id\": \"1\"\r\n            },\r\n            \"REGIME_TRABALHO\": {\r\n                \"regime_trabalho_descricao\": \"Regime trabalho descrição 1\",\r\n                \"regime_trabalho_tipo_id\": \"1\",\r\n                \"regime_trabalho_modalidade_id\": \"1\"\r\n            }\r\n        },\r\n        {\r\n            \"CARREIRA\": {\r\n                \"pessoa_id\": \"2\",\r\n                \"cargo_id\": \"2\",\r\n                \"cargo_inicio\": \"2020-12-08 00:00:00\",\r\n                \"ingresso_id\": \"2\",\r\n                \"carreira_tipo_id\": \"3\",\r\n                \"setor_id\": \"6\",\r\n                \"setor_inicio\": \"2020-12-08 00:00:00\"\r\n            },\r\n            \"CARREIRA_MOTIVO_STATUS\": {\r\n                \"carreira_status_id\": \"2\"\r\n            },\r\n            \"REGIME_TRABALHO\": {\r\n                \"regime_trabalho_tipo_id\": \"2\",\r\n                \"regime_trabalho_modalidade_id\": \"2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarCarreira",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarCarreira"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarFerias",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"FERIAS\": {\r\n                \"ferias_inicio\": \"2023-09-01 00:00:00\",\r\n                \"ferias_fim\": \"2023-09-20 00:00:00\",\r\n                \"ferias_ano\": \"2023\",\r\n                \"pessoa_id\": \"1\"\r\n            },\r\n            \"FERIAS_MOTIVO_STATUS\": {\r\n                \"ferias_motivo_status_descricao\": \"Férias motivo status descrição 1\",\r\n                \"ferias_status_id\": \"1\"\r\n            }\r\n        },\r\n        {\r\n            \"FERIAS\": {\r\n                \"ferias_inicio\": \"2023-10-02 00:00:00\",\r\n                \"ferias_fim\": \"2023-10-11 00:00:00\",\r\n                \"ferias_ano\": \"2023\",\r\n                \"pessoa_id\": \"1\"\r\n            },\r\n            \"FERIAS_MOTIVO_STATUS\": {\r\n                \"ferias_status_id\": \"1\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarFerias",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarFerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CadastrarAfastamento",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "uid",
+										"value": "289570",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"CADASTRAR\":[\r\n        {\r\n            \"AFASTAMENTO\": {\r\n                \"afastamento_descricao\": \"Afastamento descrição 1\",\r\n                \"afastamento_inicio\": \"2023-11-01 00:00:00\",\r\n                \"afastamento_fim\": \"2023-11-05 00:00:00\",\r\n                \"afastamento_tipo_id\": \"1\",\r\n                \"cid_id\": \"1\",\r\n                \"pessoa_id\": \"1\",\r\n                \"cid_sub_id\": \"1\"\r\n            },\r\n            \"AFASTAMENTO_MOTIVO_STATUS\": {\r\n                \"afastamento_motivo_status_descricao\": \"Afastamento motivo status descrição 1\",\r\n                \"afastamento_status_id\": \"1\"\r\n            }\r\n        },\r\n        {\r\n            \"AFASTAMENTO\": {\r\n                \"afastamento_inicio\": \"2023-09-10 00:00:00\",\r\n                \"afastamento_tipo_id\": \"2\",\r\n                \"pessoa_id\": \"2\"\r\n            },\r\n            \"AFASTAMENTO_MOTIVO_STATUS\": {\r\n                \"afastamento_status_id\": \"2\"\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL_BASE}}/CadastrarAfastamento",
+									"host": [
+										"{{URL_BASE}}"
+									],
+									"path": [
+										"CadastrarAfastamento"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"USUARIO\": \"76991938149\",\r\n    \"SENHA\": \"EpEt072408&@\",\r\n    \"SAPIENS\": \"SAPIENS\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE}}/login",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "uid",
+						"value": "289570",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL_BASE}}/logout",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "uid",
+						"value": "289570",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL_BASE}}/logout",
+					"host": [
+						"{{URL_BASE}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL_BASE",
+			"value": "http://172.17.24.210:8102"
+		},
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjI4OTU3MCwiZXhwIjoxNjcyMjY2MDQ0fQ.85FrLG8uRCZ_bE7HqokUaXBq9FEOSQMKsOgsXK-kN84",
+			"type": "string"
+		}
+	]
+}

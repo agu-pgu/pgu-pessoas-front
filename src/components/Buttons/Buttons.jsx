@@ -3,11 +3,11 @@ import { FaUser, FaAddressCard, FaCog, FaChartBar, FaClipboardList } from 'react
 import './Buttons.scss';
 
 const buttons = [
-  { icon: <FaUser />, label: 'Meus dados', content: 'Conteúdo Meus Dados' },
-  { icon: <FaAddressCard />, label: 'Cadastro', content: 'Conteúdo Cadastro' },
-  { icon: <FaCog />, label: 'Administração', content: 'Conteúdo Administração' },
-  { icon: <FaChartBar />, label: 'Relatórios', content: 'Conteúdo Relatórios' },
-  { icon: <FaClipboardList />, label: 'Auditoria', content: 'Conteúdo Auditoria' },
+  { icon: <FaUser />, label: 'Meus dados', content: 'MyData' },
+  { icon: <FaAddressCard />, label: 'Cadastro', content: 'Register' },
+  { icon: <FaCog />, label: 'Administração', content: 'Administration' },
+  { icon: <FaChartBar />, label: 'Relatórios', content: 'Reports' },
+  { icon: <FaClipboardList />, label: 'Auditoria', content: 'Audit' },
 ];
 
 const Buttons = ({ setContent }) => {
@@ -26,7 +26,6 @@ const Buttons = ({ setContent }) => {
             className={`button ${index === activeButton ? 'active' : ''}`}
             key={index}
             onClick={() => handleButtonClick(index)}
-
           >
             <div className="button-inner">
               {button.icon}
