@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import Person from "./Person/Person";
 
 export default function Register() {
   return (
-    <div>teste</div>
-  )
+    <div>
+      {/* <Person /> */}
+    </div>
+  );
 }
