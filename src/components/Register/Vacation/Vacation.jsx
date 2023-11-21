@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Vacation.scss";
+import {
+  createVacation,
+  getFeriasStatus,
+  getPessoa,
+} from "../../../services/CallsPerson/callsVacation";
+import {
+  CreateError,
+  ErrorAtGetData,
+  createPersonSucess,
+} from "../../../assets/js/Alerts";
 
 export default function Vacation() {
   const [feriasInicio, setFeriasInicio] = useState("");
   const [feriasFim, setFeriasFim] = useState("");
   const [feriasAno, setFeriasAno] = useState("");
-  const [pessoa, setPessoa] = useState(""); // pavimentar
+  const [pessoa, setPessoa] = useState("");
+  const [options, setOptions] = useState([]);
   const [feriasMotivoStatusDescricao, setFeriasMotivoStatusDescricao] =
     useState("");
   const [feriasStatus, setFeriasStatus] = useState(""); // pavimentar
+  const [optionsStatus, setOptionsStatus] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmitToCreateVacation = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -29,15 +41,77 @@ export default function Vacation() {
         },
       ],
     };
-
-    console.log(data);
+    try {
+      const response = await createVacation(data);
+      if (response.data.SUCESSO == true) {
+        createPersonSucess();
+      }
+    } catch (error) {
+      CreateError();
+    }
   };
+
+  useEffect(() => {
+    const getPavimentarPessoa = async () => {
+      try {
+        const response = await getPessoa();
+        const pessoaData = response.data.RETORNO[0].RETORNO;
+        const options = pessoaData.map((item) => (
+          <option key={item.PESSOA.pessoa_id} value={item.PESSOA.pessoa_id}>
+            {item.PESSOA.pessoa_nome}
+          </option>
+        )); // mapeando para obter os valores de genero_id e genero_nome
+        options.unshift(
+          <option key="0" value="">
+            Selecione
+          </option>
+        ); // adicionando a opção "Selecione" no início do array de options para o select com um valor nulo
+        setOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+      }
+    };
+    getPavimentarPessoa();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarFeriasStatus = async () => {
+      try {
+        const response = await getFeriasStatus();
+        const FeriasStatusData = response.data.RETORNO[0].RETORNO;
+        const optionsStatus = FeriasStatusData.map((item) => (
+          <option
+            key={item.FERIAS_STATUS.ferias_status_id}
+            value={item.FERIAS_STATUS.ferias_status_id}
+          >
+            {item.FERIAS_STATUS.ferias_status_nome}
+          </option>
+        )); // mapeando para obter os valores de genero_id e genero_nome
+        optionsStatus.unshift(
+          <option key="0" value="">
+            Selecione
+          </option>
+        ); // adicionando a opção "Selecione" no início do array de options para o select com um valor nulo
+        setOptionsStatus(optionsStatus);
+      } catch (error) {
+        ErrorAtGetData();
+      }
+    };
+    getPavimentarFeriasStatus();
+
+    return () => {};
+  }, []);
 
   return (
     <div>
       <div className="formulario-container">
         <div className="form-scroll">
-          <form className="formulario-container" onSubmit={handleSubmit}>
+          <form
+            className="formulario-container"
+            onSubmit={handleSubmitToCreateVacation}
+          >
             <label className="form-label">*Ferias Início:</label>
             <input
               className="form-input"
@@ -69,15 +143,16 @@ export default function Vacation() {
               required
             />
             <label className="form-label">*Pessoa:</label>
-            <input
+            <select
               className="form-input"
-              type="text"
               name="pessoa"
               id="pessoa"
               value={pessoa}
               onChange={(event) => setPessoa(event.target.value)}
               required
-            />
+            >
+              {options}
+            </select>
             <label className="form-label">
               *Ferias - Motivo - Descrição - Status:
             </label>
@@ -93,15 +168,16 @@ export default function Vacation() {
               required
             />
             <label className="form-label">*Ferias - Status:</label>
-            <input
+            <select
               className="form-input"
-              type="text"
               name="feriasStatus"
               id="feriasStatus"
               value={feriasStatus}
               onChange={(event) => setFeriasStatus(event.target.value)}
               required
-            />
+            >
+              {optionsStatus}
+            </select>
             <button className="form-button-submit" type="submit">
               Enviar
             </button>
