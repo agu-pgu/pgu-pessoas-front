@@ -5,7 +5,7 @@ import {
   getGenero,
   getMunicipio,
   getRegiao,
-} from "../../../services/callsRegister";
+} from "../../../services/CallsPerson/callsRegister";
 import {
   CreateError,
   ErrorAtGetData,
