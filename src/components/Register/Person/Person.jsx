@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./Person.scss";
-import { getGenero, getRegiao } from "../../../services/calls";
-import { ErrorAtGetData } from "../../../assets/js/Alerts";
+import {
+  createPessoa,
+  getGenero,
+  getMunicipio,
+  getRegiao,
+} from "../../../services/callsRegister";
+import {
+  CreateError,
+  ErrorAtGetData,
+  createPersonSucess,
+} from "../../../assets/js/Alerts";
 import { AiOutlineSearch } from "react-icons/ai";
 
 export default function Person() {
@@ -14,13 +23,14 @@ export default function Person() {
   const [options, setOptions] = useState([]);
   const [regiao, setRegiao] = useState("");
   const [uf, setUf] = useState("");
-  const [ufData, setUfData] = useState([])
+  const [ufData, setUfData] = useState([]);
   const [ufOptionsReady, setUfOptionsReady] = useState(false);
-  const [municipio, setMunicipio] = useState(""); //pavimentar
+  const [municipio, setMunicipio] = useState("");
+  const [municipioData, setMunicipioData] = useState([]);
+  const [municipioOptionsReady, setMunicipioOptionsReady] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmitForCreatePerson = async (e) => {
     e.preventDefault();
-
     const data = {
       CADASTRAR: [
         {
@@ -32,13 +42,18 @@ export default function Person() {
             pessoa_siape: siape,
             genero_id: genero,
             municipio_id: municipio,
-            // municipio_id: municipio, // lembrar de colocar o municipio_id dependendo de uf_id
           },
         },
       ],
     };
-
-    console.log(data);
+    try {
+      const response = await createPessoa(data);
+      if (response.data.SUCESSO == true) {
+        createPersonSucess();
+      }
+    } catch (error) {
+      CreateError();
+    }
   };
 
   const handleSubmitRegiao = async (e) => {
@@ -48,6 +63,18 @@ export default function Person() {
       const ufData = response.data.RETORNO[0].RETORNO;
       setUfData(ufData);
       setUfOptionsReady(true);
+    } catch (error) {
+      ErrorAtGetData();
+    }
+  };
+
+  const handleSubmitUf = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await getMunicipio(uf);
+      const municipioData = response.data.RETORNO[0].RETORNO;
+      setMunicipioData(municipioData);
+      setMunicipioOptionsReady(true);
     } catch (error) {
       ErrorAtGetData();
     }
@@ -82,7 +109,10 @@ export default function Person() {
     <div>
       <div className="formulario-container">
         <div className="form-scroll">
-          <form className="formulario-container" onSubmit={handleSubmit}>
+          <form
+            className="formulario-container"
+            onSubmit={handleSubmitForCreatePerson}
+          >
             <label className="form-label">*Nome:</label>
             <input
               className="form-input"
@@ -106,6 +136,7 @@ export default function Person() {
             <label className="form-label">CPF:</label>
             <input
               className="form-input"
+              placeholder="000.000.000-00"
               type="text"
               name="pessoa_cpf"
               id="pessoa_cpf"
@@ -116,6 +147,7 @@ export default function Person() {
             <label className="form-label">*Email:</label>
             <input
               className="form-input"
+              placeholder="nome@agu.gov.br"
               type="email"
               name="pessoa_email"
               id="pessoa_email"
@@ -127,6 +159,7 @@ export default function Person() {
             <label className="form-label">*Siape:</label>
             <input
               className="form-input"
+              placeholder="000000"
               type="text"
               name="pessoa_siape"
               id="pessoa_siape"
@@ -194,23 +227,39 @@ export default function Person() {
                   </option>
                 )}
               </select>
-              <button className="form-button-search-regiao">
+              <button
+                onClick={handleSubmitUf}
+                className="form-button-search-regiao"
+              >
                 <AiOutlineSearch className="form-button-search-regiao-icon" />
               </button>
             </div>
-            <label className="form-label">Municipio:</label>
+            <label className="form-label">*Municipio:</label>
             <select
               className="form-input"
               name="municipio_id"
               id="municipio_id"
               value={municipio}
               onChange={(event) => setMunicipio(event.target.value)}
+              disabled={!municipioOptionsReady}
             >
-              <option value="0">Selecione</option>
-              <option value="1">São Paulo</option>
-              <option value="2">Rio de Janeiro</option>
-              <option value="3">Belo Horizonte</option>
-              <option value="4">Salvador</option>
+              <option value="" disabled={true}>
+                Selecione
+              </option>
+              {municipioOptionsReady ? (
+                municipioData.map((item) => (
+                  <option
+                    key={item.MUNICIPIO.municipio_id}
+                    value={item.MUNICIPIO.municipio_id}
+                  >
+                    {item.MUNICIPIO.municipio_nome}
+                  </option>
+                ))
+              ) : (
+                <option value="" disabled={true}>
+                  Selecione uma UF primeiro
+                </option>
+              )}
             </select>
             <button className="form-button-submit" type="submit">
               Enviar

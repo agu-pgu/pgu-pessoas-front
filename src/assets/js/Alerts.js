@@ -29,3 +29,22 @@ export const loginUserError = () => {
       timer: 8000,
     });
   };
+
+  export const CreateError = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Falha no Cadastro!",
+      showConfirmButton: false,
+      timer: 8000,
+    });
+  };
+  export const createPersonSucess = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Pessoa cadastrada com sucesso!",
+      showConfirmButton: false,
+      timer: 8000,
+    });
+  };
