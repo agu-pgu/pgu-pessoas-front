@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Removal.scss";
 
 export default function Removal() {
   const [afastamentoDescricao, setAfastamentoDescricao] = useState("");
