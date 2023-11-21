@@ -1,4 +1,4 @@
-
+@import "../../global.scss";
 
 .login-container {
     display: flex;
@@ -41,16 +41,16 @@
       padding: 10px;
       margin-top: 5px;
       margin-bottom: 10px;
-      border: 0.5px solid #0199CB;
+      border: 0.5px solid $primary-collor;
       border-radius: 5px;
 
       &:focus {
-        border: 1px solid #0199CB; // Aumentei para 1px para melhor visibilidade
+        border: 1px solid $primary-collor; // Aumentei para 1px para melhor visibilidade
       }
     }
   
     input::placeholder {
-      color: #0199CB;
+      color: $primary-collor;
     }
   
     .checkboxes {
@@ -60,7 +60,7 @@
   
       input[type="checkbox"] {
         appearance: none;
-        border: 2px solid #0199CB;
+        border: 2px solid $primary-collor;
         border-radius: 50%;
         width: 20px;
         height: 20px;
@@ -69,8 +69,8 @@
         position: relative;
   
         &:checked {
-          background-color: #0199CB;
-          border-color: #0199CB;
+          background-color: $primary-collor;
+          border-color: $primary-collor;
         }
   
         &:before {
@@ -98,17 +98,20 @@
     }
   
     input::placeholder {
-      color: #0199CB;
+      color: $primary-collor;
     }
   
     button {
       padding: 15px;
       font-size: 16px;
-      background-color: #0199CB;
+      background-color: $primary-collor;
       color: #fff;
       border: none;
       border-radius: 15px;
       cursor: pointer;
+      &:hover {
+        background-color: $primary-collor-hover;
+      }
     }
   
     .login-button-submit {

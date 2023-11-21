@@ -7,20 +7,26 @@ export default function Person() {
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [siape, setSiape] = useState("");
-  const [genero, setGenero] = useState("");
-  const [municipio, setMunicipio] = useState("");
+  const [genero, setGenero] = useState(""); //pavimentar
+  const [municipio, setMunicipio] = useState(""); //pavimentar
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
-      nome: nome,
-      dataNascimento: dataNascimento,
-      cpf: cpf,
-      email: email,
-      siape: siape,
-      genero: genero,
-      municipio: municipio,
+      CADASTRAR: [
+        {
+          PESSOA: {
+            pessoa_nome: nome,
+            pessoa_data_nascimento: dataNascimento,
+            pessoa_cpf: cpf,
+            pessoa_email: email,
+            pessoa_siape: siape,
+            genero_id: genero,
+            municipio_id: municipio,
+          },
+        },
+      ],
     };
 
     console.log(data);
@@ -104,7 +110,9 @@ export default function Person() {
               <option value="3">Belo Horizonte</option>
               <option value="4">Salvador</option>
             </select>
-            <button className="form-button-submit" type="submit">Enviar</button>
+            <button className="form-button-submit" type="submit">
+              Enviar
+            </button>
           </form>
         </div>
       </div>
