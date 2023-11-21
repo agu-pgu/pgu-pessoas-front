@@ -8,6 +8,7 @@ export default function Person() {
   const [email, setEmail] = useState("");
   const [siape, setSiape] = useState("");
   const [genero, setGenero] = useState(""); //pavimentar
+  // const [uf, setUf] = useState(""); //pavimentar
   const [municipio, setMunicipio] = useState(""); //pavimentar
 
   const handleSubmit = (e) => {
@@ -24,6 +25,7 @@ export default function Person() {
             pessoa_siape: siape,
             genero_id: genero,
             municipio_id: municipio,
+            // municipio_id: municipio, // lembrar de colocar o municipio_id dependendo de uf_id
           },
         },
       ],
