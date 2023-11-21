@@ -19,3 +19,13 @@ export const loginUserError = () => {
       timer: 8000,
     });
   };
+
+  export const ErrorAtGetData = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Falha ao buscar dados para seleção!",
+      showConfirmButton: false,
+      timer: 8000,
+    });
+  };

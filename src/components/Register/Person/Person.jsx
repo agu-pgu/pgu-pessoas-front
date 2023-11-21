@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Person.scss";
+import { getGenero } from "../../../services/calls";
+import { ErrorAtGetData } from "../../../assets/js/Alerts";
 
 export default function Person() {
   const [nome, setNome] = useState("");
@@ -7,7 +9,8 @@ export default function Person() {
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [siape, setSiape] = useState("");
-  const [genero, setGenero] = useState(""); //pavimentar
+  const [genero, setGenero] = useState("");
+  const [options, setOptions] = useState([]);
   // const [uf, setUf] = useState(""); //pavimentar
   const [municipio, setMunicipio] = useState(""); //pavimentar
 
@@ -34,6 +37,31 @@ export default function Person() {
     console.log(data);
   };
 
+  useEffect(() => {
+    const getPavimentarGenero = async () => {
+      try {
+        const response = await getGenero();
+        const generoData = response.data.RETORNO[0].RETORNO;
+        const options = generoData.map((item) => (
+          <option key={item.GENERO.genero_id} value={item.GENERO.genero_id}>
+            {item.GENERO.genero_nome}
+          </option>
+        )); // mapeando para obter os valores de genero_id e genero_nome
+        options.unshift(
+          <option key="0" value="">
+            Selecione
+          </option>
+        ); // adicionando a opção "Selecione" no início do array de options para o select com um valor nulo
+        setOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+      }
+    };
+    getPavimentarGenero();
+
+    return () => {};
+  }, []);
+
   return (
     <div>
       <div className="formulario-container">
@@ -47,6 +75,7 @@ export default function Person() {
               id="pessoa_nome"
               value={nome}
               onChange={(event) => setNome(event.target.value)}
+              maxLength={255}
               required
             />
             <label className="form-label">Data de nascimento:</label>
@@ -66,6 +95,7 @@ export default function Person() {
               id="pessoa_cpf"
               value={cpf}
               onChange={(event) => setCpf(event.target.value)}
+              maxLength={14}
             />
             <label className="form-label">*Email:</label>
             <input
@@ -75,6 +105,7 @@ export default function Person() {
               id="pessoa_email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              maxLength={255}
               required
             />
             <label className="form-label">*Siape:</label>
@@ -85,6 +116,7 @@ export default function Person() {
               id="pessoa_siape"
               value={siape}
               onChange={(event) => setSiape(event.target.value)}
+              maxLength={45}
             />
             <label className="form-label">Gênero:</label>
             <select
@@ -94,9 +126,7 @@ export default function Person() {
               value={genero}
               onChange={(event) => setGenero(event.target.value)}
             >
-              <option value="0">Selecione</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
+              {options}
             </select>
             <label className="form-label">Município:</label>
             <select
