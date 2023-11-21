@@ -13,8 +13,9 @@ export const loginUser = async (username, password, sapiens) => {
       },
     });
     localStorage.setItem("token", response.data.TOKEN);
-    localStorage.setItem("uid", response.data.SPLIT_PROFILE.ID);
+    localStorage.setItem("uid", response.data.PROFILE_ID);
     if (response.data.SUCESSO === true) {
+      console.log(response)
       return 200;
     } else {
       return 401;
