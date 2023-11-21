@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Vacation.scss";
 
 export default function Vacation() {
   const [feriasInicio, setFeriasInicio] = useState("");
