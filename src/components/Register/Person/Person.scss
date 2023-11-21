@@ -12,10 +12,32 @@
 
   .form-label {
     display: block;
-    margin-bottom: 5px;
     margin-bottom: 10px;
     font-weight: 600;
     color: $primary-collor;
+  }
+
+  .form-div-search-regiao {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+
+    .form-button-search-regiao {
+      cursor: pointer;
+      margin-left: 1px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      background-color: $primary-collor;
+      &:hover {
+        background-color: $primary-collor-hover;
+      }
+      .form-button-search-regiao-icon {
+        font-size: 15px;
+      }
+    }
   }
 
   .form-input {

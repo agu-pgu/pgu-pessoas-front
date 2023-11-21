@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Person.scss";
-import { getGenero } from "../../../services/calls";
+import { getGenero, getRegiao } from "../../../services/calls";
 import { ErrorAtGetData } from "../../../assets/js/Alerts";
+import { AiOutlineSearch } from "react-icons/ai";
 
 export default function Person() {
   const [nome, setNome] = useState("");
@@ -11,7 +12,10 @@ export default function Person() {
   const [siape, setSiape] = useState("");
   const [genero, setGenero] = useState("");
   const [options, setOptions] = useState([]);
-  // const [uf, setUf] = useState(""); //pavimentar
+  const [regiao, setRegiao] = useState("");
+  const [uf, setUf] = useState("");
+  const [ufData, setUfData] = useState([])
+  const [ufOptionsReady, setUfOptionsReady] = useState(false);
   const [municipio, setMunicipio] = useState(""); //pavimentar
 
   const handleSubmit = (e) => {
@@ -35,6 +39,18 @@ export default function Person() {
     };
 
     console.log(data);
+  };
+
+  const handleSubmitRegiao = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await getRegiao(regiao);
+      const ufData = response.data.RETORNO[0].RETORNO;
+      setUfData(ufData);
+      setUfOptionsReady(true);
+    } catch (error) {
+      ErrorAtGetData();
+    }
   };
 
   useEffect(() => {
@@ -128,7 +144,61 @@ export default function Person() {
             >
               {options}
             </select>
-            <label className="form-label">Município:</label>
+            <label className="form-label">Região:</label>
+            <div className="form-div-search-regiao">
+              <select
+                className="form-input"
+                name="regiao"
+                id="regiao"
+                value={regiao}
+                onChange={(event) => setRegiao(event.target.value)}
+              >
+                <option value="">Selecione</option>
+                <option value="Regiao Norte">Região Norte</option>
+                <option value="Regiao Nordeste">Região Nordeste</option>
+                <option value="Regiao Centro-Oeste">Região Centro-Oeste</option>
+                <option value="Regiao Sul">Região Sul</option>
+                <option value="Regiao Sudeste">Região Sudeste</option>
+              </select>
+              <button
+                className="form-button-search-regiao"
+                onClick={handleSubmitRegiao}
+              >
+                <AiOutlineSearch className="form-button-search-regiao-icon" />
+              </button>
+            </div>
+            <label className="form-label">UF:</label>
+            <div className="form-div-search-regiao">
+              <select
+                className="form-input"
+                name="uf"
+                id="uf"
+                value={uf}
+                onChange={(event) => setUf(event.target.value)}
+                disabled={!ufOptionsReady} // Desabilita o select se os dados da UF não estiverem prontos
+              >
+                <option value="" disabled={true}>
+                  Selecione
+                </option>
+                {ufOptionsReady ? (
+                  // Mapeia os dados da UF para as opções do select quando os dados estão prontos
+                  ufData.map((item) => (
+                    <option key={item.UF.uf_id} value={item.UF.uf_id}>
+                      {item.UF.uf_nome}
+                    </option>
+                  ))
+                ) : (
+                  // Adiciona uma opção de carregamento enquanto os dados da UF não estão prontos
+                  <option value="" disabled={true}>
+                    Carregando UF...
+                  </option>
+                )}
+              </select>
+              <button className="form-button-search-regiao">
+                <AiOutlineSearch className="form-button-search-regiao-icon" />
+              </button>
+            </div>
+            <label className="form-label">Municipio:</label>
             <select
               className="form-input"
               name="municipio_id"
