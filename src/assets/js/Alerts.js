@@ -43,7 +43,7 @@ export const loginUserError = () => {
     Swal.fire({
       position: "top-end",
       icon: "success",
-      title: "Pessoa cadastrada com sucesso!",
+      title: "Cadastro bem sucedido!",
       showConfirmButton: false,
       timer: 8000,
     });
