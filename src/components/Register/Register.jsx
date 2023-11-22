@@ -13,18 +13,41 @@ export default function Register() {
   };
 
   return (
-    <div>
-      <div>
-        <button className="button-register" onClick={() => handleButtonClick("Person")}>Pessoa</button>
-        <button className="button-register" onClick={() => handleButtonClick("Career")}>Carreira</button>
-        <button className="button-register" onClick={() => handleButtonClick("Vacation")}>Férias</button>
-        <button className="button-register" onClick={() => handleButtonClick("Removal")}>Afastamento</button>
+    <>
+      <div className="register-container">
+        <div className="button-container-register">
+          <button
+            className="button-register"
+            onClick={() => handleButtonClick("Person")}
+          >
+            Pessoa
+          </button>
+          <button
+            className="button-register"
+            onClick={() => handleButtonClick("Career")}
+          >
+            Carreira
+          </button>
+          <button
+            className="button-register"
+            onClick={() => handleButtonClick("Vacation")}
+          >
+            Férias
+          </button>
+          <button
+            className="button-register"
+            onClick={() => handleButtonClick("Removal")}
+          >
+            Afastamento
+          </button>
+        </div>
       </div>
-
-      {currentPage === "Person" && <Person />}
-      {currentPage === "Career" && <Career/>}
-      {currentPage === "Vacation" && <Vacation/>}
-      {currentPage === "Removal" && <Removal/>}
-    </div>
+      <div className="content-container-register">
+        {currentPage === "Person" && <Person />}
+        {currentPage === "Career" && <Career />}
+        {currentPage === "Vacation" && <Vacation />}
+        {currentPage === "Removal" && <Removal />}
+      </div>
+    </>
   );
 }
