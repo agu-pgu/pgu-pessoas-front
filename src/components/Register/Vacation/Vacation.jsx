@@ -140,6 +140,7 @@ export default function Vacation() {
               id="feriasAno"
               value={feriasAno}
               onChange={(event) => setFeriasAno(event.target.value)}
+              maxLength={4}
               required
             />
             <label className="form-label">*Pessoa:</label>
@@ -154,7 +155,7 @@ export default function Vacation() {
               {options}
             </select>
             <label className="form-label">
-              *Ferias - Motivo - Descrição - Status:
+              *Ferias - Descrição:
             </label>
             <input
               className="form-input"
@@ -165,6 +166,7 @@ export default function Vacation() {
               onChange={(event) =>
                 setFeriasMotivoStatusDescricao(event.target.value)
               }
+              maxLength={255}
               required
             />
             <label className="form-label">*Ferias - Status:</label>
