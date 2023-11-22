@@ -156,7 +156,7 @@ export default function Person() {
               maxLength={255}
               required
             />
-            <label className="form-label">*Siape:</label>
+            <label className="form-label">Siape:</label>
             <input
               className="form-input"
               placeholder="000000"
