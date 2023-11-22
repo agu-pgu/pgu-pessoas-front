@@ -55,6 +55,7 @@ const FormLogin = () => {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="000.000.000-00"
               name="username"
+              maxLength={11}
             />
 
             <label htmlFor="password">Senha:</label>
