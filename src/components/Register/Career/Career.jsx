@@ -57,7 +57,7 @@ export default function Career() {
     useState("");
   const [carreiraStatus, setCarreiraStatus] = useState("");
   const [optionsCarreiraStatus, setOptionsCarreiraStatus] = useState([]);
-  const [regimeTrabalhoDescricao, setRegimeTrabalhoDescricao] = useState("");
+  // const [regimeTrabalhoDescricao, setRegimeTrabalhoDescricao] = useState("");
   const [regimeTrabalhoTipo, setRegimeTrabalhoTipo] = useState("");
   const [optionsRegimeTrabalhoTipo, setOptionsRegimeTrabalhoTipo] = useState(
     []
@@ -100,7 +100,7 @@ export default function Career() {
             carreira_status_id: carreiraStatus,
           },
           REGIME_TRABALHO: {
-            regime_trabalho_descricao: regimeTrabalhoDescricao,
+            // regime_trabalho_descricao: regimeTrabalhoDescricao,
             regime_trabalho_tipo_id: regimeTrabalhoTipo,
             regime_trabalho_modalidade_id: regimeTrabalhoModalidade,
           },
@@ -475,7 +475,10 @@ export default function Career() {
     <div>
       <div className="formulario-container">
         <div className="form-scroll">
-          <form className="formulario-container" onSubmit={handleSubmitCreateCareer}>
+          <form
+            className="formulario-container"
+            onSubmit={handleSubmitCreateCareer}
+          >
             <label className="form-label">*Pessoa:</label>
             <select
               className="form-input"
@@ -558,19 +561,20 @@ export default function Career() {
                 >
                   {optionsConcursoCota}
                 </select>
+                <label className="form-label">Concurso:</label>
+                <select
+                  className="form-input"
+                  name="concurso"
+                  id="concurso"
+                  value={concurso}
+                  onChange={(event) => setConcurso(event.target.value)}
+                  required
+                >
+                  {optionsConcurso}
+                </select>
               </>
             )}
-            <label className="form-label">Concurso:</label>
-            <select
-              className="form-input"
-              name="concurso"
-              id="concurso"
-              value={concurso}
-              onChange={(event) => setConcurso(event.target.value)}
-              required
-            >
-              {optionsConcurso}
-            </select>
+
             <label className="form-label">*Carreira Tipo:</label>
             <select
               className="form-input"
@@ -721,7 +725,7 @@ export default function Career() {
             >
               {optionsCarreiraStatus}
             </select>
-            <label className="form-label">
+            {/* <label className="form-label">
               *Regime de trabalho - Descrição:
             </label>
             <input
@@ -734,7 +738,7 @@ export default function Career() {
                 setRegimeTrabalhoDescricao(event.target.value)
               }
               required
-            />
+            /> */}
             <label className="form-label">*Regime de trabalho - Tipo:</label>
             <select
               className="form-input"
