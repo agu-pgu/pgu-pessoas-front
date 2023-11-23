@@ -17,7 +17,7 @@ import Vacation from "./Vacation/Vacation";
 import WorkRegime from "./WorkRegime/WorkRegime";
 
 export default function Administration() {
-  const [currentPage, setCurrentPage] = useState("Administration");
+  const [currentPage, setCurrentPage] = useState("Sector");
 
   const handleButtonClick = (page) => {
     setCurrentPage(page);
@@ -69,12 +69,12 @@ export default function Administration() {
           >
             Unidade
           </button>
-          <button
+          {/* <button
             className="button-administration"
             onClick={() => handleButtonClick("Relationship")}
           >
             Relação
-          </button>
+          </button> */}
           <button
             className="button-administration"
             onClick={() => handleButtonClick("CID")}
@@ -127,7 +127,7 @@ export default function Administration() {
         {currentPage === "Positions" && <Positions />}
         {currentPage === "Region" && <Region />}
         {currentPage === "Unit" && <Unit />}
-        {currentPage === "Relationship" && <Relationship />}
+        {/* {currentPage === "Relationship" && <Relationship />} */}
         {currentPage === "CID" && <CID />}
         {currentPage === "Ticket" && <Ticket />}
         {currentPage === "Contest" && <Contest />}
