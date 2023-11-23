@@ -33,7 +33,7 @@ export default function Settings() {
             className="button-settings"
             onClick={() => handleButtonClick("Permission")}
           >
-            Permissão
+            Permissões
           </button>
           <button
             className="button-settings"
