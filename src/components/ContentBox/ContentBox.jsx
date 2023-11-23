@@ -5,6 +5,7 @@ import MyData from "../MyData/MyData";
 import Reports from "../Reports/Reports";
 import Administration from "../Administration/Administration";
 import Audit from "../Audit/Audit";
+import Settings from "../SettingsComponent/Settings";
 
 export default function ContentBox({ content }) {
   let component = null;
@@ -19,13 +20,17 @@ export default function ContentBox({ content }) {
     component = <Reports />;
   } else if (content == "Audit") {
     component = <Audit />;
+  } else if (content == "Settings") {
+    component = <Settings />;
   }
 
   return (
     <div className="content-box">
       <div
         className={
-          content === "Seja bem vindo!!" || content === "" ? "div-contentBox" : ""
+          content === "Seja bem vindo!!" || content === ""
+            ? "div-contentBox"
+            : ""
         }
       >
         {content ? component : <p className="p-contentBox">Seja bem vindo!</p>}
