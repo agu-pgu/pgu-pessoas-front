@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CreateError, createPersonSucess } from "../../../assets/js/Alerts";
 import { createUnit } from "../../../services/callsAdministration/callsUnit";
+import "./Unit.scss";
 
 export default function Unit() {
   const [unidade, setUnidade] = useState("");
