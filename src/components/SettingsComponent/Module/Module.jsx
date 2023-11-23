@@ -1,7 +1,57 @@
-import React from 'react'
+import React, { useState } from "react";
+import { CreateError, createPersonSucess } from "../../../assets/js/Alerts";
+import { createModule } from "../../../services/callsSettings/callsModule";
 
 export default function Module() {
+  const [modulo, setModulo] = useState("");
+
+  const handleSubmitForCreateModule = async (e) => {
+    e.preventDefault();
+    const data = {
+      CADASTRAR: [
+        {
+          MODULO: {
+            modulo_nome: modulo,
+          },
+        },
+      ],
+    };
+
+    try {
+      const response = await createModule(data);
+      if (response.data.SUCESSO == true) {
+        createPersonSucess();
+      }
+    } catch (error) {
+      CreateError();
+    }
+  };
+
   return (
-    <div>Module</div>
-  )
+    <div>
+      <div className="formulario-container">
+        <div className="form-scroll">
+          <form
+            className="formulario-container"
+            onSubmit={handleSubmitForCreateModule}
+          >
+            <label className="form-label">*Módulo:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="modulo"
+              id="modulo"
+              value={modulo}
+              onChange={(event) => setModulo(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <button className="form-button-submit" type="submit">
+              Enviar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
