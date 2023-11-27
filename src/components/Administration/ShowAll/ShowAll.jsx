@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./ShowAll.scss";
 import ShowSector from "./ShowSector/ShowSector";
-import { getSetor } from "../../../services/callsAdministration/callsShowAll";
+import {
+  getCoordenacao,
+  getSetor,
+} from "../../../services/callsAdministration/callsShowAll";
+import ShowCoordination from "./ShowCoordination/ShowCoordination";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
   const [sectorList, setSectorList] = useState([]);
+  const [coordenacaoList, setCoordenacaoList] = useState([]);
 
   const lists = {
     Setor: sectorList,
-    Coordenacao: "",
+    Coordenacao: coordenacaoList,
     Funcao: "",
     Nucleo: "",
     Cargos: "",
@@ -46,6 +51,28 @@ export default function ShowAll() {
     };
 
     getPavimentaSetor();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentaCoordenacao = async () => {
+      try {
+        const response = await getCoordenacao();
+        const coordenacaoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedCoordenacaoData = coordenacaoData.map((item) => ({
+          sigla: item.COORDENACAO.coordenacao_sigla || "Sigla não disponível",
+          nome: item.COORDENACAO.coordenacao_nome || "Nome não disponível",
+          descricao:
+            item.COORDENACAO.coordenacao_descricao ||
+            "Descrição não disponível",
+        }));
+        setCoordenacaoList(formattedCoordenacaoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaCoordenacao();
   }, []);
 
   return (
@@ -145,6 +172,9 @@ export default function ShowAll() {
         </h2>
         {selectedList === "Setor" && (
           <ShowSector peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Coordenacao" && (
+          <ShowCoordination peopleList={lists[selectedList]} />
         )}
         {/* {selectedList === "Carreira" && (
           <ShowCareer peopleList={lists[selectedList]} />
