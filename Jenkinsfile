@@ -26,8 +26,8 @@ pipeline{
         nodejs 'node'
         }
     environment {
-        //aguEmails = "ramon.leal@agu.gov.br,danilo.nferreira@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
-        aguEmails = "ramon.umleal+jenkins@gmail.com"//
+        aguEmails = "ramon.leal@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
+        //aguEmails = "ramon.umleal+jenkins@gmail.com"//
         SISTEMA = "pgu-pessoas-front"//
         APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-pgu-pessoas-front-DEVOP-210/dist/*"//
         APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-pgu-pessoas-front-DEVOP-210/dist/*"//
