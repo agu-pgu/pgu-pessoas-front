@@ -3,19 +3,22 @@ import "./ShowAll.scss";
 import ShowSector from "./ShowSector/ShowSector";
 import {
   getCoordenacao,
+  getFuncao,
   getSetor,
 } from "../../../services/callsAdministration/callsShowAll";
 import ShowCoordination from "./ShowCoordination/ShowCoordination";
+import ShowFunction from "./ShowFunction/ShowFunction";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
   const [sectorList, setSectorList] = useState([]);
   const [coordenacaoList, setCoordenacaoList] = useState([]);
+  const [functionList, setFunctionList] = useState([]);
 
   const lists = {
     Setor: sectorList,
     Coordenacao: coordenacaoList,
-    Funcao: "",
+    Funcao: functionList,
     Nucleo: "",
     Cargos: "",
     Regiao: "",
@@ -73,6 +76,25 @@ export default function ShowAll() {
     };
 
     getPavimentaCoordenacao();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentaFuncao = async () => {
+      try {
+        const response = await getFuncao();
+        const funcaoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedFuncaoData = funcaoData.map((item) => ({
+          nome: item.FUNCAO.funcao_nome || "Nome não disponível",
+          descricao: item.FUNCAO.funcao_descricao || "Descrição não disponível",
+        }));
+        setFunctionList(formattedFuncaoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaFuncao();
   }, []);
 
   return (
@@ -176,15 +198,9 @@ export default function ShowAll() {
         {selectedList === "Coordenacao" && (
           <ShowCoordination peopleList={lists[selectedList]} />
         )}
-        {/* {selectedList === "Carreira" && (
-          <ShowCareer peopleList={lists[selectedList]} />
+        {selectedList === "Funcao" && (
+          <ShowFunction peopleList={lists[selectedList]} />
         )}
-        {selectedList === "Ferias" && (
-          <ShowVacation peopleList={lists[selectedList]} />
-        )}
-        {selectedList === "Afastamento" && (
-          <ShowRemoval peopleList={lists[selectedList]} />
-        )} */}
       </div>
     </div>
   );
