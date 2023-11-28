@@ -70,7 +70,7 @@ export default function ShowVacation({ peopleList }) {
               </td>
               <td className="list-container-td">{ferias.feriasStatusNome}</td>
               <td className="list-container-td list-container-td-button">
-                <button onClick={() => handleDelete(person.id)}>
+                <button onClick={() => handleDelete(ferias.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
               </td>
