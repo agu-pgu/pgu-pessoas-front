@@ -4,6 +4,7 @@ import ShowSector from "./ShowSector/ShowSector";
 import {
   getCargo,
   getCid,
+  getConcurso,
   getCoordenacao,
   getFuncao,
   getIngresso,
@@ -20,6 +21,7 @@ import ShowRegion from "./ShowRegion/ShowRegion";
 import ShowUnit from "./ShowUnit/ShowUnit";
 import ShowCid from "./ShowCid/ShowCid";
 import ShowTicket from "./ShowTicket/ShowTicket";
+import ShowContest from "./ShowContest/ShowContest";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -32,6 +34,7 @@ export default function ShowAll() {
   const [unitList, setUnitList] = useState([]);
   const [cidList, setCidList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
+  const [contestList, setContestList] = useState([]);
 
   const lists = {
     Setor: sectorList,
@@ -43,7 +46,7 @@ export default function ShowAll() {
     Unidade: unitList,
     CID: cidList,
     Ingresso: ticketList,
-    Concurso: "",
+    Concurso: contestList,
     Carreira: "",
     Afastamento: "",
     Ferias: "",
@@ -243,6 +246,32 @@ export default function ShowAll() {
     getPavimentarIngresso();
   }, []);
 
+  useEffect(() => {
+    const getPavimentarConcurso = async () => {
+      try {
+        const response = await getConcurso();
+        const concursoData = response.data.RETORNO[0].RETORNO;
+        console.log(concursoData)
+
+        const formattedConcursoData = concursoData.map((item) => ({
+          nome: item.CONCURSO.concurso_nome || "Nome não disponível",
+          descricao:
+            item.CONCURSO.concurso_descricao || "Descrição não disponível",
+          ano:
+            item.CONCURSO.concurso_ano || "Ano não disponível",
+          edital:
+            item.CONCURSO.concurso_edital || "Edital não disponível",
+        }));
+
+        setContestList(formattedConcursoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarConcurso();
+  }, []);
+
   return (
     <div className="show-all-container">
       <div className="button-container-administration">
@@ -362,6 +391,9 @@ export default function ShowAll() {
         {selectedList === "CID" && <ShowCid peopleList={lists[selectedList]} />}
         {selectedList === "Ingresso" && (
           <ShowTicket peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Concurso" && (
+          <ShowContest peopleList={lists[selectedList]} />
         )}
       </div>
     </div>

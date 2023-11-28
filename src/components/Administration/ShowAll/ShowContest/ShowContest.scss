@@ -1,0 +1,32 @@
+// ShowPerson.scss
+@import "../../../../global.scss";
+
+.scroll-container-contest {
+  max-height: 200px; 
+  overflow-y: auto; 
+}
+
+.list-container-table-contest {
+  width: 100%;
+  border-collapse: collapse;
+
+  .list-container-th-contest {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: $primary-collor;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+  }
+
+  .list-container-td-contest {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #f0f8ff;
+    }
+  }
+}
