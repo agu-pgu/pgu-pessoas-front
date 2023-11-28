@@ -26,8 +26,11 @@ import ShowTicket from "./ShowTicket/ShowTicket";
 import ShowContest from "./ShowContest/ShowContest";
 import ShowWorkRegimeModality from "./ShowWorkRegimeModality/ShowWorkRegimeModality";
 import ShowWorkRegimeType from "./ShowWorkRegimeType/ShowWorkRegimeType";
+import { useAuth } from "../../../Auth/AuthContext.jsX";
+import { useNavigate } from "react-router-dom";
 
 export default function ShowAll() {
+  const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();
   const [selectedList, setSelectedList] = useState(null);
   const [sectorList, setSectorList] = useState([]);
   const [coordenacaoList, setCoordenacaoList] = useState([]);
@@ -41,6 +44,7 @@ export default function ShowAll() {
   const [contestList, setContestList] = useState([]);
   const [workRegimeModalityList, setWorkRegimeModalityList] = useState([]);
   const [workRegimeTypeList, setWorkRegimeTypeList] = useState([]);
+  const navigate = useNavigate();
 
   const lists = {
     Setor: sectorList,
@@ -76,11 +80,13 @@ export default function ShowAll() {
         setSectorList(formattedSetorData);
       } catch (error) {
         console.log(error);
+        setUnauthorized();
+        navigate("/");
       }
     };
 
     getPavimentaSetor();
-  }, []);
+  }, [setUnauthorized]);
 
   useEffect(() => {
     const getPavimentaCoordenacao = async () => {
@@ -324,8 +330,7 @@ export default function ShowAll() {
             descricao:
               item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_descricao ||
               "Descrição não disponível",
-              id:
-              item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id
+            id: item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id,
           })
         );
 

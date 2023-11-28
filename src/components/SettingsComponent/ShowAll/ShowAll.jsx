@@ -12,14 +12,18 @@ import ShowModule from "./ShowModule/ShowModule";
 import ShowPermission from "./ShowPermission/ShowPermission";
 import ShowUf from "./ShowUf/ShowUf";
 import ShowMunicipio from "./ShowMunicipio/ShowMunicipio";
+import { useAuth } from "../../../Auth/AuthContext.jsX";
+import { useNavigate } from "react-router-dom";
 
 export default function ShowAll() {
+  const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();
   const [selectedList, setSelectedList] = useState(null);
   const [genderList, setGenderList] = useState([]);
   const [moduleList, setModuleList] = useState([]);
   const [permissionList, setPermissionList] = useState([]);
   const [ufList, setUfList] = useState([]);
   const [municipioList, setMunicipioList] = useState([]);
+  const navigate = useNavigate();
 
   const lists = {
     Genero: genderList,
@@ -46,11 +50,13 @@ export default function ShowAll() {
         setGenderList(formattedGeneroData);
       } catch (error) {
         console.log(error);
+        setUnauthorized();
+        navigate("/");
       }
     };
 
     getPavimentarGenero();
-  }, []);
+  }, [setUnauthorized]);
 
   useEffect(() => {
     const getPavimentarModulo = async () => {
@@ -165,7 +171,7 @@ export default function ShowAll() {
 
         const formattedMunicipioData = municipioData.map((item) => ({
           nome: item.MUNICIPIO.municipio_nome || "Nome não disponível",
-          id: item.MUNICIPIO.municipio_id
+          id: item.MUNICIPIO.municipio_id,
         }));
         setMunicipioList(formattedMunicipioData);
       } catch (error) {
