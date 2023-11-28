@@ -46,7 +46,7 @@ pipeline{
         stage('Verificando Versões'){
             steps{
                 echo 'Verificando Versões.............................'
-                sh 'npm version'
+                //sh 'npm version'
                 sh 'date'
                 sh 'ifconfig eth0 | grep inet'
                 echo 'FIM Verificando Versões.............................'
