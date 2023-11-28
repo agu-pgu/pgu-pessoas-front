@@ -70,8 +70,9 @@ pipeline{
             stage('Build Frontend') {
                  steps {
                     echo "Build Frontend ---------------------------------------------"
-                    //sh 'npm i'
-                    sh 'npm run build'    
+                    sh 'npm i'
+                    sh 'npm run build'
+                     
                 }
             }
             stage('Movendo arquivos'){
