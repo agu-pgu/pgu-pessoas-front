@@ -22,7 +22,6 @@ import {
   getUf,
   getUnidade,
 } from "../../../services/callsSettings/callsPermission";
-
 export default function Permission() {
   const [permissaoPessoa, SetPermissaoPessoa] = useState("");
   const [pessoa, setPessoa] = useState("");

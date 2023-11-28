@@ -5,9 +5,10 @@ import Module from "./Module/Module";
 import Permission from "./Permission/Permission";
 import UF from "./UF/UF.JSX";
 import "./Settings.scss";
+import ShowAll from "./ShowAll/ShowAll";
 
 export default function Settings() {
-  const [currentPage, setCurrentPage] = useState("Gender");
+  const [currentPage, setCurrentPage] = useState("ShowAll");
 
   const handleButtonClick = (page) => {
     setCurrentPage(page);
@@ -17,6 +18,12 @@ export default function Settings() {
     <>
       <div className="settings-container">
         <div className="button-container-settings">
+          <button
+            className="button-settings"
+            onClick={() => handleButtonClick("ShowAll")}
+          >
+            Mostrar Tudo
+          </button>
           <button
             className="button-settings"
             onClick={() => handleButtonClick("Gender")}
@@ -50,6 +57,7 @@ export default function Settings() {
         </div>
       </div>
       <div className="content-container-settings">
+        {currentPage === "ShowAll" && <ShowAll />}
         {currentPage === "County" && <County />}
         {currentPage === "Gender" && <Gender />}
         {currentPage === "Module" && <Module />}

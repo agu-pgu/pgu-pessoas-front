@@ -4,9 +4,10 @@ import Person from "./Person/Person";
 import Vacation from "./Vacation/Vacation";
 import Removal from "./Removal/Removal";
 import "./Register.scss";
+import ShowAll from "./ShowAll/ShowAll";
 
 export default function Register() {
-  const [currentPage, setCurrentPage] = useState("Person");
+  const [currentPage, setCurrentPage] = useState("ShowAll");
 
   const handleButtonClick = (page) => {
     setCurrentPage(page);
@@ -16,6 +17,12 @@ export default function Register() {
     <>
       <div className="register-container">
         <div className="button-container-register">
+          <button
+            className="button-register"
+            onClick={() => handleButtonClick("ShowAll")}
+          >
+            Mostrar Tudo
+          </button>
           <button
             className="button-register"
             onClick={() => handleButtonClick("Person")}
@@ -43,6 +50,7 @@ export default function Register() {
         </div>
       </div>
       <div className="content-container-register">
+        {currentPage === "ShowAll" && <ShowAll />}
         {currentPage === "Person" && <Person />}
         {currentPage === "Career" && <Career />}
         {currentPage === "Vacation" && <Vacation />}

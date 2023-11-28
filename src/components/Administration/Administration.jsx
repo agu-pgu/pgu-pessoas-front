@@ -15,9 +15,10 @@ import Career from "./Career/Career";
 import Removal from "./Removal/Removal";
 import Vacation from "./Vacation/Vacation";
 import WorkRegime from "./WorkRegime/WorkRegime";
+import ShowAll from "./ShowAll/ShowAll";
 
 export default function Administration() {
-  const [currentPage, setCurrentPage] = useState("Sector");
+  const [currentPage, setCurrentPage] = useState("ShowAll");
 
   const handleButtonClick = (page) => {
     setCurrentPage(page);
@@ -27,6 +28,12 @@ export default function Administration() {
     <>
       <div className="administration-container">
         <div className="button-container-administration">
+          <button
+            className="button-administration"
+            onClick={() => handleButtonClick("ShowAll")}
+          >
+            Mostrar Tudo
+          </button>
           <button
             className="button-administration"
             onClick={() => handleButtonClick("Sector")}
@@ -120,6 +127,7 @@ export default function Administration() {
         </div>
       </div>
       <div className="content-container-administration">
+        {currentPage === "ShowAll" && <ShowAll />}
         {currentPage === "Sector" && <Sector />}
         {currentPage === "Coordination" && <Coordination />}
         {currentPage === "Function" && <Functions />}
