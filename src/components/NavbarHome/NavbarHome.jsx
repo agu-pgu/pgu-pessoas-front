@@ -1,21 +1,22 @@
 import "./NavbarHome.scss";
 import Govbr from "../../assets/imgs/Govbr.png";
-// import { logoutUser } from "../../services/calls";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../services/calls";
+import { logoutError } from "../../assets/js/Alerts";
 // import { logoutUserError } from "../../assets/js/alertMessages";
 
 const NavbarHome = () => {
   const navigate = useNavigate();
 
-  // const handleSubmit = () => {
-  //   logoutUser().then((res) => {
-  //     if (res === 200) {
-  //       return navigate("/");
-  //     } else {
-  //       logoutUserError();
-  //     }
-  //   });
-  // };
+  const handleSubmit = () => {
+    logoutUser().then((res) => {
+      if (res === 200) {
+        return navigate("/");
+      } else {
+        logoutError();
+      }
+    });
+  };
 
   return (
     <nav className="navbar">
@@ -35,7 +36,7 @@ const NavbarHome = () => {
       </div>
       <div className="menu">
         <div className="menu-logout">
-          <button className="menu-logout-button">
+          <button className="menu-logout-button" onClick={handleSubmit}>
             sair
           </button>
         </div>
