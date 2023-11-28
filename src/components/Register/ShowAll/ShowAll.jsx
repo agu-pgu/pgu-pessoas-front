@@ -18,6 +18,17 @@ export default function ShowAll() {
   const [vacationList, setVacationList] = useState([]);
   const [removalList, setRemovalList] = useState([]);
 
+  const lists = {
+    Pessoa: peopleList,
+    Carreira: careerList,
+    Ferias: vacationList,
+    Afastamento: removalList,
+  };
+
+  const handleButtonClick = (list) => {
+    setSelectedList(list);
+  };
+
   useEffect(() => {
     const getPavimentaPessoa = async () => {
       try {
@@ -113,37 +124,44 @@ export default function ShowAll() {
     getPavimentaCarreira();
   }, []);
 
-  // useEffect(() => {
-  //   const getPavimentaFerias = async () => {
-  //     try {
-  //       const response = await getFerias();
-  //       const vacationData = response.data.RETORNO[0].RETORNO;
-  //       console.log(vacationData)
-  //       const formattedPeopleData = pessoaData.map((pessoa) => ({
-  //         name: pessoa.PESSOA.pessoa_nome || "Nome não disponível",
-  //         gender:
-  //           pessoa.PESSOA.genero_id[0]?.GENERO.genero_nome ||
-  //           "Gênero não disponível",
-  //         municipality:
-  //           pessoa.PESSOA.municipio_id[0]?.MUNICIPIO.municipio_nome ||
-  //           "Município não disponível",
-  //         UF:
-  //           pessoa.PESSOA.municipio_id[0]?.MUNICIPIO.uf_id[0]?.UF.uf_sigla ||
-  //           "UF não disponível",
-  //         birthDate:
-  //           pessoa.PESSOA.pessoa_data_nascimento ||
-  //           "Data de Nascimento não disponível",
-  //         cpf: pessoa.PESSOA.pessoa_cpf || "CPF não disponível",
-  //         siape: pessoa.PESSOA.pessoa_siape || "SIAPE não disponível",
-  //       }));
-  //       setPeopleList(formattedPeopleData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+  useEffect(() => {
+    const getPavimentaFerias = async () => {
+      try {
+        const response = await getFerias();
+        const vacationData = response.data.RETORNO[0][0].RETORNO;
 
-  //   getPavimentaFerias();
-  // }, []);
+        const formattedFeriasData = vacationData.map((ferias) => ({
+          feriasAno:
+            ferias.FERIAS.ferias_ano || "Ano das Férias não disponível",
+          feriasFim:
+            ferias.FERIAS.ferias_fim || "Data de Fim das Férias não disponível",
+          feriasInicio:
+            ferias.FERIAS.ferias_inicio ||
+            "Data de Início das Férias não disponível",
+          pessoaNome:
+            ferias.FERIAS.pessoa_id[0]?.PESSOA?.pessoa_nome ||
+            "Nome da Pessoa não disponível",
+          pessoaSiape:
+            ferias.FERIAS.pessoa_id[0]?.PESSOA?.pessoa_siape ||
+            "SIAPE da Pessoa não disponível",
+          feriasMotivoStatusDescricao:
+            ferias.FERIAS_MOTIVO_STATUS?.RETORNO[0]?.FERIAS_MOTIVO_STATUS
+              ?.ferias_motivo_status_descricao ||
+            "Descrição do Motivo das Férias não disponível",
+          feriasStatusNome:
+            ferias.FERIAS_MOTIVO_STATUS?.RETORNO[0]?.FERIAS_MOTIVO_STATUS
+              ?.ferias_status_id[0]?.FERIAS_STATUS?.ferias_status_nome ||
+            "Nome do Status das Férias não disponível",
+        }));
+
+        setVacationList(formattedFeriasData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaFerias();
+  }, []);
 
   useEffect(() => {
     const getPavimentaAfastamento = async () => {
@@ -184,17 +202,6 @@ export default function ShowAll() {
 
     getPavimentaAfastamento();
   }, []);
-
-  const lists = {
-    Pessoa: peopleList,
-    Carreira: careerList,
-    Ferias: ["Vacation 1", "Vacation 2", "Vacation 3"],
-    Afastamento: removalList,
-  };
-
-  const handleButtonClick = (list) => {
-    setSelectedList(list);
-  };
 
   return (
     <div className="show-all-container">
