@@ -3,6 +3,7 @@ import "./ShowAll.scss";
 import ShowSector from "./ShowSector/ShowSector";
 import {
   getCargo,
+  getCid,
   getCoordenacao,
   getFuncao,
   getNucleo,
@@ -16,6 +17,7 @@ import ShowNucleo from "./ShowNucleo/ShowNucleo";
 import ShowPositions from "./ShowPositions/ShowPositions";
 import ShowRegion from "./ShowRegion/ShowRegion";
 import ShowUnit from "./ShowUnit/ShowUnit";
+import ShowCid from "./ShowCid/ShowCid";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -26,6 +28,7 @@ export default function ShowAll() {
   const [positionsList, setPositionsList] = useState([]);
   const [regionList, setRegionList] = useState([]);
   const [unitList, setUnitList] = useState([]);
+  const [cidList, setCidList] = useState([]);
 
   const lists = {
     Setor: sectorList,
@@ -35,7 +38,7 @@ export default function ShowAll() {
     Cargos: positionsList,
     Regiao: regionList,
     Unidade: unitList,
-    CID: "",
+    CID: cidList,
     Ingresso: "",
     Concurso: "",
     Carreira: "",
@@ -172,12 +175,12 @@ export default function ShowAll() {
       try {
         const response = await getUnidade();
         const unidadeData = response.data.RETORNO[0].RETORNO;
-        console.log(unidadeData)
 
         const formattedUnidadeData = unidadeData.map((item) => ({
           nome: item.UNIDADE.unidade_nome || "Nome não disponível",
-          descricao: item.UNIDADE.unidade_descricao || "Descrição não disponível",
-          sigla: item.UNIDADE.unidade_sigla || "Descrição não disponível",
+          descricao:
+            item.UNIDADE.unidade_descricao || "Descrição não disponível",
+          sigla: item.UNIDADE.unidade_sigla || "Sigla não disponível",
         }));
         setUnitList(formattedUnidadeData);
       } catch (error) {
@@ -186,6 +189,34 @@ export default function ShowAll() {
     };
 
     getPavimentarUnidade();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarCid = async () => {
+      try {
+        const response = await getCid();
+        const cidData = response.data.RETORNO[0].RETORNO;
+
+        const formattedCidData = cidData.map((item) => ({
+          nome: item.CID.cid_nome || "Nome não disponível",
+          descricao: item.CID.cid_descricao || "Descrição não disponível",
+          classe: item.CID.cid_classe || "Classe não disponível",
+          cidCategoriaNome:
+          item.CID.cid_categoria_id[0]?.CID_CATEGORIA
+              ?.cid_categoria_nome || "Nome da Categoria não disponível",
+          cidCategoriaDescricao:
+          item.CID.cid_categoria_id[0]?.CID_CATEGORIA
+              ?.cid_categoria_descricao ||
+            "Descrição da Categoria não disponível",
+        }));
+
+        setCidList(formattedCidData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarCid();
   }, []);
 
   return (
@@ -303,6 +334,9 @@ export default function ShowAll() {
         )}
         {selectedList === "Unidade" && (
           <ShowUnit peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "CID" && (
+          <ShowCid peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
