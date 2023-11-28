@@ -1,8 +1,8 @@
 /**
  * Motor de automação no Jenkins DEVOPS
  * Versão -001.00
- * CONATEC 03/05/2023
- * SISTEMA = "bumblebee-frontend"
+ * CONATEC 28/11/2023
+ * SISTEMA = "pgu-pessoas-front"
  * 
  * Servidor de dev
  */
@@ -28,19 +28,19 @@ pipeline{
     environment {
         aguEmails = "ramon.leal@agu.gov.br,danilo.nferreira@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
         //aguEmails = "ramon.umleal+jenkins@gmail.com"//
-        SISTEMA = "bumblebee-frontend"//
-        APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-bumblebee-frontend-DEVOP-210/build/*"//
-        APIPATHH = "/home/jenkins/jenkins-agent/workspace/bumblebee_front_HOMOLOG/build/*"//
+        SISTEMA = "pgu-pessoas-front"//
+        APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-pgu-pessoas-front-DEVOP-210/build/*"//
+        APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-pgu-pessoas-front-DEVOP-210/build/*"//
         PROJ = "/var/www/"
         IPDESENV = "http://sdf4673.agu.gov.br:"
         IPHOMOLOG = "http://sdf4808.agu.gov.br:"
         PORTA = "8100"//
-        APPNAME="Sistema bumblebee-frontend desenvolvimento"
+        APPNAME="Sistema PGU-PESSOAS-frontend desenvolvimento"
         GITAUTHOR="${env.GIT_COMMITTER_EMAIL}"
         URLD="${IPDESENV}${PORTA}"
         URLH="${IPHOMOLOG}${PORTA}"
         SONAQUBE ="http://172.17.24.233:9000/dashboard?id="
-        GITHUB="https://github.com/agu-pgu/bumblebee-front.git"
+        GITHUB="https://github.com/agu-pgu/pgu-pessoas-front"
     }
     stages{
         stage('Verificando Versões'){
@@ -52,14 +52,7 @@ pipeline{
                 echo 'FIM Verificando Versões.............................'
                 }
             }
-            stage('SonarQube Analysis') {
-                    environment{
-                        scannerHome = tool 'SONAR-SCANNER'
-                    }
-                    steps{
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
-            }
+
         stage('OWASP Dependency') {
             steps {
                 dependencyCheck additionalArguments: '''
