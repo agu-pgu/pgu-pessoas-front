@@ -8,12 +8,14 @@ import {
   getNucleo,
   getRegiao,
   getSetor,
+  getUnidade,
 } from "../../../services/callsAdministration/callsShowAll";
 import ShowCoordination from "./ShowCoordination/ShowCoordination";
 import ShowFunction from "./ShowFunction/ShowFunction";
 import ShowNucleo from "./ShowNucleo/ShowNucleo";
 import ShowPositions from "./ShowPositions/ShowPositions";
 import ShowRegion from "./ShowRegion/ShowRegion";
+import ShowUnit from "./ShowUnit/ShowUnit";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -23,6 +25,7 @@ export default function ShowAll() {
   const [nucleoList, setNucleoList] = useState([]);
   const [positionsList, setPositionsList] = useState([]);
   const [regionList, setRegionList] = useState([]);
+  const [unitList, setUnitList] = useState([]);
 
   const lists = {
     Setor: sectorList,
@@ -31,7 +34,7 @@ export default function ShowAll() {
     Nucleo: nucleoList,
     Cargos: positionsList,
     Regiao: regionList,
-    Unidade: "",
+    Unidade: unitList,
     CID: "",
     Ingresso: "",
     Concurso: "",
@@ -164,6 +167,27 @@ export default function ShowAll() {
     getPavimentaRegiao();
   }, []);
 
+  useEffect(() => {
+    const getPavimentarUnidade = async () => {
+      try {
+        const response = await getUnidade();
+        const unidadeData = response.data.RETORNO[0].RETORNO;
+        console.log(unidadeData)
+
+        const formattedUnidadeData = unidadeData.map((item) => ({
+          nome: item.UNIDADE.unidade_nome || "Nome não disponível",
+          descricao: item.UNIDADE.unidade_descricao || "Descrição não disponível",
+          sigla: item.UNIDADE.unidade_sigla || "Descrição não disponível",
+        }));
+        setUnitList(formattedUnidadeData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarUnidade();
+  }, []);
+
   return (
     <div className="show-all-container">
       <div className="button-container-administration">
@@ -276,6 +300,9 @@ export default function ShowAll() {
         )}
         {selectedList === "Regiao" && (
           <ShowRegion peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Unidade" && (
+          <ShowUnit peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
