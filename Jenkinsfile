@@ -1,0 +1,167 @@
+/**
+ * Motor de automação no Jenkins DEVOPS
+ * Versão -001.00
+ * CONATEC 03/05/2023
+ * SISTEMA = "bumblebee-frontend"
+ * 
+ * Servidor de dev
+ */
+
+def getGitAuthor() {
+    return sh(script: 'git log -1 --format=%an', returnStdout: true).trim()
+}
+
+
+
+pipeline{
+    agent { label 'VM-SDF4673-210'
+    }
+    options {
+        buildDiscarder logRotator( 
+            daysToKeepStr: '16', 
+            numToKeepStr: '10'
+        )
+    }
+    tools {
+        nodejs 'node'
+        }
+    environment {
+        aguEmails = "ramon.leal@agu.gov.br,danilo.nferreira@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
+        //aguEmails = "ramon.umleal+jenkins@gmail.com"//
+        SISTEMA = "bumblebee-frontend"//
+        APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-bumblebee-frontend-DEVOP-210/build/*"//
+        APIPATHH = "/home/jenkins/jenkins-agent/workspace/bumblebee_front_HOMOLOG/build/*"//
+        PROJ = "/var/www/"
+        IPDESENV = "http://sdf4673.agu.gov.br:"
+        IPHOMOLOG = "http://sdf4808.agu.gov.br:"
+        PORTA = "8100"//
+        APPNAME="Sistema bumblebee-frontend desenvolvimento"
+        GITAUTHOR="${env.GIT_COMMITTER_EMAIL}"
+        URLD="${IPDESENV}${PORTA}"
+        URLH="${IPHOMOLOG}${PORTA}"
+        SONAQUBE ="http://172.17.24.233:9000/dashboard?id="
+        GITHUB="https://github.com/agu-pgu/bumblebee-front.git"
+    }
+    stages{
+        stage('Verificando Versões'){
+            steps{
+                echo 'Verificando Versões.............................'
+                sh 'npm version'
+                sh 'date'
+                sh 'ifconfig eth0 | grep inet'
+                echo 'FIM Verificando Versões.............................'
+                }
+            }
+            stage('SonarQube Analysis') {
+                    environment{
+                        scannerHome = tool 'SONAR-SCANNER'
+                    }
+                    steps{
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+            }
+        stage('OWASP Dependency') {
+            steps {
+                dependencyCheck additionalArguments: '''
+						-o './'
+						-s './'
+						-f 'ALL' 
+						--prettyPrint
+						--format HTML --format XML''', odcInstallation: 'Dependency Check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }         
+        stage('Capture Commit Messages') {
+                steps {
+                    script {
+                        def changeLogSets = currentBuild.changeSets
+                        def commits = []
+                        changeLogSets.each { cs ->
+                            cs.items.each { item ->
+                                commits.add("Commit by ${item.author.fullName}: ${item.msg}")
+                            }
+                        }
+                        env.COMMIT_MESSAGES = commits.join('\n')
+                    }
+                }
+            }
+            stage('Build Frontend') {
+                 steps {
+                    echo "Build Frontend ---------------------------------------------"
+                    sh 'npm i'
+                    sh 'npm run build'    
+                }
+            }
+            stage('Movendo arquivos'){
+                steps{
+                echo 'Movendo arquivos.............................' 
+                    sh 'cp -R $APIPATHD $PROJ$SISTEMA/' 
+                }
+            }
+            stage('configtest apache'){  
+                steps{
+                    echo 'configtest apache.............................'
+                    sh 'apache2ctl configtest'
+                }
+            }
+            stage('reload apache'){  
+                steps{
+                    echo 'reload.............................'
+                    sh 'ls -lla /var/www/$SISTEMA'
+                    sh '/etc/init.d/apache2 restart'
+                }
+            }
+            stage('Build'){
+                steps {
+                    script {
+                       def response = httpRequest 'http://172.17.24.210:8100/'
+                        println("Status: "+response.status)
+                        if(response.status.toString() != "200"){
+                        println "ERROR:"+ errorMsg
+                        }
+                        else{ 
+                        println "ALL OK!!!. Job ${env.JOB_NAME} Pagina WEB OK deu status ${+response.status} agora sim!!!"
+                        sh 'touch SUCCESS.log'
+                        //sh 'echo ALL OK!!! > branch.log'
+                        }
+                    }
+                }
+            }
+            stage('Deploy Code to Development') {
+                steps {   
+                    echo "Deploy to Dev"
+                            script {
+                                GITAUTHOR = getGitAuthor()
+                                echo "O autor do último commit é: ${GITAUTHOR}"                
+                        } 
+                } 
+            }
+            stage('Email de notificação') {
+                 steps {
+                    echo "Email de notificação"
+                }
+            }
+        }
+    post{
+        success{
+            sh 'echo "Isso sempre será executado quando da success! "'
+            archiveArtifacts artifacts: '*.log', onlyIfSuccessful: true
+            emailext to: "${aguEmails}",
+            subject: "Server jenkins build:${currentBuild.currentResult} Aplicação: ${APPNAME}",
+            body: "<b>Aplicação: ${SISTEMA}</b><br> Jenkins build: ${env.BUILD_NUMBER}\n no Servidor ${env.NODE_LABELS}\n<br>O build com STATUS:\n${currentBuild.currentResult}: Job de nome,${env.JOB_NAME}\n<br>Para mais informações\n Acessar o link: ${env.BUILD_URL}<p>\n<br> <br> GITHUB -> ${env.GIT_BRANCH}\n LINK ${env.GIT_URL}</p> \n <br> link do Sistema ${URLD}\n<br><b>O autor do último commit é: ${GITAUTHOR}</b></br>\n<br> Aplicação ${SISTEMA} <b>está no ar.</b>\n<br> Mensagens de Commit:\n${env.COMMIT_MESSAGES}",
+            attachLog: true
+            cleanWs()
+        }
+        failure {
+            sh 'echo "Ixe deu erro da uma olhada nos logs failure"'
+            sh 'tail -n 25  /var/www/$SISTEMA/logs/access.log > "access.log"'
+            sh 'tail -n 25  /var/www/$SISTEMA/logs/error.log > "error.log"'
+            archiveArtifacts artifacts: '*.log', onlyIfSuccessful: true
+            emailext to: "${aguEmails}",
+            subject: "jenkins build:${currentBuild.currentResult} Aplicação: ${APPNAME}",//ok
+            body: "<b>Aplicação: ${SISTEMA}</b><br> Jenkins build: ${env.BUILD_NUMBER}\n no Servidor ${env.NODE_LABELS}\n<br>O build com STATUS:\n${currentBuild.currentResult}: Job de nome,${env.JOB_NAME}\n<br>Para mais informações\n Acessar o link: ${env.BUILD_URL}<p>\n<br>   <br> GITHUB -> ${env.GIT_BRANCH}\n LINK ${env.GIT_URL}</p> \n <br> link do Sistema ${URLD}\n<br><b>O autor do último commit é: ${GITAUTHOR}</b></br>\n<br> Aplicação ${SISTEMA} <b>está no ar.</b>",
+                attachLog: true
+                cleanWs()
+            }   
+    }
+}
