@@ -3,6 +3,7 @@ import "./ShowAll.scss";
 import {
   getGenero,
   getModulo,
+  getMunicipio,
   getPermissao,
   getUf,
 } from "../../../services/callsSettings/callsShowAll";
@@ -10,6 +11,7 @@ import ShowGender from "./ShowGender/ShowGender";
 import ShowModule from "./ShowModule/ShowModule";
 import ShowPermission from "./ShowPermission/ShowPermission";
 import ShowUf from "./ShowUf/ShowUf";
+import ShowMunicipio from "./ShowMunicipio/ShowMunicipio";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -17,13 +19,14 @@ export default function ShowAll() {
   const [moduleList, setModuleList] = useState([]);
   const [permissionList, setPermissionList] = useState([]);
   const [ufList, setUfList] = useState([]);
+  const [municipioList, setMunicipioList] = useState([]);
 
   const lists = {
     Genero: genderList,
     Modulo: moduleList,
     Permissao: permissionList,
     UF: ufList,
-    Municipio: "",
+    Municipio: municipioList,
   };
 
   const handleButtonClick = (list) => {
@@ -153,6 +156,25 @@ export default function ShowAll() {
     getPavimentarUf();
   }, []);
 
+  useEffect(() => {
+    const getPavimentarMunicipio = async () => {
+      try {
+        const response = await getMunicipio();
+        const municipioData = response.data.RETORNO[0].RETORNO;
+
+        const formattedMunicipioData = municipioData.map((item) => ({
+          nome: item.MUNICIPIO.municipio_nome || "Nome não disponível",
+        }));
+
+        setMunicipioList(formattedMunicipioData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarMunicipio();
+  }, []);
+
   return (
     <div className="show-all-container">
       <div className="button-container-settings">
@@ -203,8 +225,9 @@ export default function ShowAll() {
         {selectedList === "Permissao" && (
           <ShowPermission peopleList={lists[selectedList]} />
         )}
-        {selectedList === "UF" && (
-          <ShowUf peopleList={lists[selectedList]} />
+        {selectedList === "UF" && <ShowUf peopleList={lists[selectedList]} />}
+        {selectedList === "Municipio" && (
+          <ShowMunicipio peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
