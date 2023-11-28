@@ -485,6 +485,7 @@ export default function Permission() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Configurações - Permissão</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

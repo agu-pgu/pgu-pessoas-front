@@ -10,13 +10,17 @@ import {
 import ShowCareer from "./ShowCareer/ShowCareer";
 import ShowVacation from "./ShowVacation/ShowVacation";
 import ShowRemoval from "./ShowRemoval/ShowRemoval";
+import { useAuth } from "../../../Auth/AuthContext.jsX";
+import { useNavigate } from "react-router-dom";
 
 export default function ShowAll() {
+  const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();
   const [selectedList, setSelectedList] = useState(null);
   const [peopleList, setPeopleList] = useState([]);
   const [careerList, setCareerList] = useState([]);
   const [vacationList, setVacationList] = useState([]);
   const [removalList, setRemovalList] = useState([]);
+  const navigate = useNavigate();
 
   const lists = {
     Pessoa: peopleList,
@@ -56,11 +60,13 @@ export default function ShowAll() {
         setPeopleList(formattedPeopleData);
       } catch (error) {
         console.log(error);
+        setUnauthorized();
+        navigate("/");
       }
     };
 
     getPavimentaPessoa();
-  }, []);
+  }, [setUnauthorized]);
 
   useEffect(() => {
     const getPavimentaCarreira = async () => {

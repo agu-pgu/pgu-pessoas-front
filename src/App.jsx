@@ -1,12 +1,15 @@
 import { BrowserRouter } from "react-router-dom";
 import RoutesPath from "./routes/RoutesPath";
 import Login from "./pages/Login/Login";
+import { AuthProvider } from "./Auth/AuthContext.jsX";
 
 function App() {
   return (
-    <BrowserRouter basename="/pgu-pessoas-front">
-      <RoutesPath />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <RoutesPath />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

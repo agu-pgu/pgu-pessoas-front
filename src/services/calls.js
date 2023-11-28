@@ -1,7 +1,6 @@
 import api from "./api";
 
 export const loginUser = async (username, password, sapiens) => {
-
   const dataUser = {
     USUARIO: username,
     SENHA: password,
@@ -27,3 +26,28 @@ export const loginUser = async (username, password, sapiens) => {
   }
 };
 
+export const logoutUser = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  try {
+    const response = await api.post(
+      "/logout",
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          uid: uid,
+        },
+      }
+    );
+    if (response.data.SUCESSO === true) {
+      return 200;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    return 500;
+  }
+};

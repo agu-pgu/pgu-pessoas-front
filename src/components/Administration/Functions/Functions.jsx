@@ -32,6 +32,7 @@ export default function Functions() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Administrativo - Funções</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

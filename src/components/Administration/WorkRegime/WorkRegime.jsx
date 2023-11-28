@@ -56,6 +56,7 @@ export default function WorkRegime() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Administrativo - Regime de trabalho</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

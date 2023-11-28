@@ -96,6 +96,7 @@ export default function Career() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Administrativo - Carreira</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

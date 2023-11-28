@@ -39,6 +39,17 @@ export const loginUserError = () => {
       timer: 8000,
     });
   };
+
+  export const logoutError = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Falha ao sair!",
+      showConfirmButton: false,
+      timer: 8000,
+    });
+  };
+
   export const createPersonSucess = () => {
     Swal.fire({
       position: "top-end",
