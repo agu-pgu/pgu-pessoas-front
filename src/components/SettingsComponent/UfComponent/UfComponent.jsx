@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { CreateError, createPersonSucess } from "../../../assets/js/Alerts";
-import "./UF.scss";
+import "./UfComponent.scss";
 import { createUF } from "../../../services/callsSettings/callsUF";
 
-export default function UF() {
-  const [uf, setuf] = useState("");
+export default function UfComponent() {
+  const [ufNome, setUfNome] = useState("");
   const [ufSigla, setUfSigla] = useState("");
   const [ufRegiao, setUfRegiao] = useState("");
 
@@ -14,7 +14,7 @@ export default function UF() {
       CADASTRAR: [
         {
           UF: {
-            uf_nome: uf,
+            uf_nome: ufNome,
             uf_sigla: ufSigla,
             uf_regiao: ufRegiao,
           },
@@ -46,8 +46,8 @@ export default function UF() {
               type="text"
               name="uf"
               id="uf"
-              value={uf}
-              onChange={(event) => setuf(event.target.value)}
+              value={ufNome}
+              onChange={(event) => setUfNome(event.target.value)}
               maxLength={255}
               required
             />
