@@ -6,6 +6,7 @@ import {
   getCid,
   getCoordenacao,
   getFuncao,
+  getIngresso,
   getNucleo,
   getRegiao,
   getSetor,
@@ -18,6 +19,7 @@ import ShowPositions from "./ShowPositions/ShowPositions";
 import ShowRegion from "./ShowRegion/ShowRegion";
 import ShowUnit from "./ShowUnit/ShowUnit";
 import ShowCid from "./ShowCid/ShowCid";
+import ShowTicket from "./ShowTicket/ShowTicket";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -29,6 +31,7 @@ export default function ShowAll() {
   const [regionList, setRegionList] = useState([]);
   const [unitList, setUnitList] = useState([]);
   const [cidList, setCidList] = useState([]);
+  const [ticketList, setTicketList] = useState([]);
 
   const lists = {
     Setor: sectorList,
@@ -39,7 +42,7 @@ export default function ShowAll() {
     Regiao: regionList,
     Unidade: unitList,
     CID: cidList,
-    Ingresso: "",
+    Ingresso: ticketList,
     Concurso: "",
     Carreira: "",
     Afastamento: "",
@@ -202,10 +205,10 @@ export default function ShowAll() {
           descricao: item.CID.cid_descricao || "Descrição não disponível",
           classe: item.CID.cid_classe || "Classe não disponível",
           cidCategoriaNome:
-          item.CID.cid_categoria_id[0]?.CID_CATEGORIA
-              ?.cid_categoria_nome || "Nome da Categoria não disponível",
+            item.CID.cid_categoria_id[0]?.CID_CATEGORIA?.cid_categoria_nome ||
+            "Nome da Categoria não disponível",
           cidCategoriaDescricao:
-          item.CID.cid_categoria_id[0]?.CID_CATEGORIA
+            item.CID.cid_categoria_id[0]?.CID_CATEGORIA
               ?.cid_categoria_descricao ||
             "Descrição da Categoria não disponível",
         }));
@@ -217,6 +220,27 @@ export default function ShowAll() {
     };
 
     getPavimentarCid();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarIngresso = async () => {
+      try {
+        const response = await getIngresso();
+        const ingressoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedIngressoData = ingressoData.map((item) => ({
+          nome: item.INGRESSO.ingresso_nome || "Nome não disponível",
+          descricao:
+            item.INGRESSO.ingresso_descricao || "Descrição não disponível",
+        }));
+
+        setTicketList(formattedIngressoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarIngresso();
   }, []);
 
   return (
@@ -335,8 +359,9 @@ export default function ShowAll() {
         {selectedList === "Unidade" && (
           <ShowUnit peopleList={lists[selectedList]} />
         )}
-        {selectedList === "CID" && (
-          <ShowCid peopleList={lists[selectedList]} />
+        {selectedList === "CID" && <ShowCid peopleList={lists[selectedList]} />}
+        {selectedList === "Ingresso" && (
+          <ShowTicket peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
