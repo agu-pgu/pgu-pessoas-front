@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ShowAll.scss";
+import { getGenero } from "../../../services/callsSettings/callsShowAll";
+import ShowGender from "./ShowGender/ShowGender";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
+  const [genderList, setGenderList] = useState([]);
 
   const lists = {
-    Genero: "",
+    Genero: genderList,
     Modulo: "",
     Permissao: "",
     UF: "",
@@ -15,6 +18,25 @@ export default function ShowAll() {
   const handleButtonClick = (list) => {
     setSelectedList(list);
   };
+
+  useEffect(() => {
+    const getPavimentarGenero = async () => {
+      try {
+        const response = await getGenero();
+        const generoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedGeneroData = generoData.map((item) => ({
+          nome: item.GENERO.genero_nome || "Nome não disponível",
+        }));
+
+        setGenderList(formattedGeneroData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarGenero();
+  }, []);
 
   return (
     <div className="show-all-container">
@@ -57,9 +79,9 @@ export default function ShowAll() {
             ? `Lista Selecionada: ${selectedList}`
             : "Selecione uma Lista!"}
         </h2>
-        {/* {selectedList === "Setor" && (
-              <ShowSector peopleList={lists[selectedList]} />
-            )} */}
+        {selectedList === "Genero" && (
+              <ShowGender peopleList={lists[selectedList]} />
+            )}
       </div>
     </div>
   );
