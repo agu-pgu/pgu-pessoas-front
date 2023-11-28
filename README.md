@@ -34,11 +34,11 @@ Currently, two official plugins are available:
 ```bash
   sh 'npm run build'
 ```
-# Execute a aplicação no servidor
+# Copair a aplicação no servidor
 ```bash
   cp diretorio/dist/* /var/www/pgu-pessoas-front
 ```
-# Execute a aplicação no servidor
+# reinciar a aplicação 
 ```bash
   # /etc/init.d/apache2 restart
 ```
