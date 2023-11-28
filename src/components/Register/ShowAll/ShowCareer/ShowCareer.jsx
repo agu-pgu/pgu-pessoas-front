@@ -1,7 +1,47 @@
 import React from "react";
 import "./ShowCareer.scss";
+import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { deleteCareer } from "../../../../services/CallsPerson/callsShowAll";
 
 export default function ShowCareer({ peopleList }) {
+  const handleDelete = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Você tem certeza?",
+        text: "Deseja desativar o registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#1351b4",
+        confirmButtonText: "Sim, Desativar!",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (result.isConfirmed) {
+        const response = await deleteCareer(id);
+        if (response.data.SUCESSO == true) {
+          Swal.fire(
+            "Desativado!",
+            "O registro foi desativado.",
+            "success"
+          ).then(() => {
+            window.location.reload();
+          });
+        } else {
+          Swal.fire("Erro", "Falha ao desativar o registro.", "error").then(
+            () => {
+              window.location.reload();
+            }
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao desativar o registro:", error);
+      Swal.fire("Erro", "Falha ao desativar o registro.", "error");
+    }
+  };
+
   return (
     <div className="scroll-container-career">
       <table className="list-container-table">
@@ -22,6 +62,7 @@ export default function ShowCareer({ peopleList }) {
             <th className="list-container-th">INGRESSO</th>
             <th className="list-container-th">NÚCLEO</th>
             <th className="list-container-th">SETOR</th>
+            <th className="list-container-th">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +83,11 @@ export default function ShowCareer({ peopleList }) {
               <td className="list-container-td">{career.ingresso}</td>
               <td className="list-container-td">{career.nucleo}</td>
               <td className="list-container-td">{career.setor}</td>
+              <td className="list-container-td list-container-td-button">
+                <button onClick={() => handleDelete(career.id)}>
+                  <FaTrash className="delete-icon" />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

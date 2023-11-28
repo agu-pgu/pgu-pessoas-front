@@ -1,7 +1,6 @@
 import React from "react";
 import "./ShowPerson.scss";
 import { FaTrash } from "react-icons/fa";
-// import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { deletePerson } from "../../../../services/CallsPerson/callsShowAll";
 

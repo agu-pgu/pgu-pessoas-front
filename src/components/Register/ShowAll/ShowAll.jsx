@@ -113,6 +113,7 @@ export default function ShowAll() {
           setor:
             career.CARREIRA.setor_id[0]?.SETOR.setor_nome ||
             "Setor não disponível",
+          id: career.CARREIRA.carreira_id,
         }));
 
         setCareerList(formattedCareerData);
