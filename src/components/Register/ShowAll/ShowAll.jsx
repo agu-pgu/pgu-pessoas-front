@@ -51,8 +51,8 @@ export default function ShowAll() {
             "Data de Nascimento não disponível",
           cpf: pessoa.PESSOA.pessoa_cpf || "CPF não disponível",
           siape: pessoa.PESSOA.pessoa_siape || "SIAPE não disponível",
+          id: pessoa.PESSOA.pessoa_id,
         }));
-
         setPeopleList(formattedPeopleData);
       } catch (error) {
         console.log(error);
