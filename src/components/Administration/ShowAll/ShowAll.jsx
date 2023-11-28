@@ -26,8 +26,8 @@ import ShowTicket from "./ShowTicket/ShowTicket";
 import ShowContest from "./ShowContest/ShowContest";
 import ShowWorkRegimeModality from "./ShowWorkRegimeModality/ShowWorkRegimeModality";
 import ShowWorkRegimeType from "./ShowWorkRegimeType/ShowWorkRegimeType";
-import { useAuth } from "../../../Auth/AuthContext.jsX";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 export default function ShowAll() {
   const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();

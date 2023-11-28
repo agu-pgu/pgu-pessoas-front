@@ -12,8 +12,8 @@ import ShowModule from "./ShowModule/ShowModule";
 import ShowPermission from "./ShowPermission/ShowPermission";
 import ShowUf from "./ShowUf/ShowUf";
 import ShowMunicipio from "./ShowMunicipio/ShowMunicipio";
-import { useAuth } from "../../../Auth/AuthContext.jsX";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 export default function ShowAll() {
   const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();

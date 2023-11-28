@@ -10,8 +10,8 @@ import {
 import ShowCareer from "./ShowCareer/ShowCareer";
 import ShowVacation from "./ShowVacation/ShowVacation";
 import ShowRemoval from "./ShowRemoval/ShowRemoval";
-import { useAuth } from "../../../Auth/AuthContext.jsX";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../AuthProvider/AuthProvider";
 
 export default function ShowAll() {
   const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();
