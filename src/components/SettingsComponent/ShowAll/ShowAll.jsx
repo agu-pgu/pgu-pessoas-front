@@ -4,22 +4,25 @@ import {
   getGenero,
   getModulo,
   getPermissao,
+  getUf,
 } from "../../../services/callsSettings/callsShowAll";
 import ShowGender from "./ShowGender/ShowGender";
 import ShowModule from "./ShowModule/ShowModule";
 import ShowPermission from "./ShowPermission/ShowPermission";
+import ShowUf from "./ShowUf/ShowUf";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
   const [genderList, setGenderList] = useState([]);
   const [moduleList, setModuleList] = useState([]);
   const [permissionList, setPermissionList] = useState([]);
+  const [ufList, setUfList] = useState([]);
 
   const lists = {
     Genero: genderList,
     Modulo: moduleList,
     Permissao: permissionList,
-    UF: "",
+    UF: ufList,
     Municipio: "",
   };
 
@@ -129,6 +132,27 @@ export default function ShowAll() {
     getPavimentarPermissao();
   }, []);
 
+  useEffect(() => {
+    const getPavimentarUf = async () => {
+      try {
+        const response = await getUf();
+        const ufData = response.data.RETORNO[0].RETORNO;
+
+        const formattedUfData = ufData.map((item) => ({
+          nome: item.UF.uf_nome || "Nome não disponível",
+          regiao: item.UF.uf_regiao || "Descrição não disponível",
+          sigla: item.UF.uf_sigla || "Sigla não disponível",
+        }));
+
+        setUfList(formattedUfData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarUf();
+  }, []);
+
   return (
     <div className="show-all-container">
       <div className="button-container-settings">
@@ -178,6 +202,9 @@ export default function ShowAll() {
         )}
         {selectedList === "Permissao" && (
           <ShowPermission peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "UF" && (
+          <ShowUf peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
