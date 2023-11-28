@@ -194,6 +194,7 @@ export default function ShowAll() {
           pessoaCpf:
             afastamento.AFASTAMENTO.pessoa_id[0]?.PESSOA.pessoa_cpf ||
             "CPF não disponível",
+          id: afastamento.AFASTAMENTO.afastamento_id,
         }));
 
         setRemovalList(formattedAfastamentoData);
