@@ -108,6 +108,7 @@ export default function Person() {
   return (
     <div>
       <div className="formulario-container">
+        <h1 className="formulario-h2">Cadastre uma Pessoa!</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"
