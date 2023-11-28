@@ -1,7 +1,47 @@
 import React from "react";
 import "./ShowPermission.scss";
+import { FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { deletePermissao } from "../../../../services/callsSettings/callsShowAll";
 
 export default function ShowPermission({ peopleList }) {
+  const handleDelete = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Você tem certeza?",
+        text: "Deseja desativar o registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#1351b4",
+        confirmButtonText: "Sim, Desativar!",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (result.isConfirmed) {
+        const response = await deletePermissao(id);
+        if (response.data.SUCESSO == true) {
+          Swal.fire(
+            "Desativado!",
+            "O registro foi desativado.",
+            "success"
+          ).then(() => {
+            window.location.reload();
+          });
+        } else {
+          Swal.fire("Erro", "Falha ao desativar o registro.", "error").then(
+            () => {
+              window.location.reload();
+            }
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao desativar o registro:", error);
+      Swal.fire("Erro", "Falha ao desativar o registro.", "error");
+    }
+  };
+
   return (
     <div className="scroll-container-permission">
       <table className="list-container-table-permission">
@@ -22,6 +62,7 @@ export default function ShowPermission({ peopleList }) {
             <th className="list-container-th-permission">Regiao Nome</th>
             <th className="list-container-th-permission">Setor Nome</th>
             <th className="list-container-th-permission">Unidade Nome</th>
+            <th className="list-container-th-permission">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -71,6 +112,11 @@ export default function ShowPermission({ peopleList }) {
               </td>
               <td className="list-container-td-permission">
                 {permissao.unidadeNome}
+              </td>
+              <td className="list-container-td-permission list-container-td-button-permission">
+                <button onClick={() => handleDelete(permissao.id)}>
+                  <FaTrash className="delete-icon" />
+                </button>
               </td>
             </tr>
           ))}

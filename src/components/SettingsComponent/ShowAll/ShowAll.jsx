@@ -41,8 +41,8 @@ export default function ShowAll() {
 
         const formattedGeneroData = generoData.map((item) => ({
           nome: item.GENERO.genero_nome || "Nome não disponível",
+          id: item.GENERO.genero_id,
         }));
-
         setGenderList(formattedGeneroData);
       } catch (error) {
         console.log(error);
@@ -61,6 +61,7 @@ export default function ShowAll() {
         const formattedModuloData = moduloData.map((item) => ({
           nome: item.MODULO.modulo_nome || "Nome não disponível",
           descricao: item.MODULO.modulo_nome || "Descrição não disponível",
+          id: item.MODULO.modulo_id,
         }));
 
         setModuleList(formattedModuloData);
@@ -124,8 +125,8 @@ export default function ShowAll() {
           unidadeNome:
             permissao.PERMISSAO.unidade_id[0]?.UNIDADE?.unidade_nome ||
             "Nome da Unidade não disponível",
+          id: permissao.PERMISSAO.permissao_id,
         }));
-
         setPermissionList(formattedPermissaoData);
       } catch (error) {
         console.log(error);
@@ -145,8 +146,8 @@ export default function ShowAll() {
           nome: item.UF.uf_nome || "Nome não disponível",
           regiao: item.UF.uf_regiao || "Descrição não disponível",
           sigla: item.UF.uf_sigla || "Sigla não disponível",
+          id: item.UF.uf_id,
         }));
-
         setUfList(formattedUfData);
       } catch (error) {
         console.log(error);
@@ -164,8 +165,8 @@ export default function ShowAll() {
 
         const formattedMunicipioData = municipioData.map((item) => ({
           nome: item.MUNICIPIO.municipio_nome || "Nome não disponível",
+          id: item.MUNICIPIO.municipio_id
         }));
-
         setMunicipioList(formattedMunicipioData);
       } catch (error) {
         console.log(error);
