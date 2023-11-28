@@ -4,22 +4,25 @@ import ShowSector from "./ShowSector/ShowSector";
 import {
   getCoordenacao,
   getFuncao,
+  getNucleo,
   getSetor,
 } from "../../../services/callsAdministration/callsShowAll";
 import ShowCoordination from "./ShowCoordination/ShowCoordination";
 import ShowFunction from "./ShowFunction/ShowFunction";
+import ShowNucleo from "./ShowNucleo/ShowNucleo";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
   const [sectorList, setSectorList] = useState([]);
   const [coordenacaoList, setCoordenacaoList] = useState([]);
   const [functionList, setFunctionList] = useState([]);
+  const [nucleoList, setNucleoList] = useState([]);
 
   const lists = {
     Setor: sectorList,
     Coordenacao: coordenacaoList,
     Funcao: functionList,
-    Nucleo: "",
+    Nucleo: nucleoList,
     Cargos: "",
     Regiao: "",
     Unidade: "",
@@ -95,6 +98,25 @@ export default function ShowAll() {
     };
 
     getPavimentaFuncao();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentaNucleo = async () => {
+      try {
+        const response = await getNucleo();
+        const nucleoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedNucleoData = nucleoData.map((item) => ({
+          nome: item.NUCLEO.nucleo_nome || "Nome não disponível",
+          descricao: item.NUCLEO.nucleo_descricao || "Descrição não disponível",
+        }));
+        setNucleoList(formattedNucleoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaNucleo();
   }, []);
 
   return (
@@ -200,6 +222,9 @@ export default function ShowAll() {
         )}
         {selectedList === "Funcao" && (
           <ShowFunction peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Nucleo" && (
+          <ShowNucleo peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
