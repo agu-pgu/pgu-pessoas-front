@@ -154,6 +154,7 @@ export default function CID() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Administrativo - CID</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

@@ -31,6 +31,7 @@ export default function Gender() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Configurações - Gênero</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

@@ -34,6 +34,7 @@ export default function Sector() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Administrativo - Setor</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

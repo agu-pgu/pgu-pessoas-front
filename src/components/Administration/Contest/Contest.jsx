@@ -62,6 +62,7 @@ export default function Contest() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Administrativo - Concurso</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"

@@ -107,6 +107,7 @@ export default function Vacation() {
   return (
     <div>
       <div className="formulario-container">
+      <h1 className="formulario-h2">Cadastre Férias!!</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"
