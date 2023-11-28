@@ -71,6 +71,7 @@ export default function ShowAll() {
           sigla: item.SETOR.setor_sigla || "Sigla não disponível",
           nome: item.SETOR.setor_nome || "Nome não disponível",
           descricao: item.SETOR.setor_descricao || "Descrição não disponível",
+          id: item.SETOR.setor_id,
         }));
         setSectorList(formattedSetorData);
       } catch (error) {
@@ -93,6 +94,7 @@ export default function ShowAll() {
           descricao:
             item.COORDENACAO.coordenacao_descricao ||
             "Descrição não disponível",
+          id: item.COORDENACAO.coordenacao_id,
         }));
         setCoordenacaoList(formattedCoordenacaoData);
       } catch (error) {
@@ -112,6 +114,7 @@ export default function ShowAll() {
         const formattedFuncaoData = funcaoData.map((item) => ({
           nome: item.FUNCAO.funcao_nome || "Nome não disponível",
           descricao: item.FUNCAO.funcao_descricao || "Descrição não disponível",
+          id: item.FUNCAO.funcao_id,
         }));
         setFunctionList(formattedFuncaoData);
       } catch (error) {
@@ -131,6 +134,7 @@ export default function ShowAll() {
         const formattedNucleoData = nucleoData.map((item) => ({
           nome: item.NUCLEO.nucleo_nome || "Nome não disponível",
           descricao: item.NUCLEO.nucleo_descricao || "Descrição não disponível",
+          id: item.NUCLEO.nucleo_id,
         }));
         setNucleoList(formattedNucleoData);
       } catch (error) {
@@ -150,6 +154,7 @@ export default function ShowAll() {
         const formattedCargoData = cargoData.map((item) => ({
           nome: item.CARGO.cargo_nome || "Nome não disponível",
           descricao: item.CARGO.cargo_descricao || "Descrição não disponível",
+          id: item.CARGO.cargo_id,
         }));
         setPositionsList(formattedCargoData);
       } catch (error) {
@@ -170,6 +175,7 @@ export default function ShowAll() {
           nome: item.REGIAO.regiao_nome || "Nome não disponível",
           descricao: item.REGIAO.regiao_descricao || "Descrição não disponível",
           sigla: item.REGIAO.regiao_sigla || "Descrição não disponível",
+          id: item.REGIAO.regiao_id,
         }));
         setRegionList(formattedRegiaoData);
       } catch (error) {
@@ -191,6 +197,7 @@ export default function ShowAll() {
           descricao:
             item.UNIDADE.unidade_descricao || "Descrição não disponível",
           sigla: item.UNIDADE.unidade_sigla || "Sigla não disponível",
+          id: item.UNIDADE.unidade_id,
         }));
         setUnitList(formattedUnidadeData);
       } catch (error) {
@@ -218,6 +225,7 @@ export default function ShowAll() {
             item.CID.cid_categoria_id[0]?.CID_CATEGORIA
               ?.cid_categoria_descricao ||
             "Descrição da Categoria não disponível",
+          id: item.CID.cid_id,
         }));
 
         setCidList(formattedCidData);
@@ -239,6 +247,7 @@ export default function ShowAll() {
           nome: item.INGRESSO.ingresso_nome || "Nome não disponível",
           descricao:
             item.INGRESSO.ingresso_descricao || "Descrição não disponível",
+          id: item.INGRESSO.ingresso_id,
         }));
 
         setTicketList(formattedIngressoData);
@@ -262,6 +271,7 @@ export default function ShowAll() {
             item.CONCURSO.concurso_descricao || "Descrição não disponível",
           ano: item.CONCURSO.concurso_ano || "Ano não disponível",
           edital: item.CONCURSO.concurso_edital || "Edital não disponível",
+          id: item.CONCURSO.concurso_id,
         }));
 
         setContestList(formattedConcursoData);
@@ -288,6 +298,7 @@ export default function ShowAll() {
               item.REGIME_TRABALHO_MODALIDADE
                 .regime_trabalho_modalidade_descricao ||
               "Descrição não disponível",
+            id: item.REGIME_TRABALHO_MODALIDADE.regime_trabalho_modalidade_id,
           }));
 
         setWorkRegimeModalityList(formattedRegimeDeTrabalhoModalidadeData);
@@ -305,17 +316,20 @@ export default function ShowAll() {
         const response = await getRegimeTrabalhoTipo();
         const regimeDeTrabalhoTipoData = response.data.RETORNO[0].RETORNO;
 
-        const formattedRegimeDeTrabalhoTipoData =
-        regimeDeTrabalhoTipoData.map((item) => ({
+        const formattedRegimeDeTrabalhoTipoData = regimeDeTrabalhoTipoData.map(
+          (item) => ({
             nome:
               item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_nome ||
               "Nome não disponível",
             descricao:
               item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_descricao ||
               "Descrição não disponível",
-          }));
+              id:
+              item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id
+          })
+        );
 
-          setWorkRegimeTypeList(formattedRegimeDeTrabalhoTipoData);
+        setWorkRegimeTypeList(formattedRegimeDeTrabalhoTipoData);
       } catch (error) {
         console.log(error);
       }
@@ -396,9 +410,7 @@ export default function ShowAll() {
           Regime De Trabalho-Modalidade
         </button>
         <button
-          className={
-            selectedList === "RegimeDeTrabalhoTipo" ? "selected" : ""
-          }
+          className={selectedList === "RegimeDeTrabalhoTipo" ? "selected" : ""}
           onClick={() => handleButtonClick("RegimeDeTrabalhoTipo")}
         >
           Regime De Trabalho-Tipo

@@ -2,8 +2,10 @@
 @import "../../../../global.scss";
 
 .scroll-container-region {
-  max-height: 200px; 
-  overflow-y: auto; 
+  max-height: 200px;
+  max-width: 1000px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .list-container-table-region {
@@ -27,6 +29,31 @@
 
     &:hover {
       background-color: #f0f8ff;
+    }
+  }
+  .list-container-td-button-region {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+    button {
+      border: none;
+      background-color: #d33;
+      border-radius: 4px;
+      padding: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      .delete-icon {
+        color: #ffffff; // Cor do ícone
+        font-size: 20px;
+        size: 15px;
+      }
+      &:hover {
+        background-color: #ddd;
+        .delete-icon {
+          color: #d33;
+        }
+      }
     }
   }
 }
