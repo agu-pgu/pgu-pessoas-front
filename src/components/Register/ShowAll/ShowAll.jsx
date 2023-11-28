@@ -153,6 +153,7 @@ export default function ShowAll() {
             ferias.FERIAS_MOTIVO_STATUS?.RETORNO[0]?.FERIAS_MOTIVO_STATUS
               ?.ferias_status_id[0]?.FERIAS_STATUS?.ferias_status_nome ||
             "Nome do Status das Férias não disponível",
+          id: ferias.FERIAS.ferias_id,
         }));
 
         setVacationList(formattedFeriasData);
