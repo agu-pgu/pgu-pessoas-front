@@ -5,6 +5,11 @@
   margin: 0 auto;
   padding: 20px; /* Adicione algum espaço interno se necessário */
 
+  .formulario-h2 {
+    text-align: center;
+    color: $primary-collor;
+  }
+
   .form-scroll {
     max-height: 350px; /* Ajuste conforme necessário */
     overflow-y: auto;
