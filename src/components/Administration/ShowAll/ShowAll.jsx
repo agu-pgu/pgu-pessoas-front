@@ -6,12 +6,14 @@ import {
   getCoordenacao,
   getFuncao,
   getNucleo,
+  getRegiao,
   getSetor,
 } from "../../../services/callsAdministration/callsShowAll";
 import ShowCoordination from "./ShowCoordination/ShowCoordination";
 import ShowFunction from "./ShowFunction/ShowFunction";
 import ShowNucleo from "./ShowNucleo/ShowNucleo";
 import ShowPositions from "./ShowPositions/ShowPositions";
+import ShowRegion from "./ShowRegion/ShowRegion";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -20,6 +22,7 @@ export default function ShowAll() {
   const [functionList, setFunctionList] = useState([]);
   const [nucleoList, setNucleoList] = useState([]);
   const [positionsList, setPositionsList] = useState([]);
+  const [regionList, setRegionList] = useState([]);
 
   const lists = {
     Setor: sectorList,
@@ -27,7 +30,7 @@ export default function ShowAll() {
     Funcao: functionList,
     Nucleo: nucleoList,
     Cargos: positionsList,
-    Regiao: "",
+    Regiao: regionList,
     Unidade: "",
     CID: "",
     Ingresso: "",
@@ -141,6 +144,26 @@ export default function ShowAll() {
     getPavimentaCargo();
   }, []);
 
+  useEffect(() => {
+    const getPavimentaRegiao = async () => {
+      try {
+        const response = await getRegiao();
+        const regiaoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedRegiaoData = regiaoData.map((item) => ({
+          nome: item.REGIAO.regiao_nome || "Nome não disponível",
+          descricao: item.REGIAO.regiao_descricao || "Descrição não disponível",
+          sigla: item.REGIAO.regiao_sigla || "Descrição não disponível",
+        }));
+        setRegionList(formattedRegiaoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaRegiao();
+  }, []);
+
   return (
     <div className="show-all-container">
       <div className="button-container-administration">
@@ -250,6 +273,9 @@ export default function ShowAll() {
         )}
         {selectedList === "Cargos" && (
           <ShowPositions peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Regiao" && (
+          <ShowRegion peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
