@@ -1,16 +1,16 @@
 // ShowPerson.scss
 @import "../../../../global.scss";
 
-.scroll-container {
-  max-height: 300px; 
+.scroll-container-sector {
+  max-height: 200px; 
   overflow-y: auto; 
 }
 
-.list-container-table {
+.list-container-table-sector {
   width: 100%;
   border-collapse: collapse;
 
-  .list-container-th {
+  .list-container-th-sector {
     background-color: #f2f2f2;
     font-weight: bold;
     color: $primary-collor;
@@ -19,7 +19,7 @@
     text-align: left;
   }
 
-  .list-container-td {
+  .list-container-td-sector {
     border: 1px solid #ddd;
     padding: 15px;
     text-align: left;
