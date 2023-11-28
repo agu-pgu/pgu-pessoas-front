@@ -3,9 +3,9 @@ import County from "./County/County";
 import Gender from "./Gender/Gender";
 import Module from "./Module/Module";
 import Permission from "./Permission/Permission";
-import UF from "./UF/UF.JSX";
 import "./Settings.scss";
 import ShowAll from "./ShowAll/ShowAll";
+import UfComponent from "./UfComponent/UfComponent";
 
 export default function Settings() {
   const [currentPage, setCurrentPage] = useState("ShowAll");
@@ -62,7 +62,7 @@ export default function Settings() {
         {currentPage === "Gender" && <Gender />}
         {currentPage === "Module" && <Module />}
         {currentPage === "Permission" && <Permission />}
-        {currentPage === "UF" && <UF />}
+        {currentPage === "UF" && <UfComponent />}
       </div>
     </>
   );
