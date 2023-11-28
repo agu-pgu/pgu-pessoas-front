@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./ShowAll.scss";
-import { getGenero } from "../../../services/callsSettings/callsShowAll";
+import {
+  getGenero,
+  getModulo,
+} from "../../../services/callsSettings/callsShowAll";
 import ShowGender from "./ShowGender/ShowGender";
+import ShowModule from "./ShowModule/ShowModule";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
   const [genderList, setGenderList] = useState([]);
+  const [moduleList, setModuleList] = useState([]);
 
   const lists = {
     Genero: genderList,
-    Modulo: "",
+    Modulo: moduleList,
     Permissao: "",
     UF: "",
     Municipio: "",
@@ -36,6 +41,26 @@ export default function ShowAll() {
     };
 
     getPavimentarGenero();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarModulo = async () => {
+      try {
+        const response = await getModulo();
+        const moduloData = response.data.RETORNO[0].RETORNO;
+
+        const formattedModuloData = moduloData.map((item) => ({
+          nome: item.MODULO.modulo_nome || "Nome não disponível",
+          descricao: item.MODULO.modulo_nome || "Descrição não disponível",
+        }));
+
+        setModuleList(formattedModuloData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarModulo();
   }, []);
 
   return (
@@ -80,8 +105,11 @@ export default function ShowAll() {
             : "Selecione uma Lista!"}
         </h2>
         {selectedList === "Genero" && (
-              <ShowGender peopleList={lists[selectedList]} />
-            )}
+          <ShowGender peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Modulo" && (
+          <ShowModule peopleList={lists[selectedList]} />
+        )}
       </div>
     </div>
   );
