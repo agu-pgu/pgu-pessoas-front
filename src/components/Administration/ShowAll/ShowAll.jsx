@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ShowAll.scss";
 import ShowSector from "./ShowSector/ShowSector";
 import {
+  getCargo,
   getCoordenacao,
   getFuncao,
   getNucleo,
@@ -10,6 +11,7 @@ import {
 import ShowCoordination from "./ShowCoordination/ShowCoordination";
 import ShowFunction from "./ShowFunction/ShowFunction";
 import ShowNucleo from "./ShowNucleo/ShowNucleo";
+import ShowPositions from "./ShowPositions/ShowPositions";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -17,13 +19,14 @@ export default function ShowAll() {
   const [coordenacaoList, setCoordenacaoList] = useState([]);
   const [functionList, setFunctionList] = useState([]);
   const [nucleoList, setNucleoList] = useState([]);
+  const [positionsList, setPositionsList] = useState([]);
 
   const lists = {
     Setor: sectorList,
     Coordenacao: coordenacaoList,
     Funcao: functionList,
     Nucleo: nucleoList,
-    Cargos: "",
+    Cargos: positionsList,
     Regiao: "",
     Unidade: "",
     CID: "",
@@ -117,6 +120,25 @@ export default function ShowAll() {
     };
 
     getPavimentaNucleo();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentaCargo = async () => {
+      try {
+        const response = await getCargo();
+        const cargoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedCargoData = cargoData.map((item) => ({
+          nome: item.CARGO.cargo_nome || "Nome não disponível",
+          descricao: item.CARGO.cargo_descricao || "Descrição não disponível",
+        }));
+        setPositionsList(formattedCargoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaCargo();
   }, []);
 
   return (
@@ -225,6 +247,9 @@ export default function ShowAll() {
         )}
         {selectedList === "Nucleo" && (
           <ShowNucleo peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Cargos" && (
+          <ShowPositions peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
