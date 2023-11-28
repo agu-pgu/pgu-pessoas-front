@@ -52,7 +52,17 @@ pipeline{
                 echo 'FIM Verificando Versões.............................'
                 }
             }
-         
+        stage('OWASP Dependency') {
+            steps {
+                dependencyCheck additionalArguments: '''
+						-o './'
+						-s './'
+						-f 'ALL' 
+						--prettyPrint
+						--format HTML --format XML''', odcInstallation: 'Dependency Check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
         stage('Capture Commit Messages') {
                 steps {
                     script {
