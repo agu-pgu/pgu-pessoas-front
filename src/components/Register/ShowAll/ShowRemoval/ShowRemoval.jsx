@@ -52,6 +52,7 @@ export default function ShowRemoval({ peopleList }) {
             <th className="list-container-th">CID Subcategoria</th>
             <th className="list-container-th">Nome</th>
             <th className="list-container-th">CPF</th>
+            <th className="list-container-th">Ações</th>
           </tr>
         </thead>
         <tbody>
