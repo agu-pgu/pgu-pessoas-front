@@ -10,6 +10,8 @@ import {
   getIngresso,
   getNucleo,
   getRegiao,
+  getRegimeTrabalhoModalidade,
+  getRegimeTrabalhoTipo,
   getSetor,
   getUnidade,
 } from "../../../services/callsAdministration/callsShowAll";
@@ -22,6 +24,8 @@ import ShowUnit from "./ShowUnit/ShowUnit";
 import ShowCid from "./ShowCid/ShowCid";
 import ShowTicket from "./ShowTicket/ShowTicket";
 import ShowContest from "./ShowContest/ShowContest";
+import ShowWorkRegimeModality from "./ShowWorkRegimeModality/ShowWorkRegimeModality";
+import ShowWorkRegimeType from "./ShowWorkRegimeType/ShowWorkRegimeType";
 
 export default function ShowAll() {
   const [selectedList, setSelectedList] = useState(null);
@@ -35,6 +39,8 @@ export default function ShowAll() {
   const [cidList, setCidList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
   const [contestList, setContestList] = useState([]);
+  const [workRegimeModalityList, setWorkRegimeModalityList] = useState([]);
+  const [workRegimeTypeList, setWorkRegimeTypeList] = useState([]);
 
   const lists = {
     Setor: sectorList,
@@ -47,10 +53,8 @@ export default function ShowAll() {
     CID: cidList,
     Ingresso: ticketList,
     Concurso: contestList,
-    Carreira: "",
-    Afastamento: "",
-    Ferias: "",
-    RegimeDeTrabalho: "",
+    RegimeDeTrabalhoModalidade: workRegimeModalityList,
+    RegimeDeTrabalhoTipo: workRegimeTypeList,
   };
 
   const handleButtonClick = (list) => {
@@ -251,16 +255,13 @@ export default function ShowAll() {
       try {
         const response = await getConcurso();
         const concursoData = response.data.RETORNO[0].RETORNO;
-        console.log(concursoData)
 
         const formattedConcursoData = concursoData.map((item) => ({
           nome: item.CONCURSO.concurso_nome || "Nome não disponível",
           descricao:
             item.CONCURSO.concurso_descricao || "Descrição não disponível",
-          ano:
-            item.CONCURSO.concurso_ano || "Ano não disponível",
-          edital:
-            item.CONCURSO.concurso_edital || "Edital não disponível",
+          ano: item.CONCURSO.concurso_ano || "Ano não disponível",
+          edital: item.CONCURSO.concurso_edital || "Edital não disponível",
         }));
 
         setContestList(formattedConcursoData);
@@ -270,6 +271,57 @@ export default function ShowAll() {
     };
 
     getPavimentarConcurso();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarRegimeDeTrabalhoModalidade = async () => {
+      try {
+        const response = await getRegimeTrabalhoModalidade();
+        const regimeDeTrabalhoModalidadeData = response.data.RETORNO[0].RETORNO;
+
+        const formattedRegimeDeTrabalhoModalidadeData =
+          regimeDeTrabalhoModalidadeData.map((item) => ({
+            nome:
+              item.REGIME_TRABALHO_MODALIDADE.regime_trabalho_modalidade_nome ||
+              "Nome não disponível",
+            descricao:
+              item.REGIME_TRABALHO_MODALIDADE
+                .regime_trabalho_modalidade_descricao ||
+              "Descrição não disponível",
+          }));
+
+        setWorkRegimeModalityList(formattedRegimeDeTrabalhoModalidadeData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarRegimeDeTrabalhoModalidade();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarRegimeDeTrabalhoTipo = async () => {
+      try {
+        const response = await getRegimeTrabalhoTipo();
+        const regimeDeTrabalhoTipoData = response.data.RETORNO[0].RETORNO;
+
+        const formattedRegimeDeTrabalhoTipoData =
+        regimeDeTrabalhoTipoData.map((item) => ({
+            nome:
+              item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_nome ||
+              "Nome não disponível",
+            descricao:
+              item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_descricao ||
+              "Descrição não disponível",
+          }));
+
+          setWorkRegimeTypeList(formattedRegimeDeTrabalhoTipoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentarRegimeDeTrabalhoTipo();
   }, []);
 
   return (
@@ -336,28 +388,20 @@ export default function ShowAll() {
           Concurso
         </button>
         <button
-          className={selectedList === "Carreira" ? "selected" : ""}
-          onClick={() => handleButtonClick("Carreira")}
+          className={
+            selectedList === "RegimeDeTrabalhoModalidade" ? "selected" : ""
+          }
+          onClick={() => handleButtonClick("RegimeDeTrabalhoModalidade")}
         >
-          Carreira
+          Regime De Trabalho-Modalidade
         </button>
         <button
-          className={selectedList === "Afastamento" ? "selected" : ""}
-          onClick={() => handleButtonClick("Afastamento")}
+          className={
+            selectedList === "RegimeDeTrabalhoTipo" ? "selected" : ""
+          }
+          onClick={() => handleButtonClick("RegimeDeTrabalhoTipo")}
         >
-          Afastamento
-        </button>
-        <button
-          className={selectedList === "Ferias" ? "selected" : ""}
-          onClick={() => handleButtonClick("Ferias")}
-        >
-          Ferias
-        </button>
-        <button
-          className={selectedList === "RegimeDeTrabalho" ? "selected" : ""}
-          onClick={() => handleButtonClick("RegimeDeTrabalho")}
-        >
-          Regime De Trabalho
+          Regime De Trabalho-Tipo
         </button>
       </div>
 
@@ -394,6 +438,12 @@ export default function ShowAll() {
         )}
         {selectedList === "Concurso" && (
           <ShowContest peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "RegimeDeTrabalhoModalidade" && (
+          <ShowWorkRegimeModality peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "RegimeDeTrabalhoTipo" && (
+          <ShowWorkRegimeType peopleList={lists[selectedList]} />
         )}
       </div>
     </div>
