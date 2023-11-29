@@ -128,6 +128,38 @@ export const getAfastamento = async () => {
   }
 };
 
+export const getParticipacao = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        PARTICIPACAO: {
+          participacao_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarParticipacao", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    return 500;
+  }
+};
+
 export const deletePerson = async (id) => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
@@ -252,6 +284,41 @@ export const deleteRemoval = async (id) => {
 
   try {
     const response = await api.post("/AtualizarAfastamento", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    return 500;
+  }
+};
+
+export const deleteParticipation = async (id) => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    ATUALIZAR: [
+      {
+        PARTICIPACAO: {
+          participacao_id: id,
+          ATUALIZAR: {
+            participacao_ativo: "0",
+          },
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/AtualizarParticipacao", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
