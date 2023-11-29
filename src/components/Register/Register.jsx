@@ -6,6 +6,7 @@ import Removal from "./Removal/Removal";
 import "./Register.scss";
 import ShowAll from "./ShowAll/ShowAll";
 import Training from "./Training/Training";
+import Participation from "./Participation/Participation";
 
 export default function Register() {
   const [currentPage, setCurrentPage] = useState("ShowAll");
@@ -69,6 +70,7 @@ export default function Register() {
         {currentPage === "Vacation" && <Vacation />}
         {currentPage === "Removal" && <Removal />}
         {currentPage === "Training" && <Training />}
+        {currentPage === "Participation" && <Participation />}
       </div>
     </>
   );

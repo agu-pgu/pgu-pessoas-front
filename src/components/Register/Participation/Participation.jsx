@@ -1,48 +1,47 @@
 import React, { useEffect, useState } from "react";
 import {
-    createCapacitacao,
-  getCapacitacao,
-  getCapacitacaoStatus,
-  getPessoa,
-} from "../../../services/CallsPerson/callsTraining";
-import { CreateError, ErrorAtGetData, createPersonSucess } from "../../../assets/js/Alerts";
-import "./Training.scss";
+  CreateError,
+  ErrorAtGetData,
+  createPersonSucess,
+} from "../../../assets/js/Alerts";
+import { createParticipacao, getParticipacaoStatus, getParticipacaoTipo, getPessoa } from "../../../services/CallsPerson/callsParticipation";
+import "./Participation.scss"
 
-export default function Training() {
+export default function Participation() {
   const [nome, setNome] = useState("");
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [capacitacao, setCapacitacao] = useState("");
-  const [capacitacaoStatus, setCapacitacaoStatus] = useState("");
+  const [participacao, setParticipacao] = useState("");
+  const [participacaoStatus, setParticipacaoStatus] = useState("");
   const [pessoa, setPessoa] = useState("");
-  const [capacitacaoOptions, setCapacitacaoOptions] = useState([]);
-  const [capacitacaoStatusOptions, setCapacitacaoStatusOptions] = useState([]);
+  const [participacaoOptions, setParticipacaoOptions] = useState([]);
+  const [participacaoStatusOptions, setParticipacaoStatusOptions] = useState([]);
   const [pessoaOptions, setPessoaOptions] = useState([]);
-  const [capacitacaoMotivoStatus, setCapacitacaoMotivoStatus] = useState("");
+  const [participacaoMotivoStatus, setParticipacaoMotivoStatus] = useState("");
 
-  const handleSubmitForCreateTraining = async (e) => {
+  const handleSubmitForCreateParticipation = async (e) => {
     e.preventDefault();
     const data = {
       CADASTRAR: [
         {
-          CAPACITACAO: {
-            capacitacao_nome: nome,
-            capacitacao_descricao: descricao,
-            capacitacao_inicio: dataInicio,
-            capacitacao_fim: dataFim,
-            capacitacao_tipo_id: capacitacao,
+          PARTICIPACAO: {
+            participacao_nome: nome,
+            participacao_descricao: descricao,
+            participacao_inicio: dataInicio,
+            participacao_fim: dataFim,
+            participacao_tipo_id: participacao,
             pessoa_id: pessoa,
           },
-          CAPACITACAO_MOTIVO_STATUS: {
-            capacitacao_motivo_status_descricao: capacitacaoMotivoStatus,
-            capacitacao_status_id: capacitacaoStatus,
+          PARTICIPACAO_MOTIVO_STATUS: {
+            participacao_motivo_status_descricao: participacaoMotivoStatus,
+            participacao_status_id: participacaoStatus,
           },
         },
       ],
     };
     try {
-      const response = await createCapacitacao(data);
+      const response = await createParticipacao(data);
       if (response.data.SUCESSO == true) {
         createPersonSucess();
       }
@@ -52,16 +51,16 @@ export default function Training() {
   };
 
   useEffect(() => {
-    const getPavimentarCapacitacao = async () => {
+    const getPavimentarParticipacao = async () => {
       try {
-        const response = await getCapacitacao();
-        const capacitacaoData = response.data.RETORNO[0].RETORNO;
-        const options = capacitacaoData.map((item) => (
+        const response = await getParticipacaoTipo();
+        const participacaoData = response.data.RETORNO[0].RETORNO;
+        const options = participacaoData.map((item) => (
           <option
-            key={item.CAPACITACAO_TIPO.capacitacao_tipo_id}
-            value={item.CAPACITACAO_TIPO.capacitacao_tipo_id}
+            key={item.PARTICIPACAO_TIPO.participacao_tipo_id}
+            value={item.PARTICIPACAO_TIPO.participacao_tipo_id}
           >
-            {item.CAPACITACAO_TIPO.capacitacao_tipo_nome}
+            {item.PARTICIPACAO_TIPO.participacao_tipo_nome}
           </option>
         )); // mapeando para obter os valores de genero_id e genero_nome
         options.unshift(
@@ -69,12 +68,12 @@ export default function Training() {
             Selecione
           </option>
         ); // adicionando a opção "Selecione" no início do array de options para o select com um valor nulo
-        setCapacitacaoOptions(options);
+        setParticipacaoOptions(options);
       } catch (error) {
         ErrorAtGetData();
       }
     };
-    getPavimentarCapacitacao();
+    getPavimentarParticipacao();
 
     return () => {};
   }, []);
@@ -105,16 +104,17 @@ export default function Training() {
   }, []);
 
   useEffect(() => {
-    const getPavimentarCapacitacaoStatus = async () => {
+    const getPavimentarparticipacaoStatus = async () => {
       try {
-        const response = await getCapacitacaoStatus();
-        const capacitacaoStatusData = response.data.RETORNO[0].RETORNO;
-        const options = capacitacaoStatusData.map((item) => (
+        const response = await getParticipacaoStatus();
+        const participacaoStatusData = response.data.RETORNO[0].RETORNO;
+        console.log(participacaoStatusData)
+        const options = participacaoStatusData.map((item) => (
           <option
-            key={item.CAPACITACAO_STATUS.capacitacao_status_id}
-            value={item.CAPACITACAO_STATUS.capacitacao_status_id}
+            key={item.PARTICIPACAO_STATUS.participacao_status_id}
+            value={item.PARTICIPACAO_STATUS.participacao_status_id}
           >
-            {item.CAPACITACAO_STATUS.capacitacao_status_nome}
+            {item.PARTICIPACAO_STATUS.participacao_status_nome}
           </option>
         )); // mapeando para obter os valores de genero_id e genero_nome
         options.unshift(
@@ -122,31 +122,30 @@ export default function Training() {
             Selecione
           </option>
         ); // adicionando a opção "Selecione" no início do array de options para o select com um valor nulo
-        setCapacitacaoStatusOptions(options);
+        setParticipacaoStatusOptions(options);
       } catch (error) {
         ErrorAtGetData();
       }
     };
-    getPavimentarCapacitacaoStatus();
+    getPavimentarparticipacaoStatus();
 
     return () => {};
   }, []);
-
   return (
     <div>
       <div className="formulario-container">
-        <h1 className="formulario-h2">Cadastre uma Capacitação!</h1>
+        <h1 className="formulario-h2">Cadastre uma Participação!</h1>
         <div className="form-scroll">
           <form
             className="formulario-container"
-            onSubmit={handleSubmitForCreateTraining}
+            onSubmit={handleSubmitForCreateParticipation}
           >
-            <label className="form-label">*Capacitação:</label>
+            <label className="form-label">*Participação:</label>
             <input
               className="form-input"
               type="text"
-              name="capacitacao_nome"
-              id="capacitacao_nome"
+              name="participacao_nome"
+              id="participacao_nome"
               value={nome}
               onChange={(event) => setNome(event.target.value)}
               maxLength={255}
@@ -156,14 +155,14 @@ export default function Training() {
             <input
               className="form-input"
               type="text"
-              name="capacitacao_descricao"
-              id="capacitacao_descricao"
+              name="participacao_descricao"
+              id="participacao_descricao"
               value={descricao}
               onChange={(event) => setDescricao(event.target.value)}
               maxLength={255}
               required
             />
-            <label className="form-label">*Capacitação - início:</label>
+            <label className="form-label">*Participação - início:</label>
             <input
               className="form-input"
               type="date"
@@ -174,7 +173,7 @@ export default function Training() {
               maxLength={255}
               required
             />
-            <label className="form-label">*Capacitação - fim:</label>
+            <label className="form-label">*Participação - fim:</label>
             <input
               className="form-input"
               type="date"
@@ -185,15 +184,15 @@ export default function Training() {
               maxLength={255}
               required
             />
-            <label className="form-label">Capacitação - Tipo:</label>
+            <label className="form-label">Participação - Tipo:</label>
             <select
               className="form-input"
               name="genero_id"
               id="genero_id"
-              value={capacitacao}
-              onChange={(event) => setCapacitacao(event.target.value)}
+              value={participacao}
+              onChange={(event) => setParticipacao(event.target.value)}
             >
-              {capacitacaoOptions}
+              {participacaoOptions}
             </select>
             <label className="form-label">Pessoa:</label>
             <select
@@ -205,28 +204,28 @@ export default function Training() {
             >
               {pessoaOptions}
             </select>
-            <label className="form-label">*Capacitação - Descrição:</label>
+            <label className="form-label">*Participação - Descrição:</label>
             <input
               className="form-input"
               type="text"
-              name="capacitacao_descricao"
-              id="capacitacao_descricao"
-              value={capacitacaoMotivoStatus}
+              name="participacao_descricao"
+              id="participacao_descricao"
+              value={participacaoMotivoStatus}
               onChange={(event) =>
-                setCapacitacaoMotivoStatus(event.target.value)
+                setParticipacaoMotivoStatus(event.target.value)
               }
               maxLength={255}
               required
             />
-            <label className="form-label">Capacitação - Status:</label>
+            <label className="form-label">Participação - Status:</label>
             <select
               className="form-input"
-              name="capacitação_status"
-              id="capacitação_status"
-              value={capacitacaoStatus}
-              onChange={(event) => setCapacitacaoStatus(event.target.value)}
+              name="Participação_status"
+              id="Participação_status"
+              value={participacaoStatus}
+              onChange={(event) => setParticipacaoStatus(event.target.value)}
             >
-              {capacitacaoStatusOptions}
+              {participacaoStatusOptions}
             </select>
             <button className="form-button-submit" type="submit">
               Enviar
