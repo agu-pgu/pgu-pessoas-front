@@ -108,7 +108,6 @@ export default function Participation() {
       try {
         const response = await getParticipacaoStatus();
         const participacaoStatusData = response.data.RETORNO[0].RETORNO;
-        console.log(participacaoStatusData)
         const options = participacaoStatusData.map((item) => (
           <option
             key={item.PARTICIPACAO_STATUS.participacao_status_id}
