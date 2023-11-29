@@ -6,17 +6,18 @@
   top: 0; /* Ajusta para o topo da tela */
   left: 0;
   right: 0;
-  z-index: 1000; /* Coloca a barra na frente de outros elementos */
-
+  z-index: 10; /* Coloca a barra na frente de outros elementos */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
   color: blue;
+  border-bottom: 2px solid #ccc;
+  background-color: #ffffff;
 
   .menu-name {
     color: black;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
 
