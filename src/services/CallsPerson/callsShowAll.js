@@ -160,6 +160,38 @@ export const getParticipacao = async () => {
   }
 };
 
+export const getCapacitacao = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        CAPACITACAO: {
+          capacitacao_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarCapacitacao", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    return 500;
+  }
+};
+
 export const deletePerson = async (id) => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
@@ -319,6 +351,41 @@ export const deleteParticipation = async (id) => {
 
   try {
     const response = await api.post("/AtualizarParticipacao", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    return 500;
+  }
+};
+
+export const deleteTraining = async (id) => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    ATUALIZAR: [
+      {
+        CAPACITACAO: {
+          capacitacao_id: id,
+          ATUALIZAR: {
+            capacitacao_ativo: "0",
+          },
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/AtualizarCapacitacao", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

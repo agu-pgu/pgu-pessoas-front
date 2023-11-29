@@ -3,6 +3,7 @@ import "./ShowAll.scss";
 import ShowPerson from "./ShowPerson/ShowPerson";
 import {
   getAfastamento,
+  getCapacitacao,
   getCarreira,
   getFerias,
   getParticipacao,
@@ -14,6 +15,7 @@ import ShowRemoval from "./ShowRemoval/ShowRemoval";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthProvider/AuthProvider";
 import ShowParticipation from "./ShowParticipation/ShowParticipation";
+import ShowTraining from "./ShowTraining/ShowTraining";
 
 export default function ShowAll() {
   const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();
@@ -256,6 +258,43 @@ export default function ShowAll() {
     getPavimentaParticipacao();
   }, []);
 
+  useEffect(() => {
+    const getPavimentaCapacitacao = async () => {
+      try {
+        const response = await getCapacitacao();
+        const capacitacaoData = response.data.RETORNO[0][0].RETORNO;
+
+        const capacitacaoFormattedData = capacitacaoData.map((capacitacao) => ({
+          capacitacaoNome:
+            capacitacao.CAPACITACAO.capacitacao_nome ||
+            "Nome da capacitação não disponível",
+          capacitacaoDescricao:
+            capacitacao.CAPACITACAO.capacitacao_descricao ||
+            "Descrição da capacitação não disponível",
+          capacitacaoTipoNome:
+            (capacitacao.CAPACITACAO.capacitacao_tipo_id &&
+              capacitacao.CAPACITACAO.capacitacao_tipo_id[0]?.CAPACITACAO_TIPO
+                .capacitacao_tipo_nome) ||
+            "Tipo de capacitação não disponível",
+          pessoaNome:
+            (capacitacao.CAPACITACAO.pessoa_id &&
+              capacitacao.CAPACITACAO.pessoa_id[0]?.PESSOA.pessoa_nome) ||
+            "Nome não disponível",
+          pessoaSiape:
+            (capacitacao.CAPACITACAO.pessoa_id &&
+              capacitacao.CAPACITACAO.pessoa_id[0]?.PESSOA.pessoa_siape) ||
+            "SIAPE não disponível",
+          id: capacitacao.CAPACITACAO.capacitacao_id,
+        }));
+        setTrainingList(capacitacaoFormattedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaCapacitacao();
+  }, []);
+
   return (
     <div className="show-all-container">
       <div className="button-container">
@@ -287,7 +326,7 @@ export default function ShowAll() {
           className={selectedList === "Capacitacao" ? "selected" : ""}
           onClick={() => handleButtonClick("Capacitacao")}
         >
-          Afastamento
+          Capacitação
         </button>
         <button
           className={selectedList === "Participacao" ? "selected" : ""}
@@ -314,6 +353,9 @@ export default function ShowAll() {
         )}
         {selectedList === "Afastamento" && (
           <ShowRemoval peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Capacitacao" && (
+          <ShowTraining peopleList={lists[selectedList]} />
         )}
         {selectedList === "Participacao" && (
           <ShowParticipation peopleList={lists[selectedList]} />
