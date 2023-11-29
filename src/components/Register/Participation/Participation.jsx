@@ -135,6 +135,8 @@ export default function Participation() {
       <div className="formulario-container">
         <h1 className="formulario-h2">Cadastre uma Participação!</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário de "Participação"</h3>
+
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateParticipation}

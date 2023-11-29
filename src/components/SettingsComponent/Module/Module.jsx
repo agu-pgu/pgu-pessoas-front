@@ -32,6 +32,7 @@ export default function Module() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Configurações - Módulo</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário de configurações - "Módulo"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateModule}

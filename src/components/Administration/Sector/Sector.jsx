@@ -34,8 +34,11 @@ export default function Sector() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Administrativo - Setor</h1>
+        <h1 className="formulario-h2">Administrativo - Setor</h1>
         <div className="form-scroll">
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Setor"
+          </h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateSetor}

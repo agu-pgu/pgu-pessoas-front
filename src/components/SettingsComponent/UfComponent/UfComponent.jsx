@@ -35,8 +35,10 @@ export default function UfComponent() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Configurações - UF</h1>
+        <h1 className="formulario-h2">Configurações - UF</h1>
         <div className="form-scroll">
+          <h3 className="formulario-h3">Formulário de configurações - "UF"</h3>
+
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateUf}

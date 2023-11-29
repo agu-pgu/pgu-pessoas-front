@@ -97,6 +97,7 @@ export default function Removal() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Administrativo - Afastamento</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário administrativo de "Afastamento - Tipo"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateAfastamentoTipo}
@@ -116,6 +117,7 @@ export default function Removal() {
               Enviar
             </button>
           </form>
+        <h3 className="formulario-h3">Formulário administrativo de "Afastamento - Status"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateAfastamentoStatus}

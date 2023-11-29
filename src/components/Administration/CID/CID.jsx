@@ -156,6 +156,7 @@ export default function CID() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Administrativo - CID</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário administrativo de "CID - Categoria"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateCidCategoria}
@@ -175,6 +176,7 @@ export default function CID() {
               Enviar
             </button>
           </form>
+        <h3 className="formulario-h3">Formulário administrativo de "CID"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateCid}
@@ -216,6 +218,8 @@ export default function CID() {
               Enviar
             </button>
           </form>
+        <h3 className="formulario-h3">Formulário administrativo de "CID - SUB"</h3>
+
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateCidSub}

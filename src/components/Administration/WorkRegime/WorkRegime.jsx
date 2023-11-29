@@ -58,6 +58,7 @@ export default function WorkRegime() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Administrativo - Regime de trabalho</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário administrativo de "Regime de trabalho - Modalidade"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateRegimeTrabalhoModalidade}
@@ -81,6 +82,7 @@ export default function WorkRegime() {
               Enviar
             </button>
           </form>
+        <h3 className="formulario-h3">Formulário administrativo de "Regime de trabalho - Tipo"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateRegimeTrabalhoTipo}
