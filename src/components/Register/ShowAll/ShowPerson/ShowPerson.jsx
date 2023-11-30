@@ -95,10 +95,10 @@ export default function ShowPerson({ peopleList }) {
             </tr>
           ))}
         </tbody>
-        {showUpdateModal && (
-        <UpdatePerson id={selectedPersonId} handleClose={handleCloseUpdateModal} />
-      )}
       </table>
+          {showUpdateModal && (
+          <UpdatePerson id={selectedPersonId} handleClose={handleCloseUpdateModal} />
+        )}
     </div>
   );
 }
