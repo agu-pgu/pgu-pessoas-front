@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowRemoval.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { deleteRemoval } from "../../../../services/CallsPerson/callsShowAll";
+import UpdateRemoval from "../UpdateRemoval/UpdateRemoval";
 
 export default function ShowRemoval({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -29,16 +33,27 @@ export default function ShowRemoval({ peopleList }) {
             window.location.reload();
           });
         } else {
-          Swal.fire("Erro", "Falha ao desativar o registro.", "error")
-          .then(() => {
-            window.location.reload();
-          });
+          Swal.fire("Erro", "Falha ao desativar o registro.", "error").then(
+            () => {
+              window.location.reload();
+            }
+          );
         }
       }
     } catch (error) {
       console.error("Erro ao desativar o registro:", error);
       Swal.fire("Erro", "Falha ao desativar o registro.", "error");
     }
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedPersonId(null);
+  };
+
+  const handleUpdate = (id) => {
+    setShowUpdateModal(true);
+    setSelectedPersonId(id);
   };
 
   return (
@@ -76,11 +91,23 @@ export default function ShowRemoval({ peopleList }) {
                 <button onClick={() => handleDelete(afastamento.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(afastamento.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showUpdateModal && (
+        <UpdateRemoval
+          id={selectedPersonId}
+          handleClose={handleCloseUpdateModal}
+        />
+      )}
     </div>
   );
 }
