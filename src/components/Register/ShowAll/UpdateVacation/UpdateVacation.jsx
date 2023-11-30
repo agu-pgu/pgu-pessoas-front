@@ -69,7 +69,6 @@ export default function UpdateVacation({ id, handleClose }) {
       try {
         const response = await getFeriasId(idString);
         const feriasData = response.data.RETORNO[0][0].RETORNO[0];
-        console.log(feriasData);
 
         setInicialFeriasInicio(feriasData.FERIAS.ferias_inicio || "");
         if (
