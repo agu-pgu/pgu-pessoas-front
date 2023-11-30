@@ -79,7 +79,6 @@ export default function UpdateRemoval({ id, handleClose }) {
       try {
         const response = await getAfastamentoId(idString);
         const afastamentoData = response.data.RETORNO[0][0].RETORNO[0];
-        console.log(afastamentoData);
 
         setAfastamentoDescricao(
           afastamentoData.AFASTAMENTO.afastamento_descricao
