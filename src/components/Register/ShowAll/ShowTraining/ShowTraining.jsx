@@ -53,6 +53,7 @@ export default function ShowTraining({ peopleList}) {
             <th className="list-container-th">Tipo</th>
             <th className="list-container-th">Pessoa</th>
             <th className="list-container-th">Siape</th>
+            <th className="list-container-th">Ações</th>
           </tr>
         </thead>
         <tbody>
