@@ -15,6 +15,7 @@ import {
 export default function UpdatePerson({ id, handleClose }) {
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [initialBirthDate, setInicialBirthDate] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [siape, setSiape] = useState("");
@@ -74,6 +75,7 @@ export default function UpdatePerson({ id, handleClose }) {
         setMunicipioId(
           pessoaData.PESSOA.municipio_id[0].MUNICIPIO.municipio_id || ""
         );
+        setInicialBirthDate(pessoaData.PESSOA.pessoa_data_nascimento || "");
 
         if (
           pessoaData.PESSOA.pessoa_data_nascimento !== undefined &&
@@ -185,6 +187,7 @@ export default function UpdatePerson({ id, handleClose }) {
             onChange={(e) => setName(e.target.value)}
             maxLength={255}
           />
+          <label className="label-update">Data atual: {initialBirthDate}</label>
           <input
             className="input-update"
             type="date"
