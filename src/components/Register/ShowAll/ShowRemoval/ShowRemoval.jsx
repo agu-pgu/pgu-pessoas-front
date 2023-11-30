@@ -2,6 +2,7 @@ import React from "react";
 import "./ShowRemoval.scss";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { deleteRemoval } from "../../../../services/CallsPerson/callsShowAll";
 
 export default function ShowRemoval({ peopleList }) {
   const handleDelete = async (id) => {
@@ -18,7 +19,7 @@ export default function ShowRemoval({ peopleList }) {
       });
 
       if (result.isConfirmed) {
-        const response = await deletePerson(id);
+        const response = await deleteRemoval(id);
         if (response.data.SUCESSO == true) {
           Swal.fire(
             "Desativado!",
