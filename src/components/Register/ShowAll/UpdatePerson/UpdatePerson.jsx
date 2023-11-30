@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./UpdatePerson.scss";
-import { CreateError, ErrorAtGetData, createPersonSucess } from "../../../../assets/js/Alerts";
+import {
+  CreateError,
+  ErrorAtGetData,
+  createPersonSucess,
+} from "../../../../assets/js/Alerts";
 import {
   getGenero,
   getMunicipio,
@@ -10,7 +14,7 @@ import {
 
 export default function UpdatePerson({ id, handleClose }) {
   const [name, setName] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date());
+  const [birthDate, setBirthDate] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [siape, setSiape] = useState("");
@@ -46,16 +50,14 @@ export default function UpdatePerson({ id, handleClose }) {
         },
       ],
     };
-    // updatePerson(data);
     try {
       const response = await updatePerson(data);
       if (response.data.SUCESSO == true) {
-        console.log(response)
-        createPersonSucess()
+        createPersonSucess();
       }
     } catch (error) {
       CreateError();
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -64,7 +66,6 @@ export default function UpdatePerson({ id, handleClose }) {
       try {
         const response = await getPessoaId(idString);
         const pessoaData = response.data.RETORNO[0].RETORNO[0];
-        console.log(pessoaData);
         setName(pessoaData.PESSOA.pessoa_nome || "");
         setCpf(pessoaData.PESSOA.pessoa_cpf || "");
         setEmail(pessoaData.PESSOA.pessoa_email || "");
@@ -73,20 +74,19 @@ export default function UpdatePerson({ id, handleClose }) {
         setMunicipioId(
           pessoaData.PESSOA.municipio_id[0].MUNICIPIO.municipio_id || ""
         );
+
         if (
           pessoaData.PESSOA.pessoa_data_nascimento !== undefined &&
           pessoaData.PESSOA.pessoa_data_nascimento !== ""
         ) {
-          // Convertendo a string de data para um formato reconhecido pelo construtor Date
+          // Convertendo a string de data para o formato desejado (YYYY-MM-DD HH:mm:ss)
           const birthDateArray =
             pessoaData.PESSOA.pessoa_data_nascimento.split("/");
-          const formattedBirthDate = `${birthDateArray[2]}-${birthDateArray[1]}-${birthDateArray[0]}`;
-          // Verifica se a data formatada é válida antes de definir o estado
-          const dateObj = new Date(formattedBirthDate);
-          setBirthDate(isNaN(dateObj) ? new Date() : dateObj); // caso não haja data castrada o valor será a atual
+          const formattedBirthDate = `${birthDateArray[2]}-${birthDateArray[1]}-${birthDateArray[0]} 00:00:00`;
+          setBirthDate(formattedBirthDate);
         } else {
-          setBirthDate(new Date());
-        } // feito pelo ChatGPT!!!
+          setBirthDate("");
+        }
       } catch (error) {
         console.log(error);
         ErrorAtGetData();
@@ -188,9 +188,9 @@ export default function UpdatePerson({ id, handleClose }) {
           <input
             className="input-update"
             type="date"
-            placeholder="Data de Nascimento"
-            value={birthDate.toISOString().split("T")[0]}
-            onChange={(e) => setBirthDate(new Date(e.target.value))}
+            placeholder="*Data de Nascimento"
+            value={birthDate || ""}
+            onChange={(e) => setBirthDate(e.target.value)}
           />
           <input
             className="input-update"
