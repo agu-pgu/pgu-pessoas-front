@@ -186,9 +186,6 @@ export default function ShowAll() {
         const afastamentoData = response.data.RETORNO[0][0].RETORNO;
 
         const formattedAfastamentoData = afastamentoData.map((afastamento) => ({
-          afastamentoNome:
-            afastamento.AFASTAMENTO.afastamento_nome ||
-            "Nome do afastamento não disponível",
           afastamentoTipoNome:
             afastamento.AFASTAMENTO.afastamento_tipo_id[0]?.AFASTAMENTO_TIPO
               .afastamento_tipo_nome || "Tipo de afastamento não disponível",

@@ -61,7 +61,6 @@ export default function ShowRemoval({ peopleList }) {
       <table className="list-container-table">
         <thead className="list-container-thead">
           <tr className="list-container-tr">
-            <th className="list-container-th">Afastamento Nome</th>
             <th className="list-container-th">Afastamento Tipo</th>
             <th className="list-container-th">CID Categoria</th>
             <th className="list-container-th">CID</th>
@@ -74,9 +73,6 @@ export default function ShowRemoval({ peopleList }) {
         <tbody>
           {peopleList.map((afastamento, index) => (
             <tr key={index} className="list-container-tr">
-              <td className="list-container-td">
-                {afastamento.afastamentoNome}
-              </td>
               <td className="list-container-td">
                 {afastamento.afastamentoTipoNome}
               </td>
