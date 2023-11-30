@@ -64,6 +64,8 @@ export default function Contest() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Administrativo - Concurso</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário administrativo de "Concurso"</h3>
+
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateConcurso}
@@ -105,6 +107,8 @@ export default function Contest() {
               Enviar
             </button>
           </form>
+        <h3 className="formulario-h3">Formulário administrativo de "Concurso - Cota"</h3>
+
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateConcursoCota}

@@ -34,8 +34,11 @@ export default function Coordination() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Administrativo - Coordenação</h1>
+        <h1 className="formulario-h2">Administrativo - Coordenação</h1>
         <div className="form-scroll">
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Coordenação"
+          </h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateCoordenacao}

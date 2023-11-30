@@ -33,6 +33,7 @@ export default function Gender() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Configurações - Gênero</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário de configurações - "Gênero"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateGender}

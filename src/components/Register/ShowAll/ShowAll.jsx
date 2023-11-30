@@ -3,8 +3,10 @@ import "./ShowAll.scss";
 import ShowPerson from "./ShowPerson/ShowPerson";
 import {
   getAfastamento,
+  getCapacitacao,
   getCarreira,
   getFerias,
+  getParticipacao,
   getPessoa,
 } from "../../../services/CallsPerson/callsShowAll";
 import ShowCareer from "./ShowCareer/ShowCareer";
@@ -12,6 +14,8 @@ import ShowVacation from "./ShowVacation/ShowVacation";
 import ShowRemoval from "./ShowRemoval/ShowRemoval";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../AuthProvider/AuthProvider";
+import ShowParticipation from "./ShowParticipation/ShowParticipation";
+import ShowTraining from "./ShowTraining/ShowTraining";
 
 export default function ShowAll() {
   const { isUnauthorized, setUnauthorized, clearUnauthorized } = useAuth();
@@ -20,6 +24,8 @@ export default function ShowAll() {
   const [careerList, setCareerList] = useState([]);
   const [vacationList, setVacationList] = useState([]);
   const [removalList, setRemovalList] = useState([]);
+  const [trainingList, setTrainingList] = useState([]);
+  const [participationList, setParticipationList] = useState([]);
   const navigate = useNavigate();
 
   const lists = {
@@ -27,6 +33,8 @@ export default function ShowAll() {
     Carreira: careerList,
     Ferias: vacationList,
     Afastamento: removalList,
+    Capacitacao: trainingList,
+    Participacao: participationList,
   };
 
   const handleButtonClick = (list) => {
@@ -212,6 +220,81 @@ export default function ShowAll() {
     getPavimentaAfastamento();
   }, []);
 
+  useEffect(() => {
+    const getPavimentaParticipacao = async () => {
+      try {
+        const response = await getParticipacao();
+        const participacaoData = response.data.RETORNO[0][0].RETORNO;
+
+        const formattedParticipacaoData = participacaoData.map(
+          (participacao) => ({
+            participacaoNome:
+              participacao.PARTICIPACAO.participacao_nome ||
+              "Nome da participação não disponível",
+            participacaoDescricao:
+              participacao.PARTICIPACAO.participacao_descricao ||
+              "Descrição da participação não disponível",
+            participacaoTipoNome:
+              participacao.PARTICIPACAO.participacao_tipo_id[0]
+                ?.PARTICIPACAO_TIPO.participacao_tipo_nome ||
+              "Tipo de participação não disponível",
+            pessoaNome:
+              participacao.PARTICIPACAO.pessoa_id[0]?.PESSOA.pessoa_nome ||
+              "Nome não disponível",
+            pessoaSiape:
+              participacao.PARTICIPACAO.pessoa_id[0]?.PESSOA.pessoa_siape ||
+              "SIAPE não disponível",
+            id:
+              participacao.PARTICIPACAO.participacao_id ||
+              "Nome da participação não disponível",
+          })
+        );
+        setParticipationList(formattedParticipacaoData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaParticipacao();
+  }, []);
+
+  useEffect(() => {
+    const getPavimentaCapacitacao = async () => {
+      try {
+        const response = await getCapacitacao();
+        const capacitacaoData = response.data.RETORNO[0][0].RETORNO;
+
+        const capacitacaoFormattedData = capacitacaoData.map((capacitacao) => ({
+          capacitacaoNome:
+            capacitacao.CAPACITACAO.capacitacao_nome ||
+            "Nome da capacitação não disponível",
+          capacitacaoDescricao:
+            capacitacao.CAPACITACAO.capacitacao_descricao ||
+            "Descrição da capacitação não disponível",
+          capacitacaoTipoNome:
+            (capacitacao.CAPACITACAO.capacitacao_tipo_id &&
+              capacitacao.CAPACITACAO.capacitacao_tipo_id[0]?.CAPACITACAO_TIPO
+                .capacitacao_tipo_nome) ||
+            "Tipo de capacitação não disponível",
+          pessoaNome:
+            (capacitacao.CAPACITACAO.pessoa_id &&
+              capacitacao.CAPACITACAO.pessoa_id[0]?.PESSOA.pessoa_nome) ||
+            "Nome não disponível",
+          pessoaSiape:
+            (capacitacao.CAPACITACAO.pessoa_id &&
+              capacitacao.CAPACITACAO.pessoa_id[0]?.PESSOA.pessoa_siape) ||
+            "SIAPE não disponível",
+          id: capacitacao.CAPACITACAO.capacitacao_id,
+        }));
+        setTrainingList(capacitacaoFormattedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPavimentaCapacitacao();
+  }, []);
+
   return (
     <div className="show-all-container">
       <div className="button-container">
@@ -239,6 +322,18 @@ export default function ShowAll() {
         >
           Afastamento
         </button>
+        <button
+          className={selectedList === "Capacitacao" ? "selected" : ""}
+          onClick={() => handleButtonClick("Capacitacao")}
+        >
+          Capacitação
+        </button>
+        <button
+          className={selectedList === "Participacao" ? "selected" : ""}
+          onClick={() => handleButtonClick("Participacao")}
+        >
+          Participação
+        </button>
       </div>
 
       <div className="list-container">
@@ -258,6 +353,12 @@ export default function ShowAll() {
         )}
         {selectedList === "Afastamento" && (
           <ShowRemoval peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Capacitacao" && (
+          <ShowTraining peopleList={lists[selectedList]} />
+        )}
+        {selectedList === "Participacao" && (
+          <ShowParticipation peopleList={lists[selectedList]} />
         )}
       </div>
     </div>

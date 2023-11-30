@@ -476,6 +476,8 @@ export default function Career() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Cadastre uma Carreira!!</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário de "Carreira"</h3>
+
           <form
             className="formulario-container"
             onSubmit={handleSubmitCreateCareer}

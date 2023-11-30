@@ -34,6 +34,7 @@ export default function Core() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Administrativo - Núcleo</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário administrativo de "Núcleo"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateNucleo}

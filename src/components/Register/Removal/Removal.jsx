@@ -204,6 +204,7 @@ export default function Removal() {
       <div className="formulario-container">
       <h1 className="formulario-h2">Cadastre um Afastamento!</h1>
         <div className="form-scroll">
+        <h3 className="formulario-h3">Formulário de "Afastamento"</h3>
           <form className="formulario-container" onSubmit={handleSubmitCreateRemoval}>
             <label className="form-label">Afastamento Descrição:</label>
             <input

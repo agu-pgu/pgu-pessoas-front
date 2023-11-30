@@ -1,18 +1,9 @@
 @import "../../../global.scss";
 
 .formulario-container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px; /* Adicione algum espaço interno se necessário */
-
-  .formulario-h2 {
-    text-align: center;
-    color: $primary-collor;
-  }
-  .formulario-h3 {
-    text-align: center;
-    color: $primary-collor;
-  }
 
   .form-scroll {
     max-height: 350px; /* Ajuste conforme necessário */
@@ -21,32 +12,10 @@
 
   .form-label {
     display: block;
+    margin-bottom: 5px;
     margin-bottom: 10px;
     font-weight: 600;
     color: $primary-collor;
-  }
-
-  .form-div-search-regiao {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-
-    .form-button-search-regiao {
-      cursor: pointer;
-      margin-left: 1px;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      color: #fff;
-      background-color: $primary-collor;
-      &:hover {
-        background-color: $primary-collor-hover;
-      }
-      .form-button-search-regiao-icon {
-        font-size: 15px;
-      }
-    }
   }
 
   .form-input {
