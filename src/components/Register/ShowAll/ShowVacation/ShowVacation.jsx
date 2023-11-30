@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowVacation.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { deleteVacation } from "../../../../services/CallsPerson/callsShowAll";
+import UpdateVacation from "../UpdateVacation/UpdateVacation";
 
 export default function ShowVacation({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -42,6 +46,16 @@ export default function ShowVacation({ peopleList }) {
     }
   };
 
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedPersonId(null);
+  };
+
+  const handleUpdate = (id) => {
+    setShowUpdateModal(true);
+    setSelectedPersonId(id);
+  };
+
   return (
     <div className="scroll-container">
       <table className="list-container-table">
@@ -73,11 +87,23 @@ export default function ShowVacation({ peopleList }) {
                 <button onClick={() => handleDelete(ferias.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(ferias.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+        {showUpdateModal && (
+          <UpdateVacation
+            id={selectedPersonId}
+            handleClose={handleCloseUpdateModal}
+          />
+        )}
     </div>
   );
 }
