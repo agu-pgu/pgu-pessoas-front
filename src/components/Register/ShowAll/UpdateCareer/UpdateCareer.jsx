@@ -3,8 +3,11 @@ import {
   getCargo,
   getCarreiraId,
   getCarreiraTipo,
+  getCoordenacao,
+  getFuncao,
   getIngresso,
   getPessoa,
+  getSetor,
 } from "../../../../services/CallsPerson/updateCareer";
 import { ErrorAtGetData } from "../../../../assets/js/Alerts";
 
@@ -145,7 +148,7 @@ export default function UpdateCareer({ id, handleClose }) {
       try {
         const response = await getCarreiraId(idString);
         const carreiraData = response.data.RETORNO[0][0].RETORNO[0];
-        console.log(carreiraData)
+        console.log(carreiraData);
         setPessoaId(carreiraData.CARREIRA.pessoa_id[0].PESSOA.pessoa_id || "");
         setIngressoId(
           carreiraData.CARREIRA.ingresso_id[0].INGRESSO.ingresso_id || ""
@@ -471,6 +474,114 @@ export default function UpdateCareer({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarSetor = async () => {
+      try {
+        const response = await getSetor();
+        const setorData = response.data.RETORNO[0].RETORNO;
+        const options = setorData.map((item) => (
+          <option key={item.SETOR.setor_id} value={item.SETOR.setor_id}>
+            {item.SETOR.setor_nome}
+          </option>
+        ));
+
+        setorData.forEach((item) => {
+          if (setorId === item.SETOR.setor_id) {
+            options[0] = (
+              <option
+                key={item.SETOR.setor_id}
+                value={item.SETOR.setor_id}
+                selected
+              >
+                {item.SETOR.setor_nome}
+              </option>
+            );
+          }
+        });
+        setSetorIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarSetor();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarFuncao = async () => {
+      try {
+        const response = await getFuncao();
+        const funcaoData = response.data.RETORNO[0].RETORNO;
+        const options = funcaoData.map((item) => (
+          <option key={item.FUNCAO.funcao_id} value={item.FUNCAO.funcao_id}>
+            {item.FUNCAO.funcao_nome}
+          </option>
+        ));
+
+        funcaoData.forEach((item) => {
+          if (funcaoId === item.FUNCAO.funcao_id) {
+            options[0] = (
+              <option
+                key={item.FUNCAO.funcao_id}
+                value={item.FUNCAO.funcao_id}
+                selected
+              >
+                {item.FUNCAO.funcao_nome}
+              </option>
+            );
+          }
+        });
+        setFuncaoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarFuncao();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarCoordenacao = async () => {
+      try {
+        const response = await getCoordenacao();
+        const coordenacaoData = response.data.RETORNO[0].RETORNO;
+        const options = coordenacaoData.map((item) => (
+          <option
+            key={item.COORDENACAO.coordenacao_id}
+            value={item.COORDENACAO.coordenacao_id}
+          >
+            {item.COORDENACAO.coordenacao_nome}
+          </option>
+        ));
+
+        coordenacaoData.forEach((item) => {
+          if (coordenacaoId === item.COORDENACAO.coordenacao_id) {
+            options[0] = (
+              <option
+                key={item.COORDENACAO.coordenacao_id}
+                value={item.COORDENACAO.coordenacao_id}
+                selected
+              >
+                {item.COORDENACAO.coordenacao_nome}
+              </option>
+            );
+          }
+        });
+        setCoordenacaoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarCoordenacao();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-participation-modal">
       <div className="update-participation-modal-content">
@@ -515,6 +626,36 @@ export default function UpdateCareer({ id, handleClose }) {
             onChange={(event) => setCarreiraTipoId(event.target.value)}
           >
             {carreiraTipoIdOptions}
+          </select>
+          <label className="label-update">Setor:</label>
+          <select
+            className="input-update"
+            name="setor"
+            id="setor"
+            value={setorId}
+            onChange={(event) => setSetorId(event.target.value)}
+          >
+            {setorIdOptions}
+          </select>
+          <label className="label-update">Função:</label>
+          <select
+            className="input-update"
+            name="funcao"
+            id="funcao"
+            value={funcaoId}
+            onChange={(event) => setFuncaoId(event.target.value)}
+          >
+            {funcaoIdOptions}
+          </select>
+          <label className="label-update">Coordenação:</label>
+          <select
+            className="input-update"
+            name="coordenacao"
+            id="coordenacao"
+            value={coordenacaoId}
+            onChange={(event) => setCoordenacaoId(event.target.value)}
+          >
+            {coordenacaoIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
