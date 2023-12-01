@@ -34,7 +34,7 @@ pipeline{
         PROJ = "/var/www/"
         IPDESENV = "http://sdf4673.agu.gov.br:"
         IPHOMOLOG = "http://sdf4808.agu.gov.br:"
-        PORTA = "8100"//
+        PORTA = "8103"//
         APPNAME="Sistema PGU-PESSOAS-frontend desenvolvimento"
         GITAUTHOR="${env.GIT_COMMITTER_EMAIL}"
         URLD="${IPDESENV}${PORTA}"
