@@ -46,15 +46,15 @@ export default function ShowCareer({ peopleList }) {
     }
   };
 
-  const handleCloseUpdateModal = () => {
-    setShowUpdateModal(false);
-    setSelectedPersonId(null);
-  };
+  // const handleCloseUpdateModal = () => {
+  //   setShowUpdateModal(false);
+  //   setSelectedPersonId(null);
+  // };
 
-  const handleUpdate = (id) => {
-    setShowUpdateModal(true);
-    setSelectedPersonId(id);
-  };
+  // const handleUpdate = (id) => {
+  //   setShowUpdateModal(true);
+  //   setSelectedPersonId(id);
+  // };
 
   return (
     <div className="scroll-container-career">
@@ -101,23 +101,23 @@ export default function ShowCareer({ peopleList }) {
                 <button onClick={() => handleDelete(career.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
-                <button
+                {/* <button
                   className="uptdate-Button"
                   onClick={() => handleUpdate(career.id)}
                 >
                   <FaPencilAlt className="update-icon" />
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {showUpdateModal && (
+      {/* {showUpdateModal && (
         <UpdateCareer
           id={selectedPersonId}
           handleClose={handleCloseUpdateModal}
         />
-      )}
+      )} */}
     </div>
   );
 }

@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import {
   getCargo,
   getCarreiraId,
+  getCarreiraStatus,
   getCarreiraTipo,
   getCoordenacao,
   getFuncao,
   getIngresso,
+  getNucleo,
   getPessoa,
   getSetor,
+  getRegimeTrabalhoTipo,
 } from "../../../../services/CallsPerson/updateCareer";
 import { ErrorAtGetData } from "../../../../assets/js/Alerts";
 
@@ -124,14 +127,14 @@ export default function UpdateCareer({ id, handleClose }) {
           CARREIRA_MOTIVO_STATUS: {
             carreira_status_id: carreiraStatusString,
           },
-          REGIME_TRABALHO: {
-            regime_trabalho_tipo_id: regimeTrabalhoTipoString,
-            regime_trabalho_modalidade_id: regimeTrabalhoModalidadeString,
-          },
+          //   REGIME_TRABALHO: {
+          //     regime_trabalho_tipo_id: regimeTrabalhoTipoString,
+          //     regime_trabalho_modalidade_id: regimeTrabalhoModalidadeString,
+          //   },
         },
       ],
     };
-    console.log(carreiraTipoId);
+    console.log(initialDateCargoInicio);
     // try {
     //   const response = await updateParticipation(data);
     //   if (response.data.SUCESSO == true) {
@@ -149,6 +152,9 @@ export default function UpdateCareer({ id, handleClose }) {
         const response = await getCarreiraId(idString);
         const carreiraData = response.data.RETORNO[0][0].RETORNO[0];
         console.log(carreiraData);
+        // setRegimeTrabalhoTipoId(carreiraData)
+        setNucleoId(carreiraData.CARREIRA.nucleo_id[0].NUCLEO.nucleo_id || "");
+        setInitialDateCargoInicio(carreiraData);
         setPessoaId(carreiraData.CARREIRA.pessoa_id[0].PESSOA.pessoa_id || "");
         setIngressoId(
           carreiraData.CARREIRA.ingresso_id[0].INGRESSO.ingresso_id || ""
@@ -178,21 +184,14 @@ export default function UpdateCareer({ id, handleClose }) {
             ?.coordenacao_id || ""
         );
         setCarreiraStatusId(
-          carreiraData.CARREIRA_MOTIVO_STATUS.retorno[0]?.CARREIRA_MOTIVO_STATUS
-            ?.carreira_status_id[0]?.CARREIRA_STATUS?.carreira_status_id || ""
+          carreiraData.CARREIRA_MOTIVO_STATUS.RETORNO[0].CARREIRA_MOTIVO_STATUS
+            .carreira_status_id[0].CARREIRA_STATUS.carreira_status_id || ""
         );
 
-        setRegimeTrabalhoTipoId(
-          carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_TIPO
-            ?.regime_trabalho_tipo_id || ""
-        );
-
-        setRegimeTrabalhoModalidadeId(
-          carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_MODALIDADE
-            ?.regime_trabalho_modalidade_id || ""
-        );
-
-        initialDateCargoInicio(carreiraData.CARREIRA.cargo_inicio || "");
+        // setRegimeTrabalhoModalidadeId(
+        //   carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_MODALIDADE
+        //     ?.regime_trabalho_modalidade_id || ""
+        // );
         if (
           carreiraData.CARREIRA.cargo_inicio !== undefined &&
           carreiraData.CARREIRA.cargo_inicio !== ""
@@ -291,9 +290,6 @@ export default function UpdateCareer({ id, handleClose }) {
           setCoordenacaoFim("");
         }
 
-        setNucleoId(
-          carreiraData.CARREIRA.nucleo_id[0]?.NUCLEO?.nucleo_id || ""
-        );
         setInitialDateNucleoInicio(carreiraData.CARREIRA.nucleo_inicio || "");
         if (
           carreiraData.CARREIRA.nucleo_inicio !== undefined &&
@@ -582,6 +578,117 @@ export default function UpdateCareer({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarNucleo = async () => {
+      try {
+        const response = await getNucleo();
+        const nucleoData = response.data.RETORNO[0].RETORNO;
+        const options = nucleoData.map((item) => (
+          <option key={item.NUCLEO.nucleo_id} value={item.NUCLEO.nucleo_id}>
+            {item.NUCLEO.nucleo_nome}
+          </option>
+        ));
+
+        nucleoData.forEach((item) => {
+          if (nucleoId === item.NUCLEO.nucleo_id) {
+            options[0] = (
+              <option
+                key={item.NUCLEO.nucleo_id}
+                value={item.NUCLEO.nucleo_id}
+                selected
+              >
+                {item.NUCLEO.nucleo_nome}
+              </option>
+            );
+          }
+        });
+        setNucleoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarNucleo();
+
+    return () => {};
+  }, []);
+
+  //   useEffect(() => {
+  //     const getPavimentarRegimeTrabalhoTipo = async () => {
+  //       try {
+  //         const response = await getRegimeTrabalhoTipo();
+  //         const regimeTrabalhoTipoData = response.data.RETORNO[0].RETORNO;
+  //         const options = regimeTrabalhoTipoData.map((item) => (
+  //           <option
+  //             key={item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id}
+  //             value={item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id}
+  //           >
+  //             {item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_nome}
+  //           </option>
+  //         ));
+
+  //         regimeTrabalhoTipoData.forEach((item) => {
+  //           if (regimeTrabalhoTipoId === item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id) {
+  //             options[0] = (
+  //               <option
+  //                 key={item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id}
+  //                 value={item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_id}
+  //                 selected
+  //               >
+  //                 {item.REGIME_TRABALHO_TIPO.regime_trabalho_tipo_nome}
+  //               </option>
+  //             );
+  //           }
+  //         });
+  //         setRegimeTrabalhoTipoIdOptions(options);
+  //       } catch (error) {
+  //         ErrorAtGetData();
+  //         console.log(error);
+  //       }
+  //     };
+  //     getPavimentarRegimeTrabalhoTipo();
+
+  //     return () => {};
+  //   }, []);
+
+  useEffect(() => {
+    const getPavimentarCarreiraStatus = async () => {
+      try {
+        const response = await getCarreiraStatus();
+        const carreiraStatusData = response.data.RETORNO[0].RETORNO;
+        const options = carreiraStatusData.map((item) => (
+          <option
+            key={item.CARREIRA_STATUS.carreira_status_id}
+            value={item.CARREIRA_STATUS.carreira_status_id}
+          >
+            {item.CARREIRA_STATUS.carreira_status_nome}
+          </option>
+        ));
+
+        carreiraStatusData.forEach((item) => {
+          if (carreiraStatusId === item.CARREIRA_STATUS.carreira_status_id) {
+            options[0] = (
+              <option
+                key={item.CARREIRA_STATUS.carreira_status_id}
+                value={item.CARREIRA_STATUS.carreira_status_id}
+                selected
+              >
+                {item.CARREIRA_STATUS.carreira_status_nome}
+              </option>
+            );
+          }
+        });
+        setCarreiraStatusIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarCarreiraStatus();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-participation-modal">
       <div className="update-participation-modal-content">
@@ -607,6 +714,26 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {cargoIdOptions}
           </select>
+          <label className="label-update">
+            Cargo - Data inicial atual: {initialDateCargoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial cargo"
+            value={cargoInicio || ""}
+            onChange={(e) => setCargoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Cargo - Data final atual: {initialDateCargoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data final cargo"
+            value={cargoFim || ""}
+            onChange={(e) => setCargoFim(e.target.value)}
+          />
           <label className="label-update">Ingresso:</label>
           <select
             className="input-update"
@@ -656,6 +783,26 @@ export default function UpdateCareer({ id, handleClose }) {
             onChange={(event) => setCoordenacaoId(event.target.value)}
           >
             {coordenacaoIdOptions}
+          </select>
+          <label className="label-update">Núcleo:</label>
+          <select
+            className="input-update"
+            name="nucleo"
+            id="nucleo"
+            value={nucleoId}
+            onChange={(event) => setNucleoId(event.target.value)}
+          >
+            {nucleoIdOptions}
+          </select>
+          <label className="label-update">Carreira - Status:</label>
+          <select
+            className="input-update"
+            name="carreira_status_id"
+            id="carreira_status_id"
+            value={carreiraStatusId}
+            onChange={(event) => setCarreiraStatusId(event.target.value)}
+          >
+            {carreiraStatusIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
