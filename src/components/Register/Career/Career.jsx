@@ -553,14 +553,13 @@ export default function Career() {
               min={1}
               max={2000}
             />
-            <label className="form-label">*Concurso Cota:</label>
+            <label className="form-label">Concurso Cota:</label>
             <select
               className="form-input"
               name="concursoCota"
               id="concursoCota"
               value={concursoCota}
               onChange={(event) => setConcursoCota(event.target.value)}
-              required
             >
               {optionsConcursoCota}
             </select>
@@ -571,7 +570,6 @@ export default function Career() {
               id="concurso"
               value={concurso}
               onChange={(event) => setConcurso(event.target.value)}
-              required
             >
               {optionsConcurso}
             </select>
