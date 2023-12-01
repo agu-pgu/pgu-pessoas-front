@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {
+  getCargo,
   getCarreiraId,
+  getCarreiraTipo,
+  getIngresso,
   getPessoa,
 } from "../../../../services/CallsPerson/updateCareer";
 import { ErrorAtGetData } from "../../../../assets/js/Alerts";
@@ -97,9 +100,9 @@ export default function UpdateCareer({ id, handleClose }) {
               cargo_inicio: cargoInicio,
               cargo_fim: cargoFim,
               ingresso_id: ingressoString,
-              concurso_id: concursoString,
-              concurso_classificacao: concursoClassificacaoString,
-              concurso_cota_id: concursoCotaString,
+              //   concurso_id: concursoString,
+              //   concurso_classificacao: concursoClassificacaoString,
+              //   concurso_cota_id: concursoCotaString,
               carreira_tipo_id: carreiraTipoString,
               setor_id: setorString,
               setor_inicio: setorInicio,
@@ -125,7 +128,7 @@ export default function UpdateCareer({ id, handleClose }) {
         },
       ],
     };
-console.log(pessoaId)
+    console.log(carreiraTipoId);
     // try {
     //   const response = await updateParticipation(data);
     //   if (response.data.SUCESSO == true) {
@@ -142,8 +145,50 @@ console.log(pessoaId)
       try {
         const response = await getCarreiraId(idString);
         const carreiraData = response.data.RETORNO[0][0].RETORNO[0];
+        console.log(carreiraData)
         setPessoaId(carreiraData.CARREIRA.pessoa_id[0].PESSOA.pessoa_id || "");
+        setIngressoId(
+          carreiraData.CARREIRA.ingresso_id[0].INGRESSO.ingresso_id || ""
+        );
         setCargoId(carreiraData.CARREIRA.cargo_id[0]?.CARGO?.cargo_id || "");
+        // setConcursoId(
+        //   carreiraData.CARREIRA || ""
+        // );
+        // setConcursoClassificacaoId(
+        //   carreiraData.CARREIRA.concurso_classificacao || ""
+        // );
+        // setConcursoCotaId(
+        //   carreiraData.CARREIRA.concurso_cota_id[0]?.CONCURSO_COTA
+        //     ?.concurso_cota_id || ""
+        // );
+        setCarreiraTipoId(
+          carreiraData.CARREIRA.carreira_tipo_id[0]?.CARREIRA_TIPO
+            ?.carreira_tipo_id || ""
+        );
+        setSetorId(carreiraData.CARREIRA.setor_id[0]?.SETOR?.setor_id || "");
+        setInitialDateSetorInicio(carreiraData.CARREIRA.setor_inicio || "");
+        setFuncaoId(
+          carreiraData.CARREIRA.funcao_id[0]?.FUNCAO?.funcao_id || ""
+        );
+        setCoordenacaoId(
+          carreiraData.CARREIRA.coordenacao_id[0]?.COORDENACAO
+            ?.coordenacao_id || ""
+        );
+        setCarreiraStatusId(
+          carreiraData.CARREIRA_MOTIVO_STATUS.retorno[0]?.CARREIRA_MOTIVO_STATUS
+            ?.carreira_status_id[0]?.CARREIRA_STATUS?.carreira_status_id || ""
+        );
+
+        setRegimeTrabalhoTipoId(
+          carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_TIPO
+            ?.regime_trabalho_tipo_id || ""
+        );
+
+        setRegimeTrabalhoModalidadeId(
+          carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_MODALIDADE
+            ?.regime_trabalho_modalidade_id || ""
+        );
+
         initialDateCargoInicio(carreiraData.CARREIRA.cargo_inicio || "");
         if (
           carreiraData.CARREIRA.cargo_inicio !== undefined &&
@@ -155,6 +200,7 @@ console.log(pessoaId)
         } else {
           setCargoInicio("");
         }
+
         initialDateCargoFim(carreiraData.CARREIRA.cargo_fim || "");
         if (
           carreiraData.CARREIRA.cargo_fim !== undefined &&
@@ -166,25 +212,7 @@ console.log(pessoaId)
         } else {
           setCargoFim("");
         }
-        setIngressoId(
-          carreiraData.CARREIRA.ingresso_id[0]?.INGRESSO?.ingresso_id || ""
-        );
-        setConcursoId(
-          carreiraData.CARREIRA.concurso_id[0]?.CONCURSO?.concurso_id || ""
-        );
-        setConcursoClassificacaoId(
-          carreiraData.CARREIRA.concurso_classificacao || ""
-        );
-        setConcursoCotaId(
-          carreiraData.CARREIRA.concurso_cota_id[0]?.CONCURSO_COTA
-            ?.concurso_cota_id || ""
-        );
-        setCarreiraTipoId(
-          carreiraData.CARREIRA.carreira_tipo_id[0]?.CARREIRA_TIPO
-            ?.carreira_tipo_id || ""
-        );
-        setSetorId(carreiraData.CARREIRA.setor_id[0]?.SETOR?.setor_id || "");
-        setInitialDateSetorInicio(carreiraData.CARREIRA.setor_inicio || "");
+
         if (
           carreiraData.CARREIRA.setor_inicio !== undefined &&
           carreiraData.CARREIRA.setor_inicio !== ""
@@ -195,6 +223,7 @@ console.log(pessoaId)
         } else {
           setSetorInicio("");
         }
+
         setInitialDateSetorFim(carreiraData.CARREIRA.setor_fim || "");
         if (
           carreiraData.CARREIRA.setor_fim !== undefined &&
@@ -206,9 +235,7 @@ console.log(pessoaId)
         } else {
           setSetorFim("");
         }
-        setFuncaoId(
-          carreiraData.CARREIRA.funcao_id[0]?.FUNCAO?.funcao_id || ""
-        );
+
         setInitialDateFuncaoInicio(carreiraData.CARREIRA.funcao_inicio || "");
         if (
           carreiraData.CARREIRA.funcao_inicio !== undefined &&
@@ -220,6 +247,7 @@ console.log(pessoaId)
         } else {
           setFuncaoInicio("");
         }
+
         setInitialDateFuncaoFim(carreiraData.CARREIRA.funcao_fim || "");
         if (
           carreiraData.CARREIRA.funcao_fim !== undefined &&
@@ -231,10 +259,7 @@ console.log(pessoaId)
         } else {
           setFuncaoFim("");
         }
-        setCoordenacaoId(
-          carreiraData.CARREIRA.coordenacao_id[0]?.COORDENACAO
-            ?.coordenacao_id || ""
-        );
+
         setInitialDateCoordenacaoInicio(
           carreiraData.CARREIRA.coordenacao_inicio || ""
         );
@@ -248,6 +273,7 @@ console.log(pessoaId)
         } else {
           setCoordenacaoInicio("");
         }
+
         setInitialDateCoordenacaoFim(
           carreiraData.CARREIRA.coordenacao_fim || ""
         );
@@ -261,6 +287,7 @@ console.log(pessoaId)
         } else {
           setCoordenacaoFim("");
         }
+
         setNucleoId(
           carreiraData.CARREIRA.nucleo_id[0]?.NUCLEO?.nucleo_id || ""
         );
@@ -275,6 +302,7 @@ console.log(pessoaId)
         } else {
           setNucleoInicio("");
         }
+
         setInitialDateNucleoFim(carreiraData.CARREIRA.nucleo_fim || "");
         if (
           carreiraData.CARREIRA.nucleo_fim !== undefined &&
@@ -286,18 +314,6 @@ console.log(pessoaId)
         } else {
           setNucleoFim("");
         }
-        setCarreiraStatusId(
-          carreiraData.CARREIRA_MOTIVO_STATUS.retorno[0]?.CARREIRA_MOTIVO_STATUS
-            ?.carreira_status_id[0]?.CARREIRA_STATUS?.carreira_status_id || ""
-        );
-        setRegimeTrabalhoTipoId(
-          carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_TIPO
-            ?.regime_trabalho_tipo_id || ""
-        );
-        setRegimeTrabalhoModalidadeId(
-          carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_MODALIDADE
-            ?.regime_trabalho_modalidade_id || ""
-        );
       } catch (error) {
         console.log(error);
         ErrorAtGetData();
@@ -344,10 +360,121 @@ console.log(pessoaId)
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarIngresso = async () => {
+      try {
+        const response = await getIngresso();
+        const ingressoData = response.data.RETORNO[0].RETORNO;
+        const options = ingressoData.map((item) => (
+          <option
+            key={item.INGRESSO.ingresso_id}
+            value={item.INGRESSO.ingresso_id}
+          >
+            {item.INGRESSO.ingresso_nome}
+          </option>
+        ));
+
+        ingressoData.forEach((item) => {
+          if (ingressoId === item.INGRESSO.ingresso_id) {
+            options[0] = (
+              <option
+                key={item.INGRESSO.ingresso_id}
+                value={item.INGRESSO.ingresso_id}
+                selected
+              >
+                {item.INGRESSO.ingresso_nome}
+              </option>
+            );
+          }
+        });
+        setIngressoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarIngresso();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarCargo = async () => {
+      try {
+        const response = await getCargo();
+        const cargoData = response.data.RETORNO[0].RETORNO;
+        const options = cargoData.map((item) => (
+          <option key={item.CARGO.cargo_id} value={item.CARGO.cargo_id}>
+            {item.CARGO.cargo_nome}
+          </option>
+        ));
+
+        cargoData.forEach((item) => {
+          if (cargoId === item.CARGO.cargo_id) {
+            options[0] = (
+              <option
+                key={item.CARGO.cargo_id}
+                value={item.CARGO.cargo_id}
+                selected
+              >
+                {item.CARGO.cargo_nome}
+              </option>
+            );
+          }
+        });
+        setCargoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarCargo();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarCarreiraTipo = async () => {
+      try {
+        const response = await getCarreiraTipo();
+        const carreiraTipoData = response.data.RETORNO[0].RETORNO;
+        const options = carreiraTipoData.map((item) => (
+          <option
+            key={item.CARREIRA_TIPO.carreira_tipo_id}
+            value={item.CARREIRA_TIPO.carreira_tipo_id}
+          >
+            {item.CARREIRA_TIPO.carreira_tipo_nome}
+          </option>
+        ));
+
+        carreiraTipoData.forEach((item) => {
+          if (carreiraTipoId === item.CARREIRA_TIPO.carreira_tipo_id) {
+            options[0] = (
+              <option
+                key={item.CARREIRA_TIPO.carreira_tipo_id}
+                value={item.CARREIRA_TIPO.carreira_tipo_id}
+                selected
+              >
+                {item.CARREIRA_TIPO.carreira_tipo_nome}
+              </option>
+            );
+          }
+        });
+        setCarreiraTipoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarCarreiraTipo();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-participation-modal">
       <div className="update-participation-modal-content">
-        <h2 className="update-h2">Atualizar Participaçao</h2>
+        <h2 className="update-h2">Atualizar Carreira</h2>
         <form onSubmit={handleConfirm}>
           <label className="label-update">Pessoa:</label>
           <select
@@ -358,6 +485,36 @@ console.log(pessoaId)
             onChange={(event) => setPessoaId(event.target.value)}
           >
             {pessoaIdOptions}
+          </select>
+          <label className="label-update">Cargo:</label>
+          <select
+            className="input-update"
+            name="cargo_id"
+            id="cargo_id"
+            value={cargoId}
+            onChange={(event) => setCargoId(event.target.value)}
+          >
+            {cargoIdOptions}
+          </select>
+          <label className="label-update">Ingresso:</label>
+          <select
+            className="input-update"
+            name="ingresso_id"
+            id="ingresso_id"
+            value={ingressoId}
+            onChange={(event) => setIngressoId(event.target.value)}
+          >
+            {ingressoIdOptions}
+          </select>
+          <label className="label-update">Carreira - Tipo:</label>
+          <select
+            className="input-update"
+            name="carreira_tipo_id"
+            id="carreira_tipo_id"
+            value={carreiraTipoId}
+            onChange={(event) => setCarreiraTipoId(event.target.value)}
+          >
+            {carreiraTipoIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
