@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowCareer.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { deleteCareer } from "../../../../services/CallsPerson/callsShowAll";
+import UpdateCareer from "../UpdateCareer/UpdateCareer";
 
 export default function ShowCareer({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -41,6 +45,16 @@ export default function ShowCareer({ peopleList }) {
       Swal.fire("Erro", "Falha ao desativar o registro.", "error");
     }
   };
+
+  // const handleCloseUpdateModal = () => {
+  //   setShowUpdateModal(false);
+  //   setSelectedPersonId(null);
+  // };
+
+  // const handleUpdate = (id) => {
+  //   setShowUpdateModal(true);
+  //   setSelectedPersonId(id);
+  // };
 
   return (
     <div className="scroll-container-career">
@@ -87,11 +101,23 @@ export default function ShowCareer({ peopleList }) {
                 <button onClick={() => handleDelete(career.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                {/* <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(career.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button> */}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {/* {showUpdateModal && (
+        <UpdateCareer
+          id={selectedPersonId}
+          handleClose={handleCloseUpdateModal}
+        />
+      )} */}
     </div>
   );
 }

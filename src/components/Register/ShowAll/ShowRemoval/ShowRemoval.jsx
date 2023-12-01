@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowRemoval.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { deleteRemoval } from "../../../../services/CallsPerson/callsShowAll";
+import UpdateRemoval from "../UpdateRemoval/UpdateRemoval";
 
 export default function ShowRemoval({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -18,7 +23,7 @@ export default function ShowRemoval({ peopleList }) {
       });
 
       if (result.isConfirmed) {
-        const response = await deletePerson(id);
+        const response = await deleteRemoval(id);
         if (response.data.SUCESSO == true) {
           Swal.fire(
             "Desativado!",
@@ -28,10 +33,11 @@ export default function ShowRemoval({ peopleList }) {
             window.location.reload();
           });
         } else {
-          Swal.fire("Erro", "Falha ao desativar o registro.", "error")
-          .then(() => {
-            window.location.reload();
-          });
+          Swal.fire("Erro", "Falha ao desativar o registro.", "error").then(
+            () => {
+              window.location.reload();
+            }
+          );
         }
       }
     } catch (error) {
@@ -40,12 +46,21 @@ export default function ShowRemoval({ peopleList }) {
     }
   };
 
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedPersonId(null);
+  };
+
+  const handleUpdate = (id) => {
+    setShowUpdateModal(true);
+    setSelectedPersonId(id);
+  };
+
   return (
     <div className="scroll-container">
       <table className="list-container-table">
         <thead className="list-container-thead">
           <tr className="list-container-tr">
-            <th className="list-container-th">Afastamento Nome</th>
             <th className="list-container-th">Afastamento Tipo</th>
             <th className="list-container-th">CID Categoria</th>
             <th className="list-container-th">CID</th>
@@ -58,9 +73,6 @@ export default function ShowRemoval({ peopleList }) {
         <tbody>
           {peopleList.map((afastamento, index) => (
             <tr key={index} className="list-container-tr">
-              <td className="list-container-td">
-                {afastamento.afastamentoNome}
-              </td>
               <td className="list-container-td">
                 {afastamento.afastamentoTipoNome}
               </td>
@@ -75,11 +87,23 @@ export default function ShowRemoval({ peopleList }) {
                 <button onClick={() => handleDelete(afastamento.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(afastamento.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showUpdateModal && (
+        <UpdateRemoval
+          id={selectedPersonId}
+          handleClose={handleCloseUpdateModal}
+        />
+      )}
     </div>
   );
 }

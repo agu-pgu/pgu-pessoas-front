@@ -67,6 +67,7 @@ export default function Career() {
     useState([]);
 
   const handleSubmitCreateCareer = async (e) => {
+    const concursoClassificacaoString = String(concursoClassificacao)
     e.preventDefault();
 
     const data = {
@@ -79,7 +80,7 @@ export default function Career() {
             cargo_fim: cargoFim,
             ingresso_id: ingresso,
             concurso_id: concurso,
-            concurso_classificacao: concursoClassificacao,
+            concurso_classificacao: concursoClassificacaoString,
             concurso_cota_id: concursoCota,
             carreira_tipo_id: carreiraTipo,
             setor_id: setor,
@@ -96,11 +97,11 @@ export default function Career() {
             nucleo_fim: nucleoFim,
           },
           CARREIRA_MOTIVO_STATUS: {
-            carreira_motivo_status_descricao: carreiraMotivoStatusDescricao,
+            carreira_motivo_status_descricao:
+              carreiraMotivoStatusDescricao,
             carreira_status_id: carreiraStatus,
           },
           REGIME_TRABALHO: {
-            // regime_trabalho_descricao: regimeTrabalhoDescricao,
             regime_trabalho_tipo_id: regimeTrabalhoTipo,
             regime_trabalho_modalidade_id: regimeTrabalhoModalidade,
           },
@@ -111,6 +112,7 @@ export default function Career() {
     try {
       const response = await createCareer(data);
       if (response.data.SUCESSO == true) {
+        console.log(response);
         createPersonSucess();
       }
     } catch (error) {
@@ -474,9 +476,9 @@ export default function Career() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Cadastre uma Carreira!!</h1>
+        <h1 className="formulario-h2">Cadastre uma Carreira!!</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário de "Carreira"</h3>
+          <h3 className="formulario-h3">Formulário de "Carreira"</h3>
 
           <form
             className="formulario-container"
@@ -534,49 +536,43 @@ export default function Career() {
             >
               {optionsIngresso}
             </select>
-            {ingresso === "1" && (
-              <>
-                <label className="form-label">Concurso Classificação:</label>
-                <input
-                  className="form-input"
-                  type="number"
-                  name="concursoClassificacao"
-                  id="concursoClassificacao"
-                  value={concursoClassificacao}
-                  onChange={(event) => {
-                    const newValue = Math.max(
-                      1,
-                      Math.min(2000, event.target.value)
-                    );
-                    setConcursoClassificacao(newValue);
-                  }}
-                  min={1}
-                  max={2000}
-                />
-                <label className="form-label">*Concurso Cota:</label>
-                <select
-                  className="form-input"
-                  name="concursoCota"
-                  id="concursoCota"
-                  value={concursoCota}
-                  onChange={(event) => setConcursoCota(event.target.value)}
-                  required
-                >
-                  {optionsConcursoCota}
-                </select>
-                <label className="form-label">Concurso:</label>
-                <select
-                  className="form-input"
-                  name="concurso"
-                  id="concurso"
-                  value={concurso}
-                  onChange={(event) => setConcurso(event.target.value)}
-                  required
-                >
-                  {optionsConcurso}
-                </select>
-              </>
-            )}
+            <label className="form-label">Concurso Classificação:</label>
+            <input
+              className="form-input"
+              type="number"
+              name="concursoClassificacao"
+              id="concursoClassificacao"
+              value={concursoClassificacao}
+              onChange={(event) => {
+                const newValue = Math.max(
+                  1,
+                  Math.min(2000, event.target.value)
+                );
+                setConcursoClassificacao(newValue);
+              }}
+              min={1}
+              max={2000}
+            />
+            <label className="form-label">Concurso Cota:</label>
+            <select
+              className="form-input"
+              name="concursoCota"
+              id="concursoCota"
+              value={concursoCota}
+              onChange={(event) => setConcursoCota(event.target.value)}
+            >
+              {optionsConcursoCota}
+            </select>
+            <label className="form-label">Concurso:</label>
+            <select
+              className="form-input"
+              name="concurso"
+              id="concurso"
+              value={concurso}
+              onChange={(event) => setConcurso(event.target.value)}
+            >
+              {optionsConcurso}
+            </select>
 
             <label className="form-label">*Carreira Tipo:</label>
             <select

@@ -15,6 +15,7 @@ import {
 export default function UpdatePerson({ id, handleClose }) {
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [initialBirthDate, setInicialBirthDate] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [siape, setSiape] = useState("");
@@ -74,6 +75,7 @@ export default function UpdatePerson({ id, handleClose }) {
         setMunicipioId(
           pessoaData.PESSOA.municipio_id[0].MUNICIPIO.municipio_id || ""
         );
+        setInicialBirthDate(pessoaData.PESSOA.pessoa_data_nascimento || "");
 
         if (
           pessoaData.PESSOA.pessoa_data_nascimento !== undefined &&
@@ -177,6 +179,7 @@ export default function UpdatePerson({ id, handleClose }) {
       <div className="update-person-modal-content">
         <h2 className="update-h2">Atualizar Pessoa</h2>
         <form onSubmit={handleConfirm}>
+        <label className="label-update">Nome:</label>
           <input
             className="input-update"
             type="text"
@@ -185,6 +188,7 @@ export default function UpdatePerson({ id, handleClose }) {
             onChange={(e) => setName(e.target.value)}
             maxLength={255}
           />
+          <label className="label-update">Data atual: {initialBirthDate}</label>
           <input
             className="input-update"
             type="date"
@@ -192,6 +196,7 @@ export default function UpdatePerson({ id, handleClose }) {
             value={birthDate || ""}
             onChange={(e) => setBirthDate(e.target.value)}
           />
+        <label className="label-update">CPF:</label>
           <input
             className="input-update"
             type="text"
@@ -200,6 +205,7 @@ export default function UpdatePerson({ id, handleClose }) {
             onChange={(e) => setCpf(e.target.value)}
             maxLength={14}
           />
+        <label className="label-update">Email:</label>
           <input
             className="input-update"
             type="email"
@@ -207,6 +213,7 @@ export default function UpdatePerson({ id, handleClose }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+        <label className="label-update">SIAPE:</label>
           <input
             className="input-update"
             type="text"
@@ -214,6 +221,7 @@ export default function UpdatePerson({ id, handleClose }) {
             value={siape}
             onChange={(e) => setSiape(e.target.value)}
           />
+        <label className="label-update">Gênero:</label>
           <select
             className="input-update"
             name="genero_id"
@@ -223,6 +231,7 @@ export default function UpdatePerson({ id, handleClose }) {
           >
             {generoOptions}
           </select>
+        <label className="label-update">Município:</label>
           <select
             className="input-update"
             name="municipio_id"
