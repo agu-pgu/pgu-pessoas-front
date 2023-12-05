@@ -329,3 +329,102 @@ export const getCarreiraTipo = async () => {
     return 500;
   }
 };
+
+export const getFuncao = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        FUNCAO: {
+          funcao_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarFuncao", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getIngresso = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        INGRESSO: {
+          ingresso_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarIngresso", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getNucleo = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        NUCLEO: {
+          nucleo_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarNucleo", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};

@@ -3,8 +3,11 @@ import { ErrorAtGetData } from "../../../../assets/js/Alerts";
 import {
   getCargo,
   getCarreiraTipo,
+  getFuncao,
+  getIngresso,
   getModulo,
   getMunicipio,
+  getNucleo,
   getPermissaoId,
   getPessoa,
   getRegiao,
@@ -513,6 +516,114 @@ export default function UpdatePermission({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarFuncao = async () => {
+      try {
+        const response = await getFuncao();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option key={item.FUNCAO.funcao_id} value={item.FUNCAO.funcao_id}>
+            {item.FUNCAO.funcao_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (funcaoId === item.FUNCAO.funcao_id) {
+            options[0] = (
+              <option
+                key={item.FUNCAO.funcao_id}
+                value={item.FUNCAO.funcao_id}
+                selected
+              >
+                {item.FUNCAO.funcao_nome}
+              </option>
+            );
+          }
+        });
+        setFuncaoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarFuncao();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarIngresso = async () => {
+      try {
+        const response = await getIngresso();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option
+            key={item.INGRESSO.ingresso_id}
+            value={item.INGRESSO.ingresso_id}
+          >
+            {item.INGRESSO.ingresso_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (ingressoId === item.INGRESSO.ingresso_id) {
+            options[0] = (
+              <option
+                key={item.INGRESSO.ingresso_id}
+                value={item.INGRESSO.ingresso_id}
+                selected
+              >
+                {item.INGRESSO.ingresso_nome}
+              </option>
+            );
+          }
+        });
+        setIngressoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarIngresso();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarNucleo = async () => {
+      try {
+        const response = await getNucleo();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option key={item.NUCLEO.nucleo_id} value={item.NUCLEO.nucleo_id}>
+            {item.NUCLEO.nucleo_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (nucleoId === item.NUCLEO.nucleo_id) {
+            options[0] = (
+              <option
+                key={item.NUCLEO.nucleo_id}
+                value={item.NUCLEO.nucleo_id}
+                selected
+              >
+                {item.NUCLEO.nucleo_nome}
+              </option>
+            );
+          }
+        });
+        setNucleoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarNucleo();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-permission-modal">
       <div className="update-permission-modal-content">
@@ -617,6 +728,36 @@ export default function UpdatePermission({ id, handleClose }) {
             onChange={(event) => setCarreiraTipoId(event.target.value)}
           >
             {carreiraTipoIdOptions}
+          </select>
+          <label className="label-update">Função:</label>
+          <select
+            className="input-update"
+            name="funcao_id"
+            id="funcao_id"
+            value={funcaoId}
+            onChange={(event) => setFuncaoId(event.target.value)}
+          >
+            {funcaoIdOptions}
+          </select>
+          <label className="label-update">Ingresso:</label>
+          <select
+            className="input-update"
+            name="ingresso_id"
+            id="ingresso_id"
+            value={ingressoId}
+            onChange={(event) => setIngressoId(event.target.value)}
+          >
+            {ingressoIdOptions}
+          </select>
+          <label className="label-update">Núcleo:</label>
+          <select
+            className="input-update"
+            name="nucleo_id"
+            id="nucleo_id"
+            value={nucleoId}
+            onChange={(event) => setNucleoId(event.target.value)}
+          >
+            {nucleoIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
