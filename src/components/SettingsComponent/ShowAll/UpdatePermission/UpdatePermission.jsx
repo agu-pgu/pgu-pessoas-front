@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { ErrorAtGetData } from "../../../../assets/js/Alerts";
+import {
+  CreateError,
+  ErrorAtGetData,
+  createPersonSucess,
+} from "../../../../assets/js/Alerts";
 import {
   getCargo,
   getCarreiraTipo,
+  getConcurso,
+  getCoordenacao,
   getFuncao,
   getIngresso,
   getModulo,
@@ -14,6 +20,7 @@ import {
   getSetor,
   getUf,
   getUnidade,
+  updatePermissao,
 } from "../../../../services/callsSettings/callsUpdatePermission";
 import "./UpdatePermission.scss";
 export default function UpdatePermission({ id, handleClose }) {
@@ -98,16 +105,15 @@ export default function UpdatePermission({ id, handleClose }) {
         },
       ],
     };
-    console.log(concursoId);
-    // try {
-    //   const response = await updateCareer(data);
-    //   if (response.data.SUCESSO == true) {
-    //     createPersonSucess();
-    //   }
-    // } catch (error) {
-    //   CreateError();
-    //   console.log(error);
-    // }
+    try {
+      const response = await updatePermissao(data);
+      if (response.data.SUCESSO == true) {
+        createPersonSucess();
+      }
+    } catch (error) {
+      CreateError();
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -624,6 +630,82 @@ export default function UpdatePermission({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarCoordenacao = async () => {
+      try {
+        const response = await getCoordenacao();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option
+            key={item.COORDENACAO.coordenacao_id}
+            value={item.COORDENACAO.coordenacao_id}
+          >
+            {item.COORDENACAO.coordenacao_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (coordenacaoId === item.COORDENACAO.coordenacao_id) {
+            options[0] = (
+              <option
+                key={item.COORDENACAO.coordenacao_id}
+                value={item.COORDENACAO.coordenacao_id}
+                selected
+              >
+                {item.COORDENACAO.coordenacao_nome}
+              </option>
+            );
+          }
+        });
+        setCoordenacaoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarCoordenacao();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarConcurso = async () => {
+      try {
+        const response = await getConcurso();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option
+            key={item.CONCURSO.concurso_id}
+            value={item.CONCURSO.concurso_id}
+          >
+            {item.CONCURSO.concurso_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (concursoId === item.CONCURSO.concurso_id) {
+            options[0] = (
+              <option
+                key={item.CONCURSO.concurso_id}
+                value={item.CONCURSO.concurso_id}
+                selected
+              >
+                {item.CONCURSO.concurso_nome}
+              </option>
+            );
+          }
+        });
+        setConcursoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarConcurso();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-permission-modal">
       <div className="update-permission-modal-content">
@@ -758,6 +840,26 @@ export default function UpdatePermission({ id, handleClose }) {
             onChange={(event) => setNucleoId(event.target.value)}
           >
             {nucleoIdOptions}
+          </select>
+          <label className="label-update">Coordenação:</label>
+          <select
+            className="input-update"
+            name="coordenacao_id"
+            id="coordenacao_id"
+            value={coordenacaoId}
+            onChange={(event) => setCoordenacaoId(event.target.value)}
+          >
+            {coordenacaoIdOptions}
+          </select>
+          <label className="label-update">Concurso:</label>
+          <select
+            className="input-update"
+            name="concurso_id"
+            id="concurso_id"
+            value={concursoId}
+            onChange={(event) => setConcursoId(event.target.value)}
+          >
+            {concursoIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>

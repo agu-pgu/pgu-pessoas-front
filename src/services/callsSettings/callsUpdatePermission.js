@@ -428,3 +428,92 @@ export const getNucleo = async () => {
     return 500;
   }
 };
+
+export const getCoordenacao = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        COORDENACAO: {
+          coordenacao_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarCoordenacao", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getConcurso = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        CONCURSO: {
+          concurso_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarConcurso", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const updatePermissao = async (data) => {
+    const token = localStorage.getItem("token");
+    const uid = localStorage.getItem("uid");
+  
+    try {
+      const response = await api.post("/AtualizarPermissao", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          uid: uid,
+        },
+      });
+      if (response.data.SUCESSO === true) {
+        return response;
+      } else {
+        return 401;
+      }
+    } catch (error) {
+      console.log(error);
+      return 500;
+    }
+  };
