@@ -5,6 +5,7 @@ import {
   createPersonSucess,
 } from "../../../../assets/js/Alerts";
 import { getUfId, updateUf } from "../../../../services/callsSettings/callsUpdateUf";
+import "./UpdateUf.scss";
 
 export default function UpdateUf({ id, handleClose }) {
   const [nome, setNome] = useState("");
@@ -63,8 +64,8 @@ export default function UpdateUf({ id, handleClose }) {
   }, [id]);
 
   return (
-    <div className="update-gender-modal">
-      <div className="update-gender-modal-content">
+    <div className="update-uf-modal">
+      <div className="update-uf-modal-content">
         <h2 className="update-h2">Atualizar UF</h2>
         <form onSubmit={handleConfirm}>
           <label className="label-update">Nome:</label>
