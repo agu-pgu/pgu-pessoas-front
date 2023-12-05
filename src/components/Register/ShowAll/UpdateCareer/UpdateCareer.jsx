@@ -13,8 +13,9 @@ import {
   getRegimeTrabalhoTipo,
   getConcurso,
   getConcursoCota,
+  updateCareer,
 } from "../../../../services/CallsPerson/updateCareer";
-import { ErrorAtGetData } from "../../../../assets/js/Alerts";
+import { CreateError, ErrorAtGetData, createPersonSucess } from "../../../../assets/js/Alerts";
 
 export default function UpdateCareer({ id, handleClose }) {
   const idString = String(id);
@@ -136,16 +137,15 @@ export default function UpdateCareer({ id, handleClose }) {
         },
       ],
     };
-    console.log(concursoId);
-    // try {
-    //   const response = await updateParticipation(data);
-    //   if (response.data.SUCESSO == true) {
-    //     createPersonSucess();
-    //   }
-    // } catch (error) {
-    //   CreateError();
-    //   console.log(error);
-    // }
+    try {
+      const response = await updateCareer(data);
+      if (response.data.SUCESSO == true) {
+        createPersonSucess();
+      }
+    } catch (error) {
+      CreateError();
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -337,6 +337,7 @@ export default function UpdateCareer({ id, handleClose }) {
       try {
         const response = await getPessoa();
         const pessoaData = response.data.RETORNO[0].RETORNO;
+        console.log(pessoaData);
         const options = pessoaData.map((item) => (
           <option key={item.PESSOA.pessoa_id} value={item.PESSOA.pessoa_id}>
             {item.PESSOA.pessoa_nome}

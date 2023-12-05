@@ -415,3 +415,27 @@ export const getConcursoCota = async () => {
     return 500;
   }
 };
+
+export const updateCareer = async (data) => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  try {
+    const response = await api.post("/AtualizarCarreira", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      console.log(response);
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
