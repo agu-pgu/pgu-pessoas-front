@@ -230,3 +230,102 @@ export const getMunicipio = async () => {
     return 500;
   }
 };
+
+export const getUf = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        UF: {
+          uf_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarUf", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getCargo = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        CARGO: {
+          cargo_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarCargo", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getCarreiraTipo = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        CARREIRA_TIPO: {
+          carreira_tipo_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarCarreiraTipo", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};

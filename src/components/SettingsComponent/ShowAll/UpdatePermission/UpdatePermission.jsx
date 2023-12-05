@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { ErrorAtGetData } from "../../../../assets/js/Alerts";
 import {
+  getCargo,
+  getCarreiraTipo,
   getModulo,
   getMunicipio,
   getPermissaoId,
   getPessoa,
   getRegiao,
   getSetor,
+  getUf,
   getUnidade,
 } from "../../../../services/callsSettings/callsUpdatePermission";
 import "./UpdatePermission.scss";
@@ -374,7 +377,10 @@ export default function UpdatePermission({ id, handleClose }) {
         const response = await getMunicipio();
         const responseData = response.data.RETORNO[0].RETORNO;
         const options = responseData.map((item) => (
-          <option key={item.MUNICIPIO.municipio_id} value={item.MUNICIPIO.municipio_id}>
+          <option
+            key={item.MUNICIPIO.municipio_id}
+            value={item.MUNICIPIO.municipio_id}
+          >
             {item.MUNICIPIO.municipio_nome}
           </option>
         ));
@@ -403,9 +409,113 @@ export default function UpdatePermission({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarUf = async () => {
+      try {
+        const response = await getUf();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option key={item.UF.uf_id} value={item.UF.uf_id}>
+            {item.UF.uf_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (ufId === item.UF.uf_id) {
+            options[0] = (
+              <option key={item.UF.uf_id} value={item.UF.uf_id} selected>
+                {item.UF.uf_nome}
+              </option>
+            );
+          }
+        });
+        setUfIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarUf();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarCargo = async () => {
+      try {
+        const response = await getCargo();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option key={item.CARGO.cargo_id} value={item.CARGO.cargo_id}>
+            {item.CARGO.cargo_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (cargoId === item.CARGO.cargo_id) {
+            options[0] = (
+              <option
+                key={item.CARGO.cargo_id}
+                value={item.CARGO.cargo_id}
+                selected
+              >
+                {item.CARGO.cargo_nome}
+              </option>
+            );
+          }
+        });
+        setCargoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarCargo();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarCarreiraTipo = async () => {
+      try {
+        const response = await getCarreiraTipo();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option
+            key={item.CARREIRA_TIPO.carreira_tipo_id}
+            value={item.CARREIRA_TIPO.carreira_tipo_id}
+          >
+            {item.CARREIRA_TIPO.carreira_tipo_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (carreiraTipoId === item.CARREIRA_TIPO.carreira_tipo_id) {
+            options[0] = (
+              <option
+                key={item.CARREIRA_TIPO.carreira_tipo_id}
+                value={item.CARREIRA_TIPO.carreira_tipo_id}
+                selected
+              >
+                {item.CARREIRA_TIPO.carreira_tipo_nome}
+              </option>
+            );
+          }
+        });
+        setCarreiraTipoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarCarreiraTipo();
+
+    return () => {};
+  }, []);
+
   return (
-    <div className="update-person-modal">
-      <div className="update-person-modal-content">
+    <div className="update-permission-modal">
+      <div className="update-permission-modal-content">
         <h2 className="update-h2">Atualizar Permissão</h2>
         <form onSubmit={handleConfirm}>
           <label className="label-update">Pessoa - Permissão:</label>
@@ -468,6 +578,16 @@ export default function UpdatePermission({ id, handleClose }) {
           >
             {setorIdOptions}
           </select>
+          <label className="label-update">UF:</label>
+          <select
+            className="input-update"
+            name="uf_id"
+            id="uf_id"
+            value={ufId}
+            onChange={(event) => setUfId(event.target.value)}
+          >
+            {ufIdOptions}
+          </select>
           <label className="label-update">Município:</label>
           <select
             className="input-update"
@@ -477,6 +597,26 @@ export default function UpdatePermission({ id, handleClose }) {
             onChange={(event) => setMunicipioId(event.target.value)}
           >
             {municipioIdOptions}
+          </select>
+          <label className="label-update">Cargo:</label>
+          <select
+            className="input-update"
+            name="cargo_id"
+            id="cargo_id"
+            value={cargoId}
+            onChange={(event) => setCargoId(event.target.value)}
+          >
+            {cargoIdOptions}
+          </select>
+          <label className="label-update">Carreira - Tipo:</label>
+          <select
+            className="input-update"
+            name="carreira_tipo_id"
+            id="carreira_tipo_id"
+            value={carreiraTipoId}
+            onChange={(event) => setCarreiraTipoId(event.target.value)}
+          >
+            {carreiraTipoIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
