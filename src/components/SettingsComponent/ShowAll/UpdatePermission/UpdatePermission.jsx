@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { ErrorAtGetData } from "../../../../assets/js/Alerts";
 import {
   getModulo,
+  getMunicipio,
   getPermissaoId,
   getPessoa,
   getRegiao,
+  getSetor,
+  getUnidade,
 } from "../../../../services/callsSettings/callsUpdatePermission";
 import "./UpdatePermission.scss";
 export default function UpdatePermission({ id, handleClose }) {
@@ -295,6 +298,111 @@ export default function UpdatePermission({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarUnidade = async () => {
+      try {
+        const response = await getUnidade();
+        const unidadeData = response.data.RETORNO[0].RETORNO;
+        const options = unidadeData.map((item) => (
+          <option key={item.UNIDADE.unidade_id} value={item.UNIDADE.unidade_id}>
+            {item.UNIDADE.unidade_nome}
+          </option>
+        ));
+
+        unidadeData.forEach((item) => {
+          if (unidadeId === item.UNIDADE.unidade_id) {
+            options[0] = (
+              <option
+                key={item.UNIDADE.unidade_id}
+                value={item.UNIDADE.unidade_id}
+                selected
+              >
+                {item.UNIDADE.unidade_nome}
+              </option>
+            );
+          }
+        });
+        setUnidadeIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarUnidade();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarSetor = async () => {
+      try {
+        const response = await getSetor();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option key={item.SETOR.setor_id} value={item.SETOR.setor_id}>
+            {item.SETOR.setor_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (setorId === item.SETOR.setor_id) {
+            options[0] = (
+              <option
+                key={item.SETOR.setor_id}
+                value={item.SETOR.setor_id}
+                selected
+              >
+                {item.SETOR.setor_nome}
+              </option>
+            );
+          }
+        });
+        setSetorIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarSetor();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarMunicipio = async () => {
+      try {
+        const response = await getMunicipio();
+        const responseData = response.data.RETORNO[0].RETORNO;
+        const options = responseData.map((item) => (
+          <option key={item.MUNICIPIO.municipio_id} value={item.MUNICIPIO.municipio_id}>
+            {item.MUNICIPIO.municipio_nome}
+          </option>
+        ));
+
+        responseData.forEach((item) => {
+          if (municipioId === item.MUNICIPIO.municipio_id) {
+            options[0] = (
+              <option
+                key={item.MUNICIPIO.municipio_id}
+                value={item.MUNICIPIO.municipio_id}
+                selected
+              >
+                {item.MUNICIPIO.municipio_nome}
+              </option>
+            );
+          }
+        });
+        setMunicipioIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarMunicipio();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-person-modal">
       <div className="update-person-modal-content">
@@ -339,6 +447,36 @@ export default function UpdatePermission({ id, handleClose }) {
             onChange={(event) => setRegiaoId(event.target.value)}
           >
             {regiaoIdOptions}
+          </select>
+          <label className="label-update">Unidade:</label>
+          <select
+            className="input-update"
+            name="unidade_id"
+            id="unidade_id"
+            value={unidadeId}
+            onChange={(event) => setUnidadeId(event.target.value)}
+          >
+            {unidadeIdOptions}
+          </select>
+          <label className="label-update">Setor:</label>
+          <select
+            className="input-update"
+            name="setor_id"
+            id="setor_id"
+            value={setorId}
+            onChange={(event) => setSetorId(event.target.value)}
+          >
+            {setorIdOptions}
+          </select>
+          <label className="label-update">Município:</label>
+          <select
+            className="input-update"
+            name="municipio_id"
+            id="municipio_id"
+            value={municipioId}
+            onChange={(event) => setMunicipioId(event.target.value)}
+          >
+            {municipioIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
