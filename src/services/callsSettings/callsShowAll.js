@@ -230,7 +230,7 @@ export const deleteModulo = async () => {
   }
 };
 
-export const deletePermissao = async () => {
+export const deletePermissao = async (id) => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
 
@@ -238,7 +238,7 @@ export const deletePermissao = async () => {
     ATUALIZAR: [
       {
         PERMISSAO: {
-          permissao_id: "1",
+          permissao_id: id,
           ATUALIZAR: {
             permissao_ativo: "0",
           },
