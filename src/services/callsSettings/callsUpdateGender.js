@@ -37,7 +37,7 @@ export const updateGender = async (data) => {
     const uid = localStorage.getItem("uid");
   
     try {
-      const response = await api.post("/atualizarGenero", data, {
+      const response = await api.post("/AtualizarGenero", data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
