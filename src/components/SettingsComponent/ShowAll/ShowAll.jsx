@@ -66,7 +66,7 @@ export default function ShowAll() {
 
         const formattedModuloData = moduloData.map((item) => ({
           nome: item.MODULO.modulo_nome || "Nome não disponível",
-          descricao: item.MODULO.modulo_nome || "Descrição não disponível",
+          descricao: item.MODULO.modulo_descricao || "Descrição não disponível",
           id: item.MODULO.modulo_id,
         }));
 
