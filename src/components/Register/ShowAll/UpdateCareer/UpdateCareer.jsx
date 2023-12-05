@@ -106,7 +106,7 @@ export default function UpdateCareer({ id, handleClose }) {
               cargo_inicio: cargoInicio,
               cargo_fim: cargoFim,
               ingresso_id: ingressoString,
-              //   concurso_id: concursoString,
+                concurso_id: concursoString,
               //   concurso_classificacao: concursoClassificacaoString,
               //   concurso_cota_id: concursoCotaString,
               carreira_tipo_id: carreiraTipoString,
@@ -127,14 +127,14 @@ export default function UpdateCareer({ id, handleClose }) {
           CARREIRA_MOTIVO_STATUS: {
             carreira_status_id: carreiraStatusString,
           },
-          //   REGIME_TRABALHO: {
-          //     regime_trabalho_tipo_id: regimeTrabalhoTipoString,
-          //     regime_trabalho_modalidade_id: regimeTrabalhoModalidadeString,
-          //   },
+          // REGIME_TRABALHO: {
+          //   regime_trabalho_tipo_id: regimeTrabalhoTipoString,
+          //   regime_trabalho_modalidade_id: regimeTrabalhoModalidadeString,
+          // },
         },
       ],
     };
-    console.log(carreiraStatusId);
+    console.log(concursoId);
     // try {
     //   const response = await updateParticipation(data);
     //   if (response.data.SUCESSO == true) {
@@ -151,6 +151,7 @@ export default function UpdateCareer({ id, handleClose }) {
       try {
         const response = await getCarreiraId(idString);
         const carreiraData = response.data.RETORNO[0][0].RETORNO[0];
+        console.log(carreiraData);
         // setRegimeTrabalhoTipoId(carreiraData)
         setNucleoId(carreiraData.CARREIRA.nucleo_id[0].NUCLEO.nucleo_id || "");
         setInitialDateCargoInicio(carreiraData);
@@ -159,9 +160,9 @@ export default function UpdateCareer({ id, handleClose }) {
           carreiraData.CARREIRA.ingresso_id[0].INGRESSO.ingresso_id || ""
         );
         setCargoId(carreiraData.CARREIRA.cargo_id[0]?.CARGO?.cargo_id || "");
-        // setConcursoId(
-        //   carreiraData.CARREIRA || ""
-        // );
+        setConcursoId(
+          carreiraData.CARREIRA.concurso_id[0].CONCURSO.concurso_id || ""
+        );
         // setConcursoClassificacaoId(
         //   carreiraData.CARREIRA.concurso_classificacao || ""
         // );
@@ -187,6 +188,140 @@ export default function UpdateCareer({ id, handleClose }) {
           carreiraData.CARREIRA_MOTIVO_STATUS.RETORNO[0].CARREIRA_MOTIVO_STATUS
             .carreira_motivo_status_id || ""
         );
+
+        setInitialDateCargoInicio(carreiraData.CARREIRA.cargo_inicio || "");
+
+        if (
+          carreiraData.CARREIRA.cargo_inicio !== undefined &&
+          carreiraData.CARREIRA.cargo_inicio !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.cargo_inicio.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setCargoInicio(formattedDate);
+        } else {
+          setCargoInicio("");
+        }
+
+        setInitialDateCargoFim(carreiraData.CARREIRA.cargo_fim || "");
+
+        if (
+          carreiraData.CARREIRA.cargo_fim !== undefined &&
+          carreiraData.CARREIRA.cargo_fim !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.cargo_fim.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setCargoFim(formattedDate);
+        } else {
+          setCargoFim("");
+        }
+
+        setInitialDateSetorInicio(carreiraData.CARREIRA.setor_inicio || "");
+
+        if (
+          carreiraData.CARREIRA.setor_inicio !== undefined &&
+          carreiraData.CARREIRA.setor_inicio !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.setor_inicio.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setSetorInicio(formattedDate);
+        } else {
+          setSetorInicio("");
+        }
+
+        setInitialDateSetorFim(carreiraData.CARREIRA.setor_fim || "");
+
+        if (
+          carreiraData.CARREIRA.setor_fim !== undefined &&
+          carreiraData.CARREIRA.setor_fim !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.setor_fim.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setSetorFim(formattedDate);
+        } else {
+          setSetorFim("");
+        }
+
+        setInitialDateFuncaoInicio(carreiraData.CARREIRA.funcao_inicio || "");
+
+        if (
+          carreiraData.CARREIRA.funcao_inicio !== undefined &&
+          carreiraData.CARREIRA.funcao_inicio !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.funcao_inicio.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setFuncaoInicio(formattedDate);
+        } else {
+          setFuncaoInicio("");
+        }
+
+        setInitialDateFuncaoFim(carreiraData.CARREIRA.funcao_fim || "");
+
+        if (
+          carreiraData.CARREIRA.funcao_fim !== undefined &&
+          carreiraData.CARREIRA.funcao_fim !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.funcao_fim.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setFuncaoFim(formattedDate);
+        } else {
+          setFuncaoFim("");
+        }
+
+        setInitialDateCoordenacaoInicio(
+          carreiraData.CARREIRA.coordenacao_inicio || ""
+        );
+
+        if (
+          carreiraData.CARREIRA.coordenacao_inicio !== undefined &&
+          carreiraData.CARREIRA.coordenacao_inicio !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.coordenacao_inicio.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setCoordenacaoInicio(formattedDate);
+        } else {
+          setCoordenacaoInicio("");
+        }
+
+        setInitialDateCoordenacaoFim(
+          carreiraData.CARREIRA.coordenacao_fim || ""
+        );
+
+        if (
+          carreiraData.CARREIRA.coordenacao_fim !== undefined &&
+          carreiraData.CARREIRA.coordenacao_fim !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.coordenacao_fim.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setCoordenacaoFim(formattedDate);
+        } else {
+          setCoordenacaoFim("");
+        }
+
+        setInitialDateNucleoInicio(carreiraData.CARREIRA.nucleo_inicio || "");
+
+        if (
+          carreiraData.CARREIRA.nucleo_inicio !== undefined &&
+          carreiraData.CARREIRA.nucleo_inicio !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.nucleo_inicio.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setNucleoInicio(formattedDate);
+        } else {
+          setNucleoInicio("");
+        }
+
+        setInitialDateNucleoFim(carreiraData.CARREIRA.nucleo_fim || "");
+
+        if (
+          carreiraData.CARREIRA.nucleo_fim !== undefined &&
+          carreiraData.CARREIRA.nucleo_fim !== ""
+        ) {
+          const DateArray = carreiraData.CARREIRA.nucleo_fim.split("/");
+          const formattedDate = `${DateArray[2]}-${DateArray[1]}-${DateArray[0]} 00:00:00`;
+          setNucleoFim(formattedDate);
+        } else {
+          setNucleoFim("");
+        }
       } catch (error) {
         console.log(error);
         ErrorAtGetData();
@@ -588,6 +723,26 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {cargoIdOptions}
           </select>
+          <label className="label-update">
+            Cargo - Data inicial atual: {initialDateCargoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={cargoInicio || ""}
+            onChange={(e) => setCargoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Cargo - Data final atual: {initialDateCargoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={cargoFim || ""}
+            onChange={(e) => setCargoFim(e.target.value)}
+          />
           <label className="label-update">Ingresso:</label>
           <select
             className="input-update"
@@ -628,6 +783,26 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {setorIdOptions}
           </select>
+          <label className="label-update">
+            Setor - Data inicial atual: {initialDateSetorInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={setorInicio || ""}
+            onChange={(e) => setSetorInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Setor - Data final atual: {initialDateSetorFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={setorFim || ""}
+            onChange={(e) => setSetorFim(e.target.value)}
+          />
           <label className="label-update">Função:</label>
           <select
             className="input-update"
@@ -638,6 +813,26 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {funcaoIdOptions}
           </select>
+          <label className="label-update">
+            Função - Data inicial atual: {initialDateFuncaoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={funcaoInicio || ""}
+            onChange={(e) => setFuncaoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Função - Data final atual: {initialDateFuncaoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={funcaoFim || ""}
+            onChange={(e) => setFuncaoFim(e.target.value)}
+          />
           <label className="label-update">Coordenação:</label>
           <select
             className="input-update"
@@ -648,6 +843,26 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {coordenacaoIdOptions}
           </select>
+          <label className="label-update">
+            Coordenação - Data inicial atual: {initialDateCoordenacaoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={coordenacaoInicio || ""}
+            onChange={(e) => setCoordenacaoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Coordenação - Data final atual: {initialDateCoordenacaoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={coordenacaoFim || ""}
+            onChange={(e) => setCoordenacaoFim(e.target.value)}
+          />
           <label className="label-update">Núcleo:</label>
           <select
             className="input-update"
@@ -658,6 +873,26 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {nucleoIdOptions}
           </select>
+          <label className="label-update">
+            Núcleo - Data inicial atual: {initialDateNucleoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={nucleoInicio || ""}
+            onChange={(e) => setNucleoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Núcleo - Data final atual: {initialDateNucleoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={nucleoFim || ""}
+            onChange={(e) => setNucleoFim(e.target.value)}
+          />
           {/* <label className="label-update">Carreira - Status:</label>
           <select
             className="input-update"
