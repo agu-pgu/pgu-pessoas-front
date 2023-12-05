@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ErrorAtGetData } from "../../../../assets/js/Alerts";
 import {
+  getModulo,
   getPermissaoId,
   getPessoa,
+  getRegiao,
 } from "../../../../services/callsSettings/callsUpdatePermission";
 import "./UpdatePermission.scss";
 export default function UpdatePermission({ id, handleClose }) {
@@ -188,6 +190,111 @@ export default function UpdatePermission({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarPessoa = async () => {
+      try {
+        const response = await getPessoa();
+        const pessoaData = response.data.RETORNO[0].RETORNO;
+        const options = pessoaData.map((item) => (
+          <option key={item.PESSOA.pessoa_id} value={item.PESSOA.pessoa_id}>
+            {item.PESSOA.pessoa_nome}
+          </option>
+        ));
+
+        pessoaData.forEach((item) => {
+          if (pessoaId === item.PESSOA.pessoa_id) {
+            options[0] = (
+              <option
+                key={item.PESSOA.pessoa_id}
+                value={item.PESSOA.pessoa_id}
+                selected
+              >
+                {item.PESSOA.pessoa_nome}
+              </option>
+            );
+          }
+        });
+        setPessoaIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarPessoa();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarModulo = async () => {
+      try {
+        const response = await getModulo();
+        const moduloData = response.data.RETORNO[0].RETORNO;
+        const options = moduloData.map((item) => (
+          <option key={item.MODULO.modulo_id} value={item.MODULO.modulo_id}>
+            {item.MODULO.modulo_nome}
+          </option>
+        ));
+
+        moduloData.forEach((item) => {
+          if (moduloId === item.MODULO.modulo_id) {
+            options[0] = (
+              <option
+                key={item.MODULO.modulo_id}
+                value={item.MODULO.modulo_id}
+                selected
+              >
+                {item.MODULO.modulo_nome}
+              </option>
+            );
+          }
+        });
+        setModuloIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarModulo();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarRegiao = async () => {
+      try {
+        const response = await getRegiao();
+        const regiaoData = response.data.RETORNO[0].RETORNO;
+        const options = regiaoData.map((item) => (
+          <option key={item.REGIAO.regiao_id} value={item.REGIAO.regiao_id}>
+            {item.REGIAO.regiao_nome}
+          </option>
+        ));
+
+        regiaoData.forEach((item) => {
+          if (regiaoId === item.REGIAO.regiao_id) {
+            options[0] = (
+              <option
+                key={item.REGIAO.regiao_id}
+                value={item.REGIAO.regiao_id}
+                selected
+              >
+                {item.REGIAO.regiao_nome}
+              </option>
+            );
+          }
+        });
+        setRegiaoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarRegiao();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-person-modal">
       <div className="update-person-modal-content">
@@ -202,6 +309,36 @@ export default function UpdatePermission({ id, handleClose }) {
             onChange={(event) => setPermissaoPessoaId(event.target.value)}
           >
             {permissaoPessoaIdOptions}
+          </select>
+          <label className="label-update">Pessoa:</label>
+          <select
+            className="input-update"
+            name="pessoa_id"
+            id="pessoa_id"
+            value={pessoaId}
+            onChange={(event) => setPessoaId(event.target.value)}
+          >
+            {pessoaIdOptions}
+          </select>
+          <label className="label-update">Módulo:</label>
+          <select
+            className="input-update"
+            name="modulo_id"
+            id="modulo_id"
+            value={moduloId}
+            onChange={(event) => setModuloId(event.target.value)}
+          >
+            {moduloIdOptions}
+          </select>
+          <label className="label-update">Região:</label>
+          <select
+            className="input-update"
+            name="regiao_id"
+            id="regiao_id"
+            value={regiaoId}
+            onChange={(event) => setRegiaoId(event.target.value)}
+          >
+            {regiaoIdOptions}
           </select>
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
