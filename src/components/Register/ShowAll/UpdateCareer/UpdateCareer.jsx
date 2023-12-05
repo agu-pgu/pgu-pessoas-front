@@ -11,6 +11,8 @@ import {
   getPessoa,
   getSetor,
   getRegimeTrabalhoTipo,
+  getConcurso,
+  getConcursoCota,
 } from "../../../../services/CallsPerson/updateCareer";
 import { ErrorAtGetData } from "../../../../assets/js/Alerts";
 
@@ -106,9 +108,9 @@ export default function UpdateCareer({ id, handleClose }) {
               cargo_inicio: cargoInicio,
               cargo_fim: cargoFim,
               ingresso_id: ingressoString,
-                concurso_id: concursoString,
-              //   concurso_classificacao: concursoClassificacaoString,
-              //   concurso_cota_id: concursoCotaString,
+              concurso_id: concursoString,
+              concurso_classificacao: concursoClassificacaoString,
+              concurso_cota_id: concursoCotaString,
               carreira_tipo_id: carreiraTipoString,
               setor_id: setorString,
               setor_inicio: setorInicio,
@@ -163,13 +165,10 @@ export default function UpdateCareer({ id, handleClose }) {
         setConcursoId(
           carreiraData.CARREIRA.concurso_id[0].CONCURSO.concurso_id || ""
         );
-        // setConcursoClassificacaoId(
-        //   carreiraData.CARREIRA.concurso_classificacao || ""
-        // );
-        // setConcursoCotaId(
-        //   carreiraData.CARREIRA.concurso_cota_id[0]?.CONCURSO_COTA
-        //     ?.concurso_cota_id || ""
-        // );
+        setConcursoClassificacaoId(
+          carreiraData.CARREIRA.concurso_classificacao || ""
+        );
+        setConcursoCotaId(carreiraData.CARREIRA.concurso_cota_id || "");
         setCarreiraTipoId(
           carreiraData.CARREIRA.carreira_tipo_id[0]?.CARREIRA_TIPO
             ?.carreira_tipo_id || ""
@@ -698,6 +697,82 @@ export default function UpdateCareer({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarConcurso = async () => {
+      try {
+        const response = await getConcurso();
+        const concursoData = response.data.RETORNO[0].RETORNO;
+        const options = concursoData.map((item) => (
+          <option
+            key={item.CONCURSO.concurso_id}
+            value={item.CONCURSO.concurso_id}
+          >
+            {item.CONCURSO.concurso_nome}
+          </option>
+        ));
+
+        concursoData.forEach((item) => {
+          if (concursoId === item.CONCURSO.concurso_id) {
+            options[0] = (
+              <option
+                key={item.CONCURSO.concurso_id}
+                value={item.CONCURSO.concurso_id}
+                selected
+              >
+                {item.CONCURSO.concurso_nome}
+              </option>
+            );
+          }
+        });
+        setConcursoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarConcurso();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarConcursoCota = async () => {
+      try {
+        const response = await getConcursoCota();
+        const concursoCotaData = response.data.RETORNO[0].RETORNO;
+        const options = concursoCotaData.map((item) => (
+          <option
+            key={item.CONCURSO_COTA.concurso_cota_id}
+            value={item.CONCURSO_COTA.concurso_cota_id}
+          >
+            {item.CONCURSO_COTA.concurso_cota_nome}
+          </option>
+        ));
+
+        concursoCotaData.forEach((item) => {
+          if (concursoCotaId === item.CONCURSO_COTA.concurso_cota_id) {
+            options[0] = (
+              <option
+                key={item.CONCURSO_COTA.concurso_cota_id}
+                value={item.CONCURSO_COTA.concurso_cota_id}
+                selected
+              >
+                {item.CONCURSO_COTA.concurso_cota_nome}
+              </option>
+            );
+          }
+        });
+        setConcursoCotaIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarConcursoCota();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-participation-modal">
       <div className="update-participation-modal-content">
@@ -752,6 +827,34 @@ export default function UpdateCareer({ id, handleClose }) {
             onChange={(event) => setIngressoId(event.target.value)}
           >
             {ingressoIdOptions}
+          </select>
+          <label className="label-update">Concurso:</label>
+          <select
+            className="input-update"
+            name="concurso_id"
+            id="concurso_id"
+            value={concursoId}
+            onChange={(event) => setConcursoId(event.target.value)}
+          >
+            {concursoIdOptions}
+          </select>
+          <label className="label-update">Concurso - Classificação:</label>
+          <input
+            type="number"
+            className="input-update"
+            name="concursoClassificacao"
+            value={concursoClassificacaoId}
+            onChange={(e) => setConcursoClassificacaoId(e.target.value)}
+          />
+          <label className="label-update">Concurso - Cota:</label>
+          <select
+            className="input-update"
+            name="concurso_id"
+            id="concurso_id"
+            value={concursoCotaId}
+            onChange={(event) => setConcursoCotaId(event.target.value)}
+          >
+            {concursoCotaIdOptions}
           </select>
           <label className="label-update">Carreira - Tipo:</label>
           <select
