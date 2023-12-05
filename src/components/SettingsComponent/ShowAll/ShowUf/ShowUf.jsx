@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowUf.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { deleteUf } from "../../../../services/callsSettings/callsShowAll";
+import UpdateUf from "../UpdateUf/UpdateUf";
 
 export default function ShowUf({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -42,6 +46,16 @@ export default function ShowUf({ peopleList }) {
     }
   };
 
+  const handleUpdate = (id) => {
+    setShowUpdateModal(true);
+    setSelectedPersonId(id);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedPersonId(null);
+  };
+
   return (
     <div className="scroll-container-uf">
       <table className="list-container-table-uf">
@@ -63,11 +77,23 @@ export default function ShowUf({ peopleList }) {
                 <button onClick={() => handleDelete(uf.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(uf.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showUpdateModal && (
+        <UpdateUf
+          id={selectedPersonId}
+          handleClose={handleCloseUpdateModal}
+        />
+      )}
     </div>
   );
 }
