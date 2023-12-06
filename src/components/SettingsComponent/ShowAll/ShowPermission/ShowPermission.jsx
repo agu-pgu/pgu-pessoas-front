@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowPermission.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { deletePermissao } from "../../../../services/callsSettings/callsShowAll";
+import UpdatePermission from "../UpdatePermission/UpdatePermission";
 
 export default function ShowPermission({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -40,6 +44,16 @@ export default function ShowPermission({ peopleList }) {
       console.error("Erro ao desativar o registro:", error);
       Swal.fire("Erro", "Falha ao desativar o registro.", "error");
     }
+  };
+
+  const handleUpdate = (id) => {
+    setShowUpdateModal(true);
+    setSelectedPersonId(id);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedPersonId(null);
   };
 
   return (
@@ -117,11 +131,23 @@ export default function ShowPermission({ peopleList }) {
                 <button onClick={() => handleDelete(permissao.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(permissao.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showUpdateModal && (
+        <UpdatePermission
+          id={selectedPersonId}
+          handleClose={handleCloseUpdateModal}
+        />
+      )}
     </div>
   );
 }

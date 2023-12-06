@@ -57,5 +57,8 @@ export const loginUserError = () => {
       title: "Cadastro bem sucedido!",
       showConfirmButton: false,
       timer: 8000,
+    }).then(() => {
+      // Recarrega a página após a mensagem de sucesso
+      window.location.reload();
     });
   };

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowMunicipio.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { deleteMunicipio } from "../../../../services/callsSettings/callsShowAll";
+import UpdateMunicipio from "../UpdateMunicipio/UpdateMunicipio";
 
 export default function ShowMunicipio({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -42,6 +46,16 @@ export default function ShowMunicipio({ peopleList }) {
     }
   };
 
+  const handleUpdate = (id) => {
+    setShowUpdateModal(true);
+    setSelectedPersonId(id);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedPersonId(null);
+  };
+
   return (
     <div className="scroll-container-municipio">
       <table className="list-container-table-municipio">
@@ -59,11 +73,23 @@ export default function ShowMunicipio({ peopleList }) {
                 <button onClick={() => handleDelete(municipio.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(municipio.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showUpdateModal && (
+        <UpdateMunicipio
+          id={selectedPersonId}
+          handleClose={handleCloseUpdateModal}
+        />
+      )}
     </div>
   );
 }

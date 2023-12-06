@@ -11,8 +11,11 @@ import {
   getPessoa,
   getSetor,
   getRegimeTrabalhoTipo,
+  getConcurso,
+  getConcursoCota,
+  updateCareer,
 } from "../../../../services/CallsPerson/updateCareer";
-import { ErrorAtGetData } from "../../../../assets/js/Alerts";
+import { CreateError, ErrorAtGetData, createPersonSucess } from "../../../../assets/js/Alerts";
 
 export default function UpdateCareer({ id, handleClose }) {
   const idString = String(id);
@@ -106,9 +109,9 @@ export default function UpdateCareer({ id, handleClose }) {
               cargo_inicio: cargoInicio,
               cargo_fim: cargoFim,
               ingresso_id: ingressoString,
-              //   concurso_id: concursoString,
-              //   concurso_classificacao: concursoClassificacaoString,
-              //   concurso_cota_id: concursoCotaString,
+              concurso_id: concursoString,
+              concurso_classificacao: concursoClassificacaoString,
+              concurso_cota_id: concursoCotaString,
               carreira_tipo_id: carreiraTipoString,
               setor_id: setorString,
               setor_inicio: setorInicio,
@@ -127,23 +130,22 @@ export default function UpdateCareer({ id, handleClose }) {
           CARREIRA_MOTIVO_STATUS: {
             carreira_status_id: carreiraStatusString,
           },
-          //   REGIME_TRABALHO: {
-          //     regime_trabalho_tipo_id: regimeTrabalhoTipoString,
-          //     regime_trabalho_modalidade_id: regimeTrabalhoModalidadeString,
-          //   },
+          // REGIME_TRABALHO: {
+          //   regime_trabalho_tipo_id: regimeTrabalhoTipoString,
+          //   regime_trabalho_modalidade_id: regimeTrabalhoModalidadeString,
+          // },
         },
       ],
     };
-    console.log(initialDateCargoInicio);
-    // try {
-    //   const response = await updateParticipation(data);
-    //   if (response.data.SUCESSO == true) {
-    //     createPersonSucess();
-    //   }
-    // } catch (error) {
-    //   CreateError();
-    //   console.log(error);
-    // }
+    try {
+      const response = await updateCareer(data);
+      if (response.data.SUCESSO == true) {
+        createPersonSucess();
+      }
+    } catch (error) {
+      CreateError();
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -160,16 +162,13 @@ export default function UpdateCareer({ id, handleClose }) {
           carreiraData.CARREIRA.ingresso_id[0].INGRESSO.ingresso_id || ""
         );
         setCargoId(carreiraData.CARREIRA.cargo_id[0]?.CARGO?.cargo_id || "");
-        // setConcursoId(
-        //   carreiraData.CARREIRA || ""
-        // );
-        // setConcursoClassificacaoId(
-        //   carreiraData.CARREIRA.concurso_classificacao || ""
-        // );
-        // setConcursoCotaId(
-        //   carreiraData.CARREIRA.concurso_cota_id[0]?.CONCURSO_COTA
-        //     ?.concurso_cota_id || ""
-        // );
+        setConcursoId(
+          carreiraData.CARREIRA.concurso_id[0].CONCURSO.concurso_id || ""
+        );
+        setConcursoClassificacaoId(
+          carreiraData.CARREIRA.concurso_classificacao || ""
+        );
+        setConcursoCotaId(carreiraData.CARREIRA.concurso_cota_id || "");
         setCarreiraTipoId(
           carreiraData.CARREIRA.carreira_tipo_id[0]?.CARREIRA_TIPO
             ?.carreira_tipo_id || ""
@@ -183,15 +182,14 @@ export default function UpdateCareer({ id, handleClose }) {
           carreiraData.CARREIRA.coordenacao_id[0]?.COORDENACAO
             ?.coordenacao_id || ""
         );
+
         setCarreiraStatusId(
           carreiraData.CARREIRA_MOTIVO_STATUS.RETORNO[0].CARREIRA_MOTIVO_STATUS
-            .carreira_status_id[0].CARREIRA_STATUS.carreira_status_id || ""
+            .carreira_motivo_status_id || ""
         );
 
-        // setRegimeTrabalhoModalidadeId(
-        //   carreiraData.REGIME_TRABALHO.retorno[0]?.REGIME_TRABALHO_MODALIDADE
-        //     ?.regime_trabalho_modalidade_id || ""
-        // );
+        setInitialDateCargoInicio(carreiraData.CARREIRA.cargo_inicio || "");
+
         if (
           carreiraData.CARREIRA.cargo_inicio !== undefined &&
           carreiraData.CARREIRA.cargo_inicio !== ""
@@ -203,7 +201,8 @@ export default function UpdateCareer({ id, handleClose }) {
           setCargoInicio("");
         }
 
-        initialDateCargoFim(carreiraData.CARREIRA.cargo_fim || "");
+        setInitialDateCargoFim(carreiraData.CARREIRA.cargo_fim || "");
+
         if (
           carreiraData.CARREIRA.cargo_fim !== undefined &&
           carreiraData.CARREIRA.cargo_fim !== ""
@@ -214,6 +213,8 @@ export default function UpdateCareer({ id, handleClose }) {
         } else {
           setCargoFim("");
         }
+
+        setInitialDateSetorInicio(carreiraData.CARREIRA.setor_inicio || "");
 
         if (
           carreiraData.CARREIRA.setor_inicio !== undefined &&
@@ -227,6 +228,7 @@ export default function UpdateCareer({ id, handleClose }) {
         }
 
         setInitialDateSetorFim(carreiraData.CARREIRA.setor_fim || "");
+
         if (
           carreiraData.CARREIRA.setor_fim !== undefined &&
           carreiraData.CARREIRA.setor_fim !== ""
@@ -239,6 +241,7 @@ export default function UpdateCareer({ id, handleClose }) {
         }
 
         setInitialDateFuncaoInicio(carreiraData.CARREIRA.funcao_inicio || "");
+
         if (
           carreiraData.CARREIRA.funcao_inicio !== undefined &&
           carreiraData.CARREIRA.funcao_inicio !== ""
@@ -251,6 +254,7 @@ export default function UpdateCareer({ id, handleClose }) {
         }
 
         setInitialDateFuncaoFim(carreiraData.CARREIRA.funcao_fim || "");
+
         if (
           carreiraData.CARREIRA.funcao_fim !== undefined &&
           carreiraData.CARREIRA.funcao_fim !== ""
@@ -265,6 +269,7 @@ export default function UpdateCareer({ id, handleClose }) {
         setInitialDateCoordenacaoInicio(
           carreiraData.CARREIRA.coordenacao_inicio || ""
         );
+
         if (
           carreiraData.CARREIRA.coordenacao_inicio !== undefined &&
           carreiraData.CARREIRA.coordenacao_inicio !== ""
@@ -279,6 +284,7 @@ export default function UpdateCareer({ id, handleClose }) {
         setInitialDateCoordenacaoFim(
           carreiraData.CARREIRA.coordenacao_fim || ""
         );
+
         if (
           carreiraData.CARREIRA.coordenacao_fim !== undefined &&
           carreiraData.CARREIRA.coordenacao_fim !== ""
@@ -291,6 +297,7 @@ export default function UpdateCareer({ id, handleClose }) {
         }
 
         setInitialDateNucleoInicio(carreiraData.CARREIRA.nucleo_inicio || "");
+
         if (
           carreiraData.CARREIRA.nucleo_inicio !== undefined &&
           carreiraData.CARREIRA.nucleo_inicio !== ""
@@ -303,6 +310,7 @@ export default function UpdateCareer({ id, handleClose }) {
         }
 
         setInitialDateNucleoFim(carreiraData.CARREIRA.nucleo_fim || "");
+
         if (
           carreiraData.CARREIRA.nucleo_fim !== undefined &&
           carreiraData.CARREIRA.nucleo_fim !== ""
@@ -329,6 +337,7 @@ export default function UpdateCareer({ id, handleClose }) {
       try {
         const response = await getPessoa();
         const pessoaData = response.data.RETORNO[0].RETORNO;
+        console.log(pessoaData);
         const options = pessoaData.map((item) => (
           <option key={item.PESSOA.pessoa_id} value={item.PESSOA.pessoa_id}>
             {item.PESSOA.pessoa_nome}
@@ -689,6 +698,82 @@ export default function UpdateCareer({ id, handleClose }) {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    const getPavimentarConcurso = async () => {
+      try {
+        const response = await getConcurso();
+        const concursoData = response.data.RETORNO[0].RETORNO;
+        const options = concursoData.map((item) => (
+          <option
+            key={item.CONCURSO.concurso_id}
+            value={item.CONCURSO.concurso_id}
+          >
+            {item.CONCURSO.concurso_nome}
+          </option>
+        ));
+
+        concursoData.forEach((item) => {
+          if (concursoId === item.CONCURSO.concurso_id) {
+            options[0] = (
+              <option
+                key={item.CONCURSO.concurso_id}
+                value={item.CONCURSO.concurso_id}
+                selected
+              >
+                {item.CONCURSO.concurso_nome}
+              </option>
+            );
+          }
+        });
+        setConcursoIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarConcurso();
+
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    const getPavimentarConcursoCota = async () => {
+      try {
+        const response = await getConcursoCota();
+        const concursoCotaData = response.data.RETORNO[0].RETORNO;
+        const options = concursoCotaData.map((item) => (
+          <option
+            key={item.CONCURSO_COTA.concurso_cota_id}
+            value={item.CONCURSO_COTA.concurso_cota_id}
+          >
+            {item.CONCURSO_COTA.concurso_cota_nome}
+          </option>
+        ));
+
+        concursoCotaData.forEach((item) => {
+          if (concursoCotaId === item.CONCURSO_COTA.concurso_cota_id) {
+            options[0] = (
+              <option
+                key={item.CONCURSO_COTA.concurso_cota_id}
+                value={item.CONCURSO_COTA.concurso_cota_id}
+                selected
+              >
+                {item.CONCURSO_COTA.concurso_cota_nome}
+              </option>
+            );
+          }
+        });
+        setConcursoCotaIdOptions(options);
+      } catch (error) {
+        ErrorAtGetData();
+        console.log(error);
+      }
+    };
+    getPavimentarConcursoCota();
+
+    return () => {};
+  }, []);
+
   return (
     <div className="update-participation-modal">
       <div className="update-participation-modal-content">
@@ -720,7 +805,7 @@ export default function UpdateCareer({ id, handleClose }) {
           <input
             className="input-update"
             type="date"
-            placeholder="*Data inicial cargo"
+            placeholder="*Data inicial"
             value={cargoInicio || ""}
             onChange={(e) => setCargoInicio(e.target.value)}
           />
@@ -730,7 +815,7 @@ export default function UpdateCareer({ id, handleClose }) {
           <input
             className="input-update"
             type="date"
-            placeholder="*Data final cargo"
+            placeholder="*Data inicial"
             value={cargoFim || ""}
             onChange={(e) => setCargoFim(e.target.value)}
           />
@@ -744,6 +829,34 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {ingressoIdOptions}
           </select>
+          <label className="label-update">Concurso:</label>
+          <select
+            className="input-update"
+            name="concurso_id"
+            id="concurso_id"
+            value={concursoId}
+            onChange={(event) => setConcursoId(event.target.value)}
+          >
+            {concursoIdOptions}
+          </select>
+          <label className="label-update">Concurso - Classificação:</label>
+          <input
+            type="number"
+            className="input-update"
+            name="concursoClassificacao"
+            value={concursoClassificacaoId}
+            onChange={(e) => setConcursoClassificacaoId(e.target.value)}
+          />
+          <label className="label-update">Concurso - Cota:</label>
+          <select
+            className="input-update"
+            name="concurso_id"
+            id="concurso_id"
+            value={concursoCotaId}
+            onChange={(event) => setConcursoCotaId(event.target.value)}
+          >
+            {concursoCotaIdOptions}
+          </select>
           <label className="label-update">Carreira - Tipo:</label>
           <select
             className="input-update"
@@ -753,46 +866,6 @@ export default function UpdateCareer({ id, handleClose }) {
             onChange={(event) => setCarreiraTipoId(event.target.value)}
           >
             {carreiraTipoIdOptions}
-          </select>
-          <label className="label-update">Setor:</label>
-          <select
-            className="input-update"
-            name="setor"
-            id="setor"
-            value={setorId}
-            onChange={(event) => setSetorId(event.target.value)}
-          >
-            {setorIdOptions}
-          </select>
-          <label className="label-update">Função:</label>
-          <select
-            className="input-update"
-            name="funcao"
-            id="funcao"
-            value={funcaoId}
-            onChange={(event) => setFuncaoId(event.target.value)}
-          >
-            {funcaoIdOptions}
-          </select>
-          <label className="label-update">Coordenação:</label>
-          <select
-            className="input-update"
-            name="coordenacao"
-            id="coordenacao"
-            value={coordenacaoId}
-            onChange={(event) => setCoordenacaoId(event.target.value)}
-          >
-            {coordenacaoIdOptions}
-          </select>
-          <label className="label-update">Núcleo:</label>
-          <select
-            className="input-update"
-            name="nucleo"
-            id="nucleo"
-            value={nucleoId}
-            onChange={(event) => setNucleoId(event.target.value)}
-          >
-            {nucleoIdOptions}
           </select>
           <label className="label-update">Carreira - Status:</label>
           <select
@@ -804,6 +877,136 @@ export default function UpdateCareer({ id, handleClose }) {
           >
             {carreiraStatusIdOptions}
           </select>
+          <label className="label-update">Setor:</label>
+          <select
+            className="input-update"
+            name="setor"
+            id="setor"
+            value={setorId}
+            onChange={(event) => setSetorId(event.target.value)}
+          >
+            {setorIdOptions}
+          </select>
+          <label className="label-update">
+            Setor - Data inicial atual: {initialDateSetorInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={setorInicio || ""}
+            onChange={(e) => setSetorInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Setor - Data final atual: {initialDateSetorFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={setorFim || ""}
+            onChange={(e) => setSetorFim(e.target.value)}
+          />
+          <label className="label-update">Função:</label>
+          <select
+            className="input-update"
+            name="funcao"
+            id="funcao"
+            value={funcaoId}
+            onChange={(event) => setFuncaoId(event.target.value)}
+          >
+            {funcaoIdOptions}
+          </select>
+          <label className="label-update">
+            Função - Data inicial atual: {initialDateFuncaoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={funcaoInicio || ""}
+            onChange={(e) => setFuncaoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Função - Data final atual: {initialDateFuncaoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={funcaoFim || ""}
+            onChange={(e) => setFuncaoFim(e.target.value)}
+          />
+          <label className="label-update">Coordenação:</label>
+          <select
+            className="input-update"
+            name="coordenacao"
+            id="coordenacao"
+            value={coordenacaoId}
+            onChange={(event) => setCoordenacaoId(event.target.value)}
+          >
+            {coordenacaoIdOptions}
+          </select>
+          <label className="label-update">
+            Coordenação - Data inicial atual: {initialDateCoordenacaoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={coordenacaoInicio || ""}
+            onChange={(e) => setCoordenacaoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Coordenação - Data final atual: {initialDateCoordenacaoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={coordenacaoFim || ""}
+            onChange={(e) => setCoordenacaoFim(e.target.value)}
+          />
+          <label className="label-update">Núcleo:</label>
+          <select
+            className="input-update"
+            name="nucleo"
+            id="nucleo"
+            value={nucleoId}
+            onChange={(event) => setNucleoId(event.target.value)}
+          >
+            {nucleoIdOptions}
+          </select>
+          <label className="label-update">
+            Núcleo - Data inicial atual: {initialDateNucleoInicio}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={nucleoInicio || ""}
+            onChange={(e) => setNucleoInicio(e.target.value)}
+          />
+          <label className="label-update">
+            Núcleo - Data final atual: {initialDateNucleoFim}
+          </label>
+          <input
+            className="input-update"
+            type="date"
+            placeholder="*Data inicial"
+            value={nucleoFim || ""}
+            onChange={(e) => setNucleoFim(e.target.value)}
+          />
+          {/* <label className="label-update">Carreira - Status:</label>
+          <select
+            className="input-update"
+            name="carreira_status_id"
+            id="carreira_status_id"
+            value={carreiraStatusId}
+            onChange={(event) => setCarreiraStatusId(event.target.value)}
+          >
+            {carreiraStatusIdOptions}
+          </select> */}
           <div className="button-container">
             <button className="cancel-button" onClick={handleCancel}>
               Cancelar

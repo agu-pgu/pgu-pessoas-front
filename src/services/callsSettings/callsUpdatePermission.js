@@ -1,21 +1,21 @@
 import api from "../api";
 
-export const getCarreiraId = async (id) => {
+export const getPermissaoId = async (id) => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
 
   const data = {
     CONSULTAR: [
       {
-        CARREIRA: {
-          carreira_id: id,
+        PERMISSAO: {
+          permissao_id: id,
         },
       },
     ],
   };
 
   try {
-    const response = await api.post("/ConsultarCarreira", data, {
+    const response = await api.post("/ConsultarPermissao", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -28,6 +28,7 @@ export const getCarreiraId = async (id) => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
@@ -60,26 +61,27 @@ export const getPessoa = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
 
-export const getCargo = async () => {
+export const getModulo = async () => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
 
   const data = {
     CONSULTAR: [
       {
-        CARGO: {
-          cargo_ativo: "1",
+        MODULO: {
+          modulo_ativo: "1",
         },
       },
     ],
   };
 
   try {
-    const response = await api.post("/ConsultarCargo", data, {
+    const response = await api.post("/ConsultarModulo", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -92,26 +94,27 @@ export const getCargo = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
 
-export const getIngresso = async () => {
+export const getRegiao = async () => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
 
   const data = {
     CONSULTAR: [
       {
-        INGRESSO: {
-          ingresso_ativo: "1",
+        REGIAO: {
+          regiao_ativo: "1",
         },
       },
     ],
   };
 
   try {
-    const response = await api.post("/ConsultarIngresso", data, {
+    const response = await api.post("/ConsultarRegiao", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -124,26 +127,27 @@ export const getIngresso = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
 
-export const getCarreiraTipo = async () => {
+export const getUnidade = async () => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
 
   const data = {
     CONSULTAR: [
       {
-        CARREIRA_TIPO: {
-          carreira_tipo_ativo: "1",
+        UNIDADE: {
+          unidade_ativo: "1",
         },
       },
     ],
   };
 
   try {
-    const response = await api.post("/ConsultarCarreiraTipo", data, {
+    const response = await api.post("/ConsultarUnidade", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -156,6 +160,7 @@ export const getCarreiraTipo = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
@@ -188,6 +193,139 @@ export const getSetor = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getMunicipio = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        MUNICIPIO: {
+          municipio_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarMunicipio", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getUf = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        UF: {
+          uf_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarUf", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getCargo = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        CARGO: {
+          cargo_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarCargo", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
+    return 500;
+  }
+};
+
+export const getCarreiraTipo = async () => {
+  const token = localStorage.getItem("token");
+  const uid = localStorage.getItem("uid");
+
+  const data = {
+    CONSULTAR: [
+      {
+        CARREIRA_TIPO: {
+          carreira_tipo_ativo: "1",
+        },
+      },
+    ],
+  };
+
+  try {
+    const response = await api.post("/ConsultarCarreiraTipo", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        uid: uid,
+      },
+    });
+    if (response.data.SUCESSO === true) {
+      return response;
+    } else {
+      return 401;
+    }
+  } catch (error) {
+    console.log(error);
     return 500;
   }
 };
@@ -220,26 +358,27 @@ export const getFuncao = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
 
-export const getCoordenacao = async () => {
+export const getIngresso = async () => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
 
   const data = {
     CONSULTAR: [
       {
-        COORDENACAO: {
-          coordenacao_ativo: "1",
+        INGRESSO: {
+          ingresso_ativo: "1",
         },
       },
     ],
   };
 
   try {
-    const response = await api.post("/ConsultarCoordenacao", data, {
+    const response = await api.post("/ConsultarIngresso", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -252,6 +391,7 @@ export const getCoordenacao = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
@@ -284,26 +424,27 @@ export const getNucleo = async () => {
       return 401;
     }
   } catch (error) {
+    console.log(error);
     return 500;
   }
 };
 
-export const getCarreiraStatus = async () => {
+export const getCoordenacao = async () => {
   const token = localStorage.getItem("token");
   const uid = localStorage.getItem("uid");
 
   const data = {
     CONSULTAR: [
       {
-        CARREIRA_STATUS: {
-          carreira_status_ativo: "1",
+        COORDENACAO: {
+          coordenacao_ativo: "1",
         },
       },
     ],
   };
 
   try {
-    const response = await api.post("/ConsultarCarreiraStatus", data, {
+    const response = await api.post("/ConsultarCoordenacao", data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -316,38 +457,7 @@ export const getCarreiraStatus = async () => {
       return 401;
     }
   } catch (error) {
-    return 500;
-  }
-};
-
-export const getRegimeTrabalhoTipo = async () => {
-  const token = localStorage.getItem("token");
-  const uid = localStorage.getItem("uid");
-
-  const data = {
-    CONSULTAR: [
-      {
-        REGIME_TRABALHO_TIPO: {
-          regime_trabalho_tipo_ativo: "1",
-        },
-      },
-    ],
-  };
-
-  try {
-    const response = await api.post("/ConsultarRegimeTrabalhoTipo", data, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        uid: uid,
-      },
-    });
-    if (response.data.SUCESSO === true) {
-      return response;
-    } else {
-      return 401;
-    }
-  } catch (error) {
+    console.log(error);
     return 500;
   }
 };
@@ -380,62 +490,30 @@ export const getConcurso = async () => {
       return 401;
     }
   } catch (error) {
-    return 500;
-  }
-};
-
-export const getConcursoCota = async () => {
-  const token = localStorage.getItem("token");
-  const uid = localStorage.getItem("uid");
-
-  const data = {
-    CONSULTAR: [
-      {
-        CONCURSO_COTA: {
-          concurso_cota_ativo: "1",
-        },
-      },
-    ],
-  };
-
-  try {
-    const response = await api.post("/ConsultarConcursoCota", data, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        uid: uid,
-      },
-    });
-    if (response.data.SUCESSO === true) {
-      return response;
-    } else {
-      return 401;
-    }
-  } catch (error) {
-    return 500;
-  }
-};
-
-export const updateCareer = async (data) => {
-  const token = localStorage.getItem("token");
-  const uid = localStorage.getItem("uid");
-
-  try {
-    const response = await api.post("/AtualizarCarreira", data, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-        uid: uid,
-      },
-    });
-    if (response.data.SUCESSO === true) {
-      console.log(response);
-      return response;
-    } else {
-      return 401;
-    }
-  } catch (error) {
     console.log(error);
     return 500;
   }
 };
+
+export const updatePermissao = async (data) => {
+    const token = localStorage.getItem("token");
+    const uid = localStorage.getItem("uid");
+  
+    try {
+      const response = await api.post("/AtualizarPermissao", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          uid: uid,
+        },
+      });
+      if (response.data.SUCESSO === true) {
+        return response;
+      } else {
+        return 401;
+      }
+    } catch (error) {
+      console.log(error);
+      return 500;
+    }
+  };

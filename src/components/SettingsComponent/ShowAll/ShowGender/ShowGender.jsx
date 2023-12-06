@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ShowGender.scss";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { deleteGenero } from "../../../../services/callsSettings/callsShowAll";
+import "./ShowGender.scss";
+import UpdateGender from "../UpdateGender/UpdateGender";
 
 export default function ShowGender({ peopleList }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       const result = await Swal.fire({
@@ -42,6 +47,16 @@ export default function ShowGender({ peopleList }) {
     }
   };
 
+  const handleUpdate = (id) => {
+    setShowUpdateModal(true);
+    setSelectedPersonId(id);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+    setSelectedPersonId(null);
+  };
+
   return (
     <div className="scroll-container-gender">
       <table className="list-container-table-gender">
@@ -59,11 +74,23 @@ export default function ShowGender({ peopleList }) {
                 <button onClick={() => handleDelete(gender.id)}>
                   <FaTrash className="delete-icon" />
                 </button>
+                <button
+                  className="uptdate-Button"
+                  onClick={() => handleUpdate(gender.id)}
+                >
+                  <FaPencilAlt className="update-icon" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showUpdateModal && (
+        <UpdateGender
+          id={selectedPersonId}
+          handleClose={handleCloseUpdateModal}
+        />
+      )}
     </div>
   );
 }
