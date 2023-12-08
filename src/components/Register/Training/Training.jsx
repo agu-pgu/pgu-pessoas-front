@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-    createCapacitacao,
+  createCapacitacao,
   getCapacitacao,
   getCapacitacaoStatus,
   getPessoa,
 } from "../../../services/CallsPerson/callsTraining";
-import { CreateError, ErrorAtGetData, createPersonSucess } from "../../../assets/js/Alerts";
+import {
+  CreateError,
+  ErrorAtGetData,
+  createPersonSucess,
+} from "../../../assets/js/Alerts";
 import "./Training.scss";
 
 export default function Training() {
@@ -23,27 +27,40 @@ export default function Training() {
 
   const handleSubmitForCreateTraining = async (e) => {
     e.preventDefault();
+
+    const training = {};
+
+    // Verificações para os campos da CAPACITACAO
+    if (nome !== "") training.capacitacao_nome = nome;
+    if (descricao !== "") training.capacitacao_descricao = descricao;
+    if (dataInicio !== "") training.capacitacao_inicio = dataInicio;
+    if (dataFim !== "") training.capacitacao_fim = dataFim;
+    if (capacitacao !== "") training.capacitacao_tipo_id = capacitacao;
+    if (pessoa !== "") training.pessoa_id = pessoa;
+
+    const trainingMotivoStatus = {};
+
+    // Verificações para CAPACITACAO_MOTIVO_STATUS
+    if (capacitacaoMotivoStatus !== "") {
+      trainingMotivoStatus.capacitacao_motivo_status_descricao =
+        capacitacaoMotivoStatus;
+    }
+    if (capacitacaoStatus !== "") {
+      trainingMotivoStatus.capacitacao_status_id = capacitacaoStatus;
+    }
+
     const data = {
       CADASTRAR: [
         {
-          CAPACITACAO: {
-            capacitacao_nome: nome,
-            capacitacao_descricao: descricao,
-            capacitacao_inicio: dataInicio,
-            capacitacao_fim: dataFim,
-            capacitacao_tipo_id: capacitacao,
-            pessoa_id: pessoa,
-          },
-          CAPACITACAO_MOTIVO_STATUS: {
-            capacitacao_motivo_status_descricao: capacitacaoMotivoStatus,
-            capacitacao_status_id: capacitacaoStatus,
-          },
+          CAPACITACAO: training,
+          CAPACITACAO_MOTIVO_STATUS: trainingMotivoStatus,
         },
       ],
     };
+
     try {
       const response = await createCapacitacao(data);
-      if (response.data.SUCESSO == true) {
+      if (response.data.SUCESSO === true) {
         createPersonSucess();
       }
     } catch (error) {
@@ -137,7 +154,7 @@ export default function Training() {
       <div className="formulario-container">
         <h1 className="formulario-h2">Cadastre uma Capacitação!</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário de "Capacitação"</h3>
+          <h3 className="formulario-h3">Formulário de "Capacitação"</h3>
 
           <form
             className="formulario-container"

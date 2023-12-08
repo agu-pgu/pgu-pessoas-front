@@ -25,25 +25,37 @@ export default function Vacation() {
   const handleSubmitToCreateVacation = async (e) => {
     e.preventDefault();
 
+    const vacation = {};
+
+    // Verificações para os campos da FERIAS
+    if (feriasInicio !== "") vacation.ferias_inicio = feriasInicio;
+    if (feriasFim !== "") vacation.ferias_fim = feriasFim;
+    if (feriasAno !== "") vacation.ferias_ano = feriasAno;
+    if (pessoa !== "") vacation.pessoa_id = pessoa;
+
+    const vacationMotivoStatus = {};
+
+    // Verificações para FERIAS_MOTIVO_STATUS
+    if (feriasMotivoStatusDescricao !== "") {
+      vacationMotivoStatus.ferias_motivo_status_descricao =
+        feriasMotivoStatusDescricao;
+    }
+    if (feriasStatus !== "") {
+      vacationMotivoStatus.ferias_status_id = feriasStatus;
+    }
+
     const data = {
       CADASTRAR: [
         {
-          FERIAS: {
-            ferias_inicio: feriasInicio,
-            ferias_fim: feriasFim,
-            ferias_ano: feriasAno,
-            pessoa_id: pessoa,
-          },
-          FERIAS_MOTIVO_STATUS: {
-            ferias_motivo_status_descricao: feriasMotivoStatusDescricao,
-            ferias_status_id: feriasStatus,
-          },
+          FERIAS: vacation,
+          FERIAS_MOTIVO_STATUS: vacationMotivoStatus,
         },
       ],
     };
+
     try {
       const response = await createVacation(data);
-      if (response.data.SUCESSO == true) {
+      if (response.data.SUCESSO === true) {
         createPersonSucess();
       }
     } catch (error) {
@@ -107,9 +119,9 @@ export default function Vacation() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Cadastre Férias!!</h1>
+        <h1 className="formulario-h2">Cadastre Férias!!</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário de "Férias"</h3>
+          <h3 className="formulario-h3">Formulário de "Férias"</h3>
 
           <form
             className="formulario-container"
@@ -157,9 +169,7 @@ export default function Vacation() {
             >
               {options}
             </select>
-            <label className="form-label">
-              *Ferias - Descrição:
-            </label>
+            <label className="form-label">*Ferias - Descrição:</label>
             <input
               className="form-input"
               type="text"

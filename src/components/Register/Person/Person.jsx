@@ -31,24 +31,29 @@ export default function Person() {
 
   const handleSubmitForCreatePerson = async (e) => {
     e.preventDefault();
+
+    const person = {};
+
+    // Verificações para os campos da PESSOA
+    if (nome !== "") person.pessoa_nome = nome;
+    if (dataNascimento !== "") person.pessoa_data_nascimento = dataNascimento;
+    if (cpf !== "") person.pessoa_cpf = cpf;
+    if (email !== "") person.pessoa_email = email;
+    if (siape !== "") person.pessoa_siape = siape;
+    if (genero !== "") person.genero_id = genero;
+    if (municipio !== "") person.municipio_id = municipio;
+
     const data = {
       CADASTRAR: [
         {
-          PESSOA: {
-            pessoa_nome: nome,
-            pessoa_data_nascimento: dataNascimento,
-            pessoa_cpf: cpf,
-            pessoa_email: email,
-            pessoa_siape: siape,
-            genero_id: genero,
-            municipio_id: municipio,
-          },
+          PESSOA: person,
         },
       ],
     };
+
     try {
       const response = await createPessoa(data);
-      if (response.data.SUCESSO == true) {
+      if (response.data.SUCESSO === true) {
         createPersonSucess();
       }
     } catch (error) {
@@ -110,7 +115,7 @@ export default function Person() {
       <div className="formulario-container">
         <h1 className="formulario-h2">Cadastre uma Pessoa!</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário de "Pessoa"</h3>
+          <h3 className="formulario-h3">Formulário de "Pessoa"</h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreatePerson}
@@ -180,6 +185,7 @@ export default function Person() {
               {options}
             </select>
             <label className="form-label">Região:</label>
+            <span className="form-span">Clique no botão para pesquisar</span>
             <div className="form-div-search-regiao">
               <select
                 className="form-input"
@@ -202,7 +208,9 @@ export default function Person() {
                 <AiOutlineSearch className="form-button-search-regiao-icon" />
               </button>
             </div>
+
             <label className="form-label">UF:</label>
+            <span className="form-span">Clique no botão para pesquisar</span>
             <div className="form-div-search-regiao">
               <select
                 className="form-input"

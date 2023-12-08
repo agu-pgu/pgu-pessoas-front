@@ -22,27 +22,39 @@ export default function Participation() {
 
   const handleSubmitForCreateParticipation = async (e) => {
     e.preventDefault();
+  
+    const participation = {};
+  
+    // Verificações para os campos da PARTICIPACAO
+    if (nome !== "") participation.participacao_nome = nome;
+    if (descricao !== "") participation.participacao_descricao = descricao;
+    if (dataInicio !== "") participation.participacao_inicio = dataInicio;
+    if (dataFim !== "") participation.participacao_fim = dataFim;
+    if (participacao !== "") participation.participacao_tipo_id = participacao;
+    if (pessoa !== "") participation.pessoa_id = pessoa;
+  
+    const participationMotivoStatus = {};
+  
+    // Verificações para PARTICIPACAO_MOTIVO_STATUS
+    if (participacaoMotivoStatus !== "") {
+      participationMotivoStatus.participacao_motivo_status_descricao = participacaoMotivoStatus;
+    }
+    if (participacaoStatus !== "") {
+      participationMotivoStatus.participacao_status_id = participacaoStatus;
+    }
+  
     const data = {
       CADASTRAR: [
         {
-          PARTICIPACAO: {
-            participacao_nome: nome,
-            participacao_descricao: descricao,
-            participacao_inicio: dataInicio,
-            participacao_fim: dataFim,
-            participacao_tipo_id: participacao,
-            pessoa_id: pessoa,
-          },
-          PARTICIPACAO_MOTIVO_STATUS: {
-            participacao_motivo_status_descricao: participacaoMotivoStatus,
-            participacao_status_id: participacaoStatus,
-          },
+          PARTICIPACAO: participation,
+          PARTICIPACAO_MOTIVO_STATUS: participationMotivoStatus,
         },
       ],
     };
+  
     try {
       const response = await createParticipacao(data);
-      if (response.data.SUCESSO == true) {
+      if (response.data.SUCESSO === true) {
         createPersonSucess();
       }
     } catch (error) {

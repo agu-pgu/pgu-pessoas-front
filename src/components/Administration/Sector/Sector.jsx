@@ -5,7 +5,7 @@ import { createSector } from "../../../services/callsAdministration/callsSector"
 
 export default function Sector() {
   const [setor, setSetor] = useState("");
-  // const [setorDescricao, setSetorDescricao] = useState("");
+  const [setorDescricao, setSetorDescricao] = useState("");
   const [setorSigla, setSetorSigra] = useState("");
 
   const handleSubmitForCreateSetor = async (e) => {
@@ -16,6 +16,7 @@ export default function Sector() {
           SETOR: {
             setor_nome: setor,
             setor_sigla: setorSigla,
+            setor_descricao: setorDescricao,
           },
         },
       ],
@@ -62,6 +63,17 @@ export default function Sector() {
               id="setorSigla"
               value={setorSigla}
               onChange={(event) => setSetorSigra(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Setor Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="setorDescricao"
+              id="setorDescricao"
+              value={setorDescricao}
+              onChange={(event) => setSetorDescricao(event.target.value)}
               maxLength={255}
               required
             />

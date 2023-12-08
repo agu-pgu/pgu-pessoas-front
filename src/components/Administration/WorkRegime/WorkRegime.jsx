@@ -8,7 +8,13 @@ import {
 
 export default function WorkRegime() {
   const [regimeTrabalhoModalidade, setRegimeTrabalhoModalidade] = useState("");
+  const [
+    regimeTrabalhoModalidadeDescricao,
+    setRegimeTrabalhoModalidadeDescricao,
+  ] = useState("");
   const [regimeTrabalhoTipo, setRegimeTrabalhoTipo] = useState("");
+  const [regimeTrabalhoTipoDescricao, setRegimeTrabalhoTipoDescricao] =
+    useState("");
 
   const handleSubmitForCreateRegimeTrabalhoModalidade = async (e) => {
     e.preventDefault();
@@ -17,6 +23,8 @@ export default function WorkRegime() {
         {
           REGIME_TRABALHO_MODALIDADE: {
             regime_trabalho_modalidade_nome: regimeTrabalhoModalidade,
+            regime_trabalho_modalidade_descricao:
+              regimeTrabalhoModalidadeDescricao,
           },
         },
       ],
@@ -39,6 +47,7 @@ export default function WorkRegime() {
         {
           REGIME_TRABALHO_TIPO: {
             regime_trabalho_tipo_nome: regimeTrabalhoTipo,
+            regime_trabalho_tipo_descricao: regimeTrabalhoTipoDescricao,
           },
         },
       ],
@@ -56,9 +65,11 @@ export default function WorkRegime() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Administrativo - Regime de trabalho</h1>
+        <h1 className="formulario-h2">Administrativo - Regime de trabalho</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário administrativo de "Regime de trabalho - Modalidade"</h3>
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Regime de trabalho - Modalidade"
+          </h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateRegimeTrabalhoModalidade}
@@ -78,11 +89,28 @@ export default function WorkRegime() {
               maxLength={255}
               required
             />
+            <label className="form-label">
+              *Regime de Trabalho - Modalidade - Descrição:
+            </label>
+            <input
+              className="form-input"
+              type="text"
+              name="regimeTrabalhoModalidadeDescricao"
+              id="regimeTrabalhoModalidadeDescricao"
+              value={regimeTrabalhoModalidadeDescricao}
+              onChange={(event) =>
+                setRegimeTrabalhoModalidadeDescricao(event.target.value)
+              }
+              maxLength={255}
+              required
+            />
             <button className="form-button-submit" type="submit">
               Enviar
             </button>
           </form>
-        <h3 className="formulario-h3">Formulário administrativo de "Regime de trabalho - Tipo"</h3>
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Regime de trabalho - Tipo"
+          </h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateRegimeTrabalhoTipo}
@@ -95,6 +123,21 @@ export default function WorkRegime() {
               id="regimeTrabalhoTipo"
               value={regimeTrabalhoTipo}
               onChange={(event) => setRegimeTrabalhoTipo(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">
+              *Regime de Trabalho - Tipo - Descrição:
+            </label>
+            <input
+              className="form-input"
+              type="text"
+              name="regimeTrabalhoTipoDescricao"
+              id="regimeTrabalhoTipoDescricao"
+              value={regimeTrabalhoTipoDescricao}
+              onChange={(event) =>
+                setRegimeTrabalhoTipoDescricao(event.target.value)
+              }
               maxLength={255}
               required
             />

@@ -17,7 +17,9 @@ export default function Removal() {
   const [afastamentoStatusOrdemId, setAfastamentoStatusOrdemId] = useState("");
   const [optionsAfastamentoStatusOrdem, setOptionsAfastamentoStatusOrdem] =
     useState([]);
-  // const [carreiraDescricao, setCarreiraDescricao] = useState("");
+  const [afastamentoStatusDescricao, setAfastamentoStatusDescricao] =
+    useState("");
+  const [afastamentoTipoDescricao, setAfastamentoTipoDescricao] = useState("");
 
   const handleSubmitForCreateAfastamentoStatus = async (e) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ export default function Removal() {
           AFASTAMENTO_STATUS: {
             afastamento_status_nome: afastamentoStatus,
             afastamento_status_ordem: afastamentoStatusOrdemId,
+            afastamento_status_descricao: afastamentoStatusDescricao,
           },
         },
       ],
@@ -49,6 +52,7 @@ export default function Removal() {
         {
           AFASTAMENTO_TIPO: {
             afastamento_tipo_nome: afastamentoTipo,
+            afastamento_tipo_descricao: afastamentoTipoDescricao,
           },
         },
       ],
@@ -95,9 +99,11 @@ export default function Removal() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Administrativo - Afastamento</h1>
+        <h1 className="formulario-h2">Administrativo - Afastamento</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário administrativo de "Afastamento - Tipo"</h3>
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Afastamento - Tipo"
+          </h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateAfastamentoTipo}
@@ -113,11 +119,26 @@ export default function Removal() {
               maxLength={255}
               required
             />
+            <label className="form-label">*Afastamento Tipo - Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="afastamentoTipoDescricao"
+              id="afastamentoTipoDescricao"
+              value={afastamentoTipoDescricao}
+              onChange={(event) =>
+                setAfastamentoTipoDescricao(event.target.value)
+              }
+              maxLength={255}
+              required
+            />
             <button className="form-button-submit" type="submit">
               Enviar
             </button>
           </form>
-        <h3 className="formulario-h3">Formulário administrativo de "Afastamento - Status"</h3>
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Afastamento - Status"
+          </h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateAfastamentoStatus}
@@ -130,6 +151,21 @@ export default function Removal() {
               id="afastamentoStatus"
               value={afastamentoStatus}
               onChange={(event) => setAfastamentoStatus(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">
+              *Afastamento Status - Descrição:
+            </label>
+            <input
+              className="form-input"
+              type="text"
+              name="afastamentoStatusDescricao"
+              id="afastamentoStatusDescricao"
+              value={afastamentoStatusDescricao}
+              onChange={(event) =>
+                setAfastamentoStatusDescricao(event.target.value)
+              }
               maxLength={255}
               required
             />

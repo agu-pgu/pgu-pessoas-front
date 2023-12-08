@@ -5,7 +5,7 @@ import { createFunction } from "../../../services/callsAdministration/callsFunci
 
 export default function Functions() {
   const [funcao, setFuncao] = useState("");
-  // const [funcaoDescricao, setFuncaoDescricao] = useState("");
+  const [funcaoDescricao, setFuncaoDescricao] = useState("");
 
   const handleSubmitForCreateFuncao = async (e) => {
     e.preventDefault();
@@ -14,6 +14,7 @@ export default function Functions() {
         {
           FUNCAO: {
             funcao_nome: funcao,
+            funcao_descricao: funcaoDescricao,
           },
         },
       ],
@@ -47,6 +48,17 @@ export default function Functions() {
               id="funcao"
               value={funcao}
               onChange={(event) => setFuncao(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Função Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="funcaoDescricao"
+              id="funcaoDescricao"
+              value={funcaoDescricao}
+              onChange={(event) => setFuncaoDescricao(event.target.value)}
               maxLength={255}
               required
             />

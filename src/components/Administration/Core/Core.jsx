@@ -5,7 +5,7 @@ import { createCore } from '../../../services/callsAdministration/CallsCore';
 
 export default function Core() {
   const [nucleo, setNucleo] = useState("");
-  // const [nucleoDescricao, setNucleoDescricao] = useState("");
+  const [nucleoDescricao, setNucleoDescricao] = useState("");
 
   const handleSubmitForCreateNucleo = async (e) => {
     e.preventDefault();
@@ -14,6 +14,7 @@ export default function Core() {
         {
           NUCLEO: {
             nucleo_nome: nucleo,
+            nucleo_descricao: nucleoDescricao,
           },
         },
       ],
@@ -47,6 +48,17 @@ export default function Core() {
               id="nucleo"
               value={nucleo}
               onChange={(event) => setNucleo(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Núcleo Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="nucleoDescricao"
+              id="nucleoDescricao"
+              value={nucleoDescricao}
+              onChange={(event) => setNucleoDescricao(event.target.value)}
               maxLength={255}
               required
             />

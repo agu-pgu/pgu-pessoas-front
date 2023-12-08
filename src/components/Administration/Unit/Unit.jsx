@@ -5,7 +5,7 @@ import "./Unit.scss";
 
 export default function Unit() {
   const [unidade, setUnidade] = useState("");
-  // const [unidadeDescricao, setUnidadeDescricao] = useState("");
+  const [unidadeDescricao, setUnidadeDescricao] = useState("");
   const [unidadeSigla, setUnidadeSigla] = useState("");
 
   const handleSubmitForCreateUnidade = async (e) => {
@@ -16,6 +16,7 @@ export default function Unit() {
           UNIDADE: {
             unidade_nome: unidade,
             unidade_sigla: unidadeSigla,
+            unidade_descricao: unidadeDescricao,
           },
         },
       ],
@@ -62,6 +63,17 @@ export default function Unit() {
               id="unidadeSigla"
               value={unidadeSigla}
               onChange={(event) => setUnidadeSigla(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Unidade Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="unidadeDescricao"
+              id="unidadeDescricao"
+              value={unidadeDescricao}
+              onChange={(event) => setUnidadeDescricao(event.target.value)}
               maxLength={255}
               required
             />

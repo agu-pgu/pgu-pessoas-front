@@ -5,7 +5,7 @@ import { createTicket } from "../../../services/callsAdministration/callsTicket"
 
 export default function Ticket() {
   const [ingresso, setIngresso] = useState("");
-  // const [setorDescricao, setSetorDescricao] = useState("");
+  const [ingressoDescricao, setIngressoDescricao] = useState("");
 
   const handleSubmitForCreateIngresso = async (e) => {
     e.preventDefault();
@@ -14,6 +14,7 @@ export default function Ticket() {
         {
           INGRESSO: {
             ingresso_nome: ingresso,
+            ingresso_descricao: ingressoDescricao,
           },
         },
       ],
@@ -47,6 +48,17 @@ export default function Ticket() {
               id="ingresso"
               value={ingresso}
               onChange={(event) => setIngresso(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Ingresso Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="ingressoDescricao"
+              id="ingressoDescricao"
+              value={ingressoDescricao}
+              onChange={(event) => setIngressoDescricao(event.target.value)}
               maxLength={255}
               required
             />
