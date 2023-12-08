@@ -5,7 +5,7 @@ import { createRegion } from "../../../services/callsAdministration/callsRegion"
 export default function Region() {
   const [regiao, setRegiao] = useState("");
   const [regiaoSigla, setRegiaoSigla] = useState("");
-  // const [cargoDescricao, setCargoDescricao] = useState("");
+  const [regiaoDescricao, setRegiaoDescricao] = useState("");
 
   const handleSubmitForCreateRegiao = async (e) => {
     e.preventDefault();
@@ -15,6 +15,7 @@ export default function Region() {
           REGIAO: {
             regiao_nome: regiao,
             regiao_sigla: regiaoSigla,
+            regiao_descricao: regiaoDescricao,
           },
         },
       ],
@@ -33,9 +34,11 @@ export default function Region() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Administrativo - Região</h1>
+        <h1 className="formulario-h2">Administrativo - Região</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário administrativo de "Região"</h3>
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Região"
+          </h3>
           <form
             className="formulario-container"
             onSubmit={handleSubmitForCreateRegiao}
@@ -59,6 +62,17 @@ export default function Region() {
               id="regiaoSigla"
               value={regiaoSigla}
               onChange={(event) => setRegiaoSigla(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Região Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="regiaoDescricao"
+              id="regiaoDescricao"
+              value={regiaoDescricao}
+              onChange={(event) => setRegiaoDescricao(event.target.value)}
               maxLength={255}
               required
             />
