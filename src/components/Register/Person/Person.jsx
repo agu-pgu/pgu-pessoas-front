@@ -185,6 +185,7 @@ export default function Person() {
               {options}
             </select>
             <label className="form-label">Região:</label>
+            <span className="form-span">Clique no botão para pesquisar</span>
             <div className="form-div-search-regiao">
               <select
                 className="form-input"
@@ -207,7 +208,9 @@ export default function Person() {
                 <AiOutlineSearch className="form-button-search-regiao-icon" />
               </button>
             </div>
+
             <label className="form-label">UF:</label>
+            <span className="form-span">Clique no botão para pesquisar</span>
             <div className="form-div-search-regiao">
               <select
                 className="form-input"
