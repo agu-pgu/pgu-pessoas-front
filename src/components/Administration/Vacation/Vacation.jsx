@@ -14,7 +14,7 @@ export default function Vacation() {
   const [feriasStatus, setFeriasStatus] = useState("");
   const [feriasStatusOrdemId, setFeriasStatusOrdemId] = useState("");
   const [optionsFeriasStatusOrdem, setOptionsFeriasStatusOrdem] = useState([]);
-  // const [carreiraDescricao, setCarreiraDescricao] = useState("");
+  const [feriasDescricao, setFeriasDescricao] = useState("");
 
   const handleSubmitForCreateFeriasStatus = async (e) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ export default function Vacation() {
           FERIAS_STATUS: {
             ferias_status_nome: feriasStatus,
             ferias_status_ordem: feriasStatusOrdemId,
+            ferias_status_descricao: feriasDescricao,
           },
         },
       ],
@@ -70,9 +71,11 @@ export default function Vacation() {
   return (
     <div>
       <div className="formulario-container">
-      <h1 className="formulario-h2">Administrativo - Férias</h1>
+        <h1 className="formulario-h2">Administrativo - Férias</h1>
         <div className="form-scroll">
-        <h3 className="formulario-h3">Formulário administrativo de "Férias - Status"</h3>
+          <h3 className="formulario-h3">
+            Formulário administrativo de "Férias - Status"
+          </h3>
 
           <form
             className="formulario-container"
@@ -86,6 +89,17 @@ export default function Vacation() {
               id="feriasStatus"
               value={feriasStatus}
               onChange={(event) => setFeriasStatus(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Ferias Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="feriasDescricao"
+              id="feriasDescricao"
+              value={feriasDescricao}
+              onChange={(event) => setFeriasDescricao(event.target.value)}
               maxLength={255}
               required
             />
