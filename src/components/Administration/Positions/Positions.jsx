@@ -5,7 +5,7 @@ import { createPositions } from "../../../services/callsAdministration/CallsPosi
 
 export default function Positions() {
   const [cargo, setCargo] = useState("");
-  // const [cargoDescricao, setCargoDescricao] = useState("");
+  const [cargoDescricao, setCargoDescricao] = useState("");
 
   const handleSubmitForCreateCargo = async (e) => {
     e.preventDefault();
@@ -14,6 +14,7 @@ export default function Positions() {
         {
           CARGO: {
             cargo_nome: cargo,
+            cargo_descricao: cargoDescricao,
           },
         },
       ],
@@ -47,6 +48,17 @@ export default function Positions() {
               id="cargo"
               value={cargo}
               onChange={(event) => setCargo(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Cargo Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="cargoDescricao"
+              id="cargoDescricao"
+              value={cargoDescricao}
+              onChange={(event) => setCargoDescricao(event.target.value)}
               maxLength={255}
               required
             />
