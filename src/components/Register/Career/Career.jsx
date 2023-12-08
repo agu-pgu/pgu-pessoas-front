@@ -66,60 +66,73 @@ export default function Career() {
   const [optionsRegimeTrabalhoModalidade, setOptionsRegimeTrabalhoModalidade] =
     useState([]);
 
-  const handleSubmitCreateCareer = async (e) => {
-    const concursoClassificacaoString = String(concursoClassificacao)
-    e.preventDefault();
-
-    const data = {
-      CADASTRAR: [
-        {
-          CARREIRA: {
-            pessoa_id: pessoa,
-            cargo_id: cargo,
-            cargo_inicio: cargoInicio,
-            cargo_fim: cargoFim,
-            ingresso_id: ingresso,
-            concurso_id: concurso,
-            concurso_classificacao: concursoClassificacaoString,
-            concurso_cota_id: concursoCota,
-            carreira_tipo_id: carreiraTipo,
-            setor_id: setor,
-            setor_inicio: setorInicio,
-            setor_fim: setorFim,
-            funcao_id: funcao,
-            funcao_inicio: funcaoInicio,
-            funcao_fim: funcaoFim,
-            coordenacao_id: coordenacao,
-            coordenacao_inicio: coordenacaoInicio,
-            coordenacao_fim: coordenacaoFim,
-            nucleo_id: nucleo,
-            nucleo_inicio: nucleoInicio,
-            nucleo_fim: nucleoFim,
-          },
-          CARREIRA_MOTIVO_STATUS: {
-            carreira_motivo_status_descricao:
-              carreiraMotivoStatusDescricao,
-            carreira_status_id: carreiraStatus,
-          },
-          REGIME_TRABALHO: {
-            regime_trabalho_tipo_id: regimeTrabalhoTipo,
-            regime_trabalho_modalidade_id: regimeTrabalhoModalidade,
-          },
-        },
-      ],
-    };
-
-    try {
-      const response = await createCareer(data);
-      if (response.data.SUCESSO == true) {
-        console.log(response);
-        createPersonSucess();
+    const handleSubmitCreateCareer = async (e) => {
+      const concursoClassificacaoString = String(concursoClassificacao)
+      e.preventDefault();
+    
+      const carreira = {};
+    
+      // Verificações para os campos da carreira
+      if (pessoa !== "") carreira.pessoa_id = pessoa;
+      if (cargo !== "") carreira.cargo_id = cargo;
+      if (cargoInicio !== "") carreira.cargo_inicio = cargoInicio;
+      if (cargoFim !== "") carreira.cargo_fim = cargoFim;
+      if (ingresso !== "") carreira.ingresso_id = ingresso;
+      if (concurso !== "") carreira.concurso_id = concurso;
+      if (concursoClassificacaoString !== "") carreira.concurso_classificacao = concursoClassificacaoString;
+      if (concursoCota !== "") carreira.concurso_cota_id = concursoCota;
+      if (carreiraTipo !== "") carreira.carreira_tipo_id = carreiraTipo;
+      if (setor !== "") carreira.setor_id = setor;
+      if (setorInicio !== "") carreira.setor_inicio = setorInicio;
+      if (setorFim !== "") carreira.setor_fim = setorFim;
+      if (funcao !== "") carreira.funcao_id = funcao;
+      if (funcaoInicio !== "") carreira.funcao_inicio = funcaoInicio;
+      if (funcaoFim !== "") carreira.funcao_fim = funcaoFim;
+      if (coordenacao !== "") carreira.coordenacao_id = coordenacao;
+      if (coordenacaoInicio !== "") carreira.coordenacao_inicio = coordenacaoInicio;
+      if (coordenacaoFim !== "") carreira.coordenacao_fim = coordenacaoFim;
+      if (nucleo !== "") carreira.nucleo_id = nucleo;
+      if (nucleoInicio !== "") carreira.nucleo_inicio = nucleoInicio;
+      if (nucleoFim !== "") carreira.nucleo_fim = nucleoFim;
+    
+      const carreiraMotivoStatus = {};
+    
+      // Verificações para CARREIRA_MOTIVO_STATUS
+      if (carreiraMotivoStatusDescricao !== "") {
+        carreiraMotivoStatus.carreira_motivo_status_descricao = carreiraMotivoStatusDescricao;
       }
-    } catch (error) {
-      CreateError();
-    }
-    console.log(data);
-  };
+      if (carreiraStatus !== "") {
+        carreiraMotivoStatus.carreira_status_id = carreiraStatus;
+      }
+    
+      const regimeTrabalho = {};
+    
+      // Verificações para REGIME_TRABALHO
+      if (regimeTrabalhoTipo !== "") {
+        regimeTrabalho.regime_trabalho_tipo_id = regimeTrabalhoTipo;
+      }
+      if (regimeTrabalhoModalidade !== "") {
+        regimeTrabalho.regime_trabalho_modalidade_id = regimeTrabalhoModalidade;
+      }
+    
+      const data = {
+        CADASTRAR: [
+          {
+            CARREIRA: carreira,
+            CARREIRA_MOTIVO_STATUS: carreiraMotivoStatus,
+            REGIME_TRABALHO: regimeTrabalho,
+          },
+        ],
+      };
+      try {
+        const response = await createCareer(data);
+        if (response.data.SUCESSO === true) {
+          createPersonSucess();
+        }
+      } catch (error) {
+        CreateError();
+      }
+    };
 
   useEffect(() => {
     const getPavimentarPessoa = async () => {
@@ -622,7 +635,6 @@ export default function Career() {
               id="funcao"
               value={funcao}
               onChange={(event) => setFuncao(event.target.value)}
-              required
             >
               {optionsFuncao}
             </select>
@@ -679,7 +691,6 @@ export default function Career() {
               id="nucleo"
               value={nucleo}
               onChange={(event) => setNucleo(event.target.value)}
-              required
             >
               {optionsNucleo}
             </select>
