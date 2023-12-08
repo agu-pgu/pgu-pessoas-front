@@ -92,7 +92,7 @@ const FormLogin = () => {
             </button>
           </form>
           <p className="login-p">
-            &copy; PGU-Pessoas <strong>Desenvolvimento</strong> 1.0.0 2023
+            &copy; PGU-Pessoas <strong>Desenvolvimento</strong> 1.0.1 2023
             CONATEC. Alguns direitos reservados.
           </p>
         </div>
