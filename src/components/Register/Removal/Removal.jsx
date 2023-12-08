@@ -36,36 +36,47 @@ export default function Removal() {
   const handleSubmitCreateRemoval = async (e) => {
     e.preventDefault();
 
+    const removal = {};
+
+    // Verificações para os campos da AFASTAMENTO
+    if (afastamentoDescricao !== "")
+      removal.afastamento_descricao = afastamentoDescricao;
+    if (afastamentoInicio !== "")
+      removal.afastamento_inicio = afastamentoInicio;
+    if (afastamentoFim !== "") removal.afastamento_fim = afastamentoFim;
+    if (afastamentoTipo !== "") removal.afastamento_tipo_id = afastamentoTipo;
+    if (cid !== "") removal.cid_id = cid;
+    if (pessoa !== "") removal.pessoa_id = pessoa;
+    if (cidSub !== "") removal.cid_sub_id = cidSub;
+
+    const removalMotivoStatus = {};
+
+    // Verificações para AFASTAMENTO_MOTIVO_STATUS
+    if (afastamentoMotivoStatusDescricao !== "") {
+      removalMotivoStatus.afastamento_motivo_status_descricao =
+        afastamentoMotivoStatusDescricao;
+    }
+    if (afastamentoStatus !== "") {
+      removalMotivoStatus.afastamento_status_id = afastamentoStatus;
+    }
+
     const data = {
       CADASTRAR: [
         {
-          AFASTAMENTO: {
-            afastamento_descricao: afastamentoDescricao,
-            afastamento_inicio: afastamentoInicio,
-            afastamento_fim: afastamentoFim,
-            afastamento_tipo_id: afastamentoTipo,
-            cid_id: cid,
-            pessoa_id: pessoa,
-            cid_sub_id: cidSub,
-          },
-          AFASTAMENTO_MOTIVO_STATUS: {
-            afastamento_motivo_status_descricao:
-              afastamentoMotivoStatusDescricao,
-            afastamento_status_id: afastamentoStatus,
-          },
+          AFASTAMENTO: removal,
+          AFASTAMENTO_MOTIVO_STATUS: removalMotivoStatus,
         },
       ],
     };
 
     try {
       const response = await createRemoval(data);
-      if (response.data.SUCESSO == true) {
+      if (response.data.SUCESSO === true) {
         createPersonSucess();
       }
     } catch (error) {
       CreateError();
     }
-    console.log(data);
   };
 
   useEffect(() => {
