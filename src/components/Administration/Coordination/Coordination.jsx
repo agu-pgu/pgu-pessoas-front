@@ -5,7 +5,7 @@ import { CreateError, createPersonSucess } from "../../../assets/js/Alerts";
 
 export default function Coordination() {
   const [coordenacao, setCoordenacao] = useState("");
-  // const [setorDescricao, setSetorDescricao] = useState("");
+  const [coordenacaoDescricao, setCoordenacaoDescricao] = useState("");
   const [coordenacaoSigla, setCoordenacaoSigra] = useState("");
 
   const handleSubmitForCreateCoordenacao = async (e) => {
@@ -16,6 +16,7 @@ export default function Coordination() {
           COORDENACAO: {
             coordenacao_nome: coordenacao,
             coordenacao_sigla: coordenacaoSigla,
+            coordenacao_descricao: coordenacaoDescricao,
           },
         },
       ],
@@ -62,6 +63,17 @@ export default function Coordination() {
               id="coordenacaoSigla"
               value={coordenacaoSigla}
               onChange={(event) => setCoordenacaoSigra(event.target.value)}
+              maxLength={255}
+              required
+            />
+            <label className="form-label">*Coordenação Descrição:</label>
+            <input
+              className="form-input"
+              type="text"
+              name="coordenacaoDescricao"
+              id="coordenacaoDescricao"
+              value={coordenacaoDescricao}
+              onChange={(event) => setCoordenacaoDescricao(event.target.value)}
               maxLength={255}
               required
             />
