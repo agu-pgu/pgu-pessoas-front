@@ -14,7 +14,7 @@ def getGitAuthor() {
 
 
 pipeline{
-    agent { label 'VM-SDF4673-210'
+    agent { label 'VM-SDF4808-14'
     }
     options {
         buildDiscarder logRotator( 
@@ -26,11 +26,11 @@ pipeline{
         nodejs 'node'
         }
     environment {
-        aguEmails = "ramon.leal@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
-        //aguEmails = "ramon.umleal+jenkins@gmail.com"//
+        //aguEmails = "ramon.leal@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
+        aguEmails = "ramon.umleal+jenkins@gmail.com"//
         SISTEMA = "pgu-pessoas-front"//
         APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-pgu-pessoas-front-DEVOP-210/dist/*"//
-        APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-pgu-pessoas-front-DEVOP-210/dist/*"//
+        APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-pgu-pessoas-front-DEVOP-/dist/*"//
         PROJ = "/var/www/"
         IPDESENV = "http://sdf4673.agu.gov.br:"
         IPHOMOLOG = "http://sdf4808.agu.gov.br:"
@@ -52,17 +52,6 @@ pipeline{
                 echo 'FIM Verificando Versões.............................'
                 }
             }
-        stage('OWASP Dependency') {
-            steps {
-                dependencyCheck additionalArguments: '''
-						-o './'
-						-s './'
-						-f 'ALL' 
-						--prettyPrint
-						--format HTML --format XML''', odcInstallation: 'Dependency Check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
         stage('Capture Commit Messages') {
                 steps {
                     script {
