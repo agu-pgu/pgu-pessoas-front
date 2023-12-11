@@ -30,7 +30,7 @@ pipeline{
         aguEmails = "ramon.umleal+jenkins@gmail.com"//
         SISTEMA = "pgu-pessoas-front"//
         APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-pgu-pessoas-front-DEVOP-210/dist/*"//
-        APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-mirage-frontend-HOMOLOG-14/dist/*"//
+        APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-pgu-pessoas-front-HOMOLOG-14/dist/*"//
         PROJ = "/var/www/"
         IPDESENV = "http://sdf4673.agu.gov.br:"
         IPHOMOLOG = "http://sdf4808.agu.gov.br:"
