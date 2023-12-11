@@ -4,7 +4,7 @@
  * CONATEC 28/11/2023
  * SISTEMA = "pgu-pessoas-front"
  * 
- * Servidor de dev
+ * Servidor de HOMOLOGAÇÃO
  */
 
 def getGitAuthor() {
@@ -30,7 +30,7 @@ pipeline{
         aguEmails = "ramon.umleal+jenkins@gmail.com"//
         SISTEMA = "pgu-pessoas-front"//
         APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-pgu-pessoas-front-DEVOP-210/dist/*"//
-        APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-pgu-pessoas-front-DEVOP-/dist/*"//
+        APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-mirage-frontend-HOMOLOG-14/dist/*"//
         PROJ = "/var/www/"
         IPDESENV = "http://sdf4673.agu.gov.br:"
         IPHOMOLOG = "http://sdf4808.agu.gov.br:"
@@ -77,7 +77,7 @@ pipeline{
             stage('Movendo arquivos'){
                 steps{
                 echo 'Movendo arquivos.............................' 
-                    sh 'cp -R $APIPATHD $PROJ$SISTEMA/' 
+                    sh 'cp -R $APIPATHH $PROJ$SISTEMA/' 
                 }
             }
             stage('configtest apache'){  
