@@ -26,8 +26,8 @@ pipeline{
         nodejs 'node'
         }
     environment {
-        //aguEmails = "ramon.leal@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
-        aguEmails = "ramon.umleal+jenkins@gmail.com"//
+        aguEmails = "ramon.leal@agu.gov.br,joao.lsouza@agu.gov.br,gilson.miranda@agu.gov.br"
+        //aguEmails = "ramon.umleal+jenkins@gmail.com"//
         SISTEMA = "pgu-pessoas-front"//
         APIPATHD = "/home/jenkins/jenkins-agent/workspace/1-pgu-pessoas-front-DEVOP-210/dist/*"//
         APIPATHH = "/home/jenkins/jenkins-agent/workspace/2-pgu-pessoas-front-HOMOLOG-14/dist/*"//
@@ -35,7 +35,7 @@ pipeline{
         IPDESENV = "http://sdf4673.agu.gov.br:"
         IPHOMOLOG = "http://sdf4808.agu.gov.br:"
         PORTA = "8103"//
-        APPNAME="Sistema PGU-PESSOAS-frontend desenvolvimento"
+        APPNAME="Sistema PGU-PESSOAS-frontend homologação"
         GITAUTHOR="${env.GIT_COMMITTER_EMAIL}"
         URLD="${IPDESENV}${PORTA}"
         URLH="${IPHOMOLOG}${PORTA}"
