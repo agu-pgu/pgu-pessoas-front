@@ -96,7 +96,7 @@ pipeline{
             stage('Build'){
                 steps {
                     script {
-                       def response = httpRequest 'http://172.17.24.210:8103/'
+                       def response = httpRequest 'http://172.17.25.14:8103/'
                         println("Status: "+response.status)
                         if(response.status.toString() != "200"){
                         println "ERROR:"+ errorMsg
